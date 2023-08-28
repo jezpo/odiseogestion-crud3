@@ -146,27 +146,21 @@
                                                     </div>
 
                                                     <div class="form-group row m-b-15">
-                                                        <label class="col-md-4 col-sm-4 col-form-label">Origen:
-                                                        </label>
+                                                        <label class="col-md-4 col-sm-4 col-form-label">Origen: </label>
                                                         <div class="col-md-8 col-sm-8">
-
-                                                            <select class="form-control" id="id_programa"
-                                                                name="id_programa" data-parsley-required="true">
-                                                                <option value="">Por favor selecciona el origen
-                                                                </option>
+                                                            <select class="form-control select2_programas" id="id_programa" name="id_programa" data-parsley-required="true">
+                                                                <option value="">Por favor selecciona el origen</option>
                                                                 @foreach ($programas as $opcion)
                                                                     <option value="{{ $opcion['id_programa'] }}">
                                                                         {{ $opcion['programa'] }}</option>
                                                                 @endforeach
                                                                 @error('id_programa')
-                                                                    <ul class="parsley-errors-list filled" id="parsley-id-5"
-                                                                        aria-hidden="false">
+                                                                    <ul class="parsley-errors-list filled" id="parsley-id-5" aria-hidden="false">
                                                                         <li class="parsley-required">
                                                                             {{ 'este valor es requerido' }}</li>
                                                                     </ul>
                                                                 @enderror
                                                             </select>
-
                                                         </div>
                                                     </div>
                                                     <div class="form-group row m-b-0">
@@ -519,6 +513,14 @@
                         } else {
                             console.error("doc_id no está establecido.");  // Para depuración
                         }
+                    });
+                </script>
+
+                <script type="text/javascript">
+                    $(document).ready(function() {
+                        $('.select2_programas').select2({
+                            placeholder: "Por favor selecciona el origen", // placeholder
+                        });
                     });
                 </script>
             @endpush
