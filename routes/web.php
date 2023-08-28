@@ -73,7 +73,6 @@ Route::prefix('hermes')->group(function() {
 
    
     Route::get('/documentos', [DocumentosController::class, 'index'])->name('documentos.index');
-    Route::get('documentos/fetchall', [DocumentosController::class, 'fetchAll'])->name('documentos-fetchAll');
     Route::post('documentos/store', 'DocumentosController@store')->name('documentos.store');
     Route::get('documentos/{id}', 'DocumentosController@show')->name('documentos.show');
     Route::get('documentos/edit/{id}', 'DocumentosController@edit')->name('documentos.edit');

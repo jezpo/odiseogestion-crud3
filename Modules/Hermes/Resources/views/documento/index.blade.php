@@ -148,14 +148,18 @@
                                                     <div class="form-group row m-b-15">
                                                         <label class="col-md-4 col-sm-4 col-form-label">Origen: </label>
                                                         <div class="col-md-8 col-sm-8">
-                                                            <select class="form-control select2_programas" id="id_programa" name="id_programa" data-parsley-required="true">
-                                                                <option value="">Por favor selecciona el origen</option>
+                                                            <select class="form-control select2_programas"
+                                                                id="id_programa" name="id_programa"
+                                                                data-parsley-required="true">
+                                                                <option value="">Por favor selecciona el origen
+                                                                </option>
                                                                 @foreach ($programas as $opcion)
                                                                     <option value="{{ $opcion['id_programa'] }}">
                                                                         {{ $opcion['programa'] }}</option>
                                                                 @endforeach
                                                                 @error('id_programa')
-                                                                    <ul class="parsley-errors-list filled" id="parsley-id-5" aria-hidden="false">
+                                                                    <ul class="parsley-errors-list filled" id="parsley-id-5"
+                                                                        aria-hidden="false">
                                                                         <li class="parsley-required">
                                                                             {{ 'este valor es requerido' }}</li>
                                                                     </ul>
@@ -239,48 +243,117 @@
                                             </div>
                                             <div class="modal-body">
                                                 <!-- Formulario de edición -->
-                                                <form id="editarDocumentoForm" method="POST">
+                                                <form id="editDocumentoForm" method="POST">
                                                     @csrf
-                                                    <div class="form-group">
-                                                        <label for="name">Cite</label>
-                                                        <input type="text" class="form-control" id="cite"
-                                                            name="cite">
+                                                    <!-- Dentro del formulario -->
+                                                    <input type="hidden" id="txtId2" name="txtId2">
+                                                    <div class="form-group row m-b-15">
+                                                        <label class="col-md-4 col-sm-4 col-form-label"
+                                                            for="fullname">Cite:</label>
+                                                        <div class="col-md-8 col-sm-8">
+                                                            <input class="form-control" type="text" id="cite2"
+                                                                value="" name="cite2" placeholder="cite"
+                                                                data-parsley-required="true">
+                                                            @error('cite')
+                                                                <ul class="parsley-errors-list filled" id="parsley-id-5"
+                                                                    aria-hidden="false">
+                                                                    <li class="parsley-required">
+                                                                        {{ 'Este valor es requerido' }}</li>
+                                                                </ul>
+                                                            @enderror
+                                                        </div>
                                                     </div>
 
-                                                    <div class="form-group">
-                                                        <label for="descripcion">Descripción</label>
-                                                        <input type="text" class="form-control" id="descripcion"
-                                                            name="descripcion">
+                                                    <div class="form-group row m-b-15">
+                                                        <label class="col-md-4 col-sm-4 col-form-label"
+                                                            for="fullname">Descripcion:</label>
+                                                        <div class="col-md-8 col-sm-8">
+                                                            <input class="form-control" type="text" id="descripcion2"
+                                                                value="" name="descripcion2"
+                                                                placeholder="descripcion" data-parsley-required="true">
+                                                            @error('descripcion')
+                                                                <ul class="parsley-errors-list filled" id="parsley-id-5"
+                                                                    aria-hidden="false">
+                                                                    <li class="parsley-required">
+                                                                        {{ 'Este valor es requerido' }}</li>
+                                                                </ul>
+                                                            @enderror
+                                                        </div>
                                                     </div>
-
-                                                    <div class="form-group">
-                                                        <label for="estado">Estado</label>
-                                                        <select class="form-control" id="estado" name="estado">
-                                                            <option value="1">Aceptado</option>
-                                                            <option value="2">Rechazado</option>
-                                                        </select>
-                                                    </div>
-
-                                                    <div class="form-group">
-                                                        <label for="id_tipo_documento">Tipo De Documento</label>
-                                                        <select class="form-control" id="id_tipo_documento"
-                                                            name="id_tipo_documento">
-                                                            <option value="1">Carta</option>
-                                                            <option value="2">Resolucion</option>
-                                                            <option value="3">Dicatamen</option>
-                                                            <option value="4">Circular</option>
-                                                            <option value="5">Nota</option>
-                                                        </select>
-                                                    </div>
-
-                                                    <div class="form-group">
-                                                        <label for="id_programa">Unidad o Carrera</label>
-                                                        <select class="form-control" id="id_programa" name="id_programa">
-                                                            @foreach ($programas as $programa)
-                                                                <option value="{{ $programa->id }}">{{ $programa->nombre }}
+                                                    <div class="form-group row m-b-15">
+                                                        <label class="col-md-4 col-sm-4 col-form-label">Estado: </label>
+                                                        <div class="col-md-8 col-sm-8">
+                                                            <select class="form-control" id="estado2" name="estado2"
+                                                                data-parsley-required="true">
+                                                                <option value="">Por favor selecciona una opcion
                                                                 </option>
-                                                            @endforeach
-                                                        </select>
+                                                                <option value="A">Activo</option>
+                                                                <option value="I">Inactivo</option>
+                                                                @error('estado')
+                                                                    <ul class="parsley-errors-list filled" id="parsley-id-5"
+                                                                        aria-hidden="false">
+                                                                        <li class="parsley-required">
+                                                                            {{ 'este valor es requerido' }}</li>
+                                                                    </ul>
+                                                                @enderror
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row m-b-15">
+                                                        <label class="col-md-4 col-sm-4 col-form-label">Archivo:
+                                                        </label>
+                                                        <div class="col-md-8 col-sm-8">
+
+                                                            <div class="form-group">
+
+                                                                <input type="file" class="form-control-file"
+                                                                    id="docummento2" name="documento2" accept=".pdf">
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row m-b-15">
+                                                        <label class="col-md-4 col-sm-4 col-form-label">Tipo de
+                                                            documento: </label>
+                                                        <div class="col-md-8 col-sm-8">
+                                                            <select class="form-control" id="id_tipo_documento2"
+                                                                name="id_tipo_documento2" data-parsley-required="true">
+                                                                <option value="">Por favor selecciona una opcion
+                                                                </option>
+                                                                <option value="1">Cata</option>
+                                                                <option value="2">Dictamen</option>
+                                                                @error('id_tipo_documento')
+                                                                    <ul class="parsley-errors-list filled" id="parsley-id-5"
+                                                                        aria-hidden="false">
+                                                                        <li class="parsley-required">
+                                                                            {{ 'este valor es requerido' }}</li>
+                                                                    </ul>
+                                                                @enderror
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group row m-b-15">
+                                                        <label class="col-md-4 col-sm-4 col-form-label">Origen: </label>
+                                                        <div class="col-md-8 col-sm-8">
+                                                            <select class="form-control select2_programas"
+                                                                id="id_programa2" name="id_programa2"
+                                                                data-parsley-required="true">
+                                                                <option value="">Por favor selecciona el origen
+                                                                </option>
+                                                                @foreach ($programas as $opcion)
+                                                                    <option value="{{ $opcion['id_programa'] }}">
+                                                                        {{ $opcion['programa'] }}</option>
+                                                                @endforeach
+                                                                @error('id_programa')
+                                                                    <ul class="parsley-errors-list filled" id="parsley-id-5"
+                                                                        aria-hidden="false">
+                                                                        <li class="parsley-required">
+                                                                            {{ 'este valor es requerido' }}</li>
+                                                                    </ul>
+                                                                @enderror
+                                                            </select>
+                                                        </div>
                                                     </div>
 
                                                     <!-- Agrega más campos de acuerdo a tus necesidades -->
@@ -291,9 +364,7 @@
                                                         <button type="submit" class="btn btn-primary">Actualizar</button>
                                                     </div>
 
-                                                    <!-- Dentro del formulario -->
-                                                    <input type="hidden" id="documentoIdEditar"
-                                                        name="documentoIdEditar">
+
                                                 </form>
 
                                             </div>
@@ -485,20 +556,20 @@
                     // Función que será llamada cuando se haga clic en el botón "Eliminar"
                     function deleteDocument(docId) {
                         doc_id = docId;
-                        console.log("doc_id establecido como: ", doc_id);  // Para depuración
-                        $('#deleteDocument').modal('show');  // Mostrar el modal de confirmación
+                        console.log("doc_id establecido como: ", doc_id); // Para depuración
+                        $('#deleteDocument').modal('show'); // Mostrar el modal de confirmación
                     }
 
                     // Manejador para el botón dentro del modal que confirma la eliminación
-                    $('#btnDelete').click(function(){
-                        if(doc_id) {  // Solo procede si doc_id está establecido
+                    $('#btnDelete').click(function() {
+                        if (doc_id) { // Solo procede si doc_id está establecido
                             $.ajax({
-                                url:"documentos/destroy/" + doc_id,
-                                beforeSend:function(){
+                                url: "documentos/destroy/" + doc_id,
+                                beforeSend: function() {
                                     $('#btnDelete').text('Eliminando...');
                                 },
-                                success:function(data){
-                                    setTimeout(function(){
+                                success: function(data) {
+                                    setTimeout(function() {
                                         $('#deleteDocument').modal('hide');
                                         // Usar alert en lugar de toastr
                                         alert('El registro fue eliminado correctamente');
@@ -506,17 +577,72 @@
                                         $('#documentos-table').DataTable().ajax.reload();
                                     }, 2000);
                                 },
-                                error:function(xhr, status, error) {
-                                    console.error("Error: ", xhr, status, error);  // Para depuración
+                                error: function(xhr, status, error) {
+                                    console.error("Error: ", xhr, status, error); // Para depuración
                                 }
                             });
                         } else {
-                            console.error("doc_id no está establecido.");  // Para depuración
+                            console.error("doc_id no está establecido."); // Para depuración
                         }
                     });
                 </script>
 
+                <script>
+                    function editDocument(id) {
+                        $.get('documentos/edit/' + id, function(data) {
+                            $('#txtId2').val(data.id);
+                            $('#cite2').val(data.cite);
+                            $('#descripcion2').val(data.descripcion);
+                            $('#estado2').val(data.estado).trigger('change');
+                            //$('#archivo').val(data.archivo).trigger('change');
+                            $('#id_tipo_documento2').val(data.id_tipo_documento).trigger('change');
+                            $('#id_programa2').val(data.id_programa).trigger('change');
+                            $("input[name=_token]").val();
+                            $('#editarDocumentoModal').modal('show');
+                        })
+                    }
+                </script>
+
+                <script>
+                    $('#editDocumentoForm').submit(function(e) {
+                        e.preventDefault();
+                        var id2 = $('#txtId2').val();
+                        var cite2 = $('#cite2').val();
+                        var descripcion2 = $('#descripcion2').val();
+                        var estado2 = $('#estado2').val();
+                        var id_tipo_documento2 = $('#id_tipo_documento2').val();
+                        var id_programa2 = $('#id_programa2').val();
+                        var _token2 = $("input[name=_token]").val();
+
+                        $.ajax({
+                            url: "/documentos/update/" + id2, // Asegúrate de que esta URL es correcta
+                            type: 'POST',
+                            data: {
+                                id: id2,
+                                cite: cite2,
+                                descripcion: descripcion2,
+                                estado: estado2,
+                                id_tipo_documento: id_tipo_documento2,
+                                id_programa: id_programa2,
+                                _token: _token2
+                            },
+                            success: function(response) {
+                                if (response) {
+                                    $('#editarDocumentoModal').modal('hide');
+                                    alert('El registro fue actualizado correctamente');
+                                    $('#documentos-table').DataTable().ajax.reload();
+                                }
+                            },
+                            error: function(jqXHR, textStatus, errorThrown) {
+                                console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+                            }
+                        });
+                    });
+                </script>
+
                 <script type="text/javascript">
+                    // para usar el secet2
+
                     $(document).ready(function() {
                         $('.select2_programas').select2({
                             placeholder: "Por favor selecciona el origen", // placeholder
