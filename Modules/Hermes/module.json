@@ -1,0 +1,13 @@
+{
+    "name": "Hermes",
+    "alias": "hermes",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Hermes\\Providers\\HermesServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
