@@ -411,8 +411,8 @@
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                <iframe id="pdfIframe" style="width:100%; height:500px;"
-                                                    frameborder="0"></iframe>
+                                                <iframe id="pdfIframe" type="application/pdf" width="100%"
+                                                    height="600px"></iframe>
                                             </div>
                                         </div>
                                     </div>
@@ -661,25 +661,26 @@
                     });
                 </script>
 
-                <script type="text/javascript">
-                    // para usar el secet2
-
-                    $(document).ready(function() {
-                        $('.select2_programas').select2({
-                            placeholder: "Por favor selecciona el origen", // placeholder
-                        });
-                    });
-                </script>
-
-
                 <script>
                     function viewDocument(id) {
-                        let url = "/documentos/ver/" + id; // Sustituye con la ruta de tu controlador que retorna el PDF
-                        let iframe = document.getElementById('pdfIframe');
-                        iframe.src = url;
+                        loadPDF(id);
+                    }
 
-                        // Mostrar el modal de Bootstrap
-                        $('#pdfModal').modal('show');
+                    function loadPDF(documentId) {
+                        $.ajax({
+                            url: `/documentos/get/${documentId}`, // Actualiza la URL según tu estructura de rutas
+                            method: 'GET',
+                            success: function(response) {
+                                let pdfBase64 = response.pdf_base64;
+                                let pdfDataUri = `data:application/pdf;base64,${pdfBase64}`;
+                                $('#pdfIframe').attr('src',
+                                    pdfDataUri); // Asegúrate de que tu iframe tenga el id 'pdfIframe'
+                                $('#pdfModal').modal('show');
+                            },
+                            error: function() {
+                                alert("No se pudo cargar el documento PDF.");
+                            }
+                        });
                     }
                 </script>
             @endpush

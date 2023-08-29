@@ -20,7 +20,7 @@ class DocumentosController extends Controller
 
             return DataTables::of($documentos)
                 ->addColumn('action', function ($documentos) {
-                    $btn = '<a href="javascript:void(0)" type="button" name="viewDocument" onclick="loadPDF(' . $documentos->id . ')" class="view btn btn-primary btn-sm">Ver</a>';
+                    $btn = '<a href="javascript:void(0)" type="button" name="viewDocument" onclick="loadPDF(' . $documentos->id . ')" class="view btn btn-yellow btn-sm">Ver</a>';
                     $btn .= '&nbsp;&nbsp;<a href="javascript:void(0)" type="button" data-toggle="tooltip" onclick="editDocument(' . $documentos->id . ')" class="edit btn btn-primary btn-sm ">Editar</a>';
                     $btn .= '&nbsp;&nbsp;<button type="button" data-toggle="tooltip" name="deleteDocument" onclick="deleteDocument(' . $documentos->id . ')" class="delete btn btn-danger btn-sm ">Eliminar</button>';
                     return $btn;
@@ -119,6 +119,15 @@ class DocumentosController extends Controller
         return response()->json($documento);
     }
 
+
+    public function getDocumentBase64($id)
+    {
+        $documento = Documentos::find($id);
+        $pdfData = $documento->pdf_data;  // Asumiendo que pdf_data contiene el archivo PDF
+        $pdfBase64 = base64_encode($pdfData);
+
+        return response()->json(['pdf_base64' => $pdfBase64]);
+    }
     //como convierto pdf para la vista 
     public function verDocumento($id)
     {

@@ -79,7 +79,7 @@ Route::prefix('hermes')->group(function() {
     Route::put('documentos/update/{id}', 'DocumentosController@update')->name('documentos.update');
     Route::get('documentos/destroy/{id}', [DocumentosController::class, 'destroy'])->name('documentos.destroy');
 
-    Route::get('/documentos/ver/{id}', 'DocumentosController@verDocumento');
+    Route::get('/documentos/get/{id}', [DocumentosController::class, 'getDocumentBase64']);
 });
 
 
