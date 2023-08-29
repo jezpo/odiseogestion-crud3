@@ -411,8 +411,7 @@
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                <iframe id="pdfIframe" type="application/pdf" width="100%"
-                                                    height="600px"></iframe>
+                                                <iframe id="pdfIframe" type="application/pdf" width="100%" height="600px"></iframe>
                                             </div>
                                         </div>
                                     </div>
@@ -607,6 +606,14 @@
                     });
                 </script>
 
+                <script type="text/javascript">
+                    $(document).ready(function() {
+                        $('.select2_programas').select2({
+                            placeholder: "Por favor selecciona el origen", // placeholder
+                        });
+                    });
+                </script>
+                
                 <script>
                     function editDocument(id) {
                         $.get('documentos/edit/' + id, function(data) {
@@ -662,19 +669,14 @@
                 </script>
 
                 <script>
-                    function viewDocument(id) {
-                        loadPDF(id);
-                    }
-
                     function loadPDF(documentId) {
                         $.ajax({
-                            url: `/documentos/get/${documentId}`, // Actualiza la URL según tu estructura de rutas
+                            url: `documentos/ver/${documentId}`, // Asegúrate de que esta URL coincide con la definida en tu archivo de rutas.
                             method: 'GET',
                             success: function(response) {
-                                let pdfBase64 = response.pdf_base64;
-                                let pdfDataUri = `data:application/pdf;base64,${pdfBase64}`;
-                                $('#pdfIframe').attr('src',
-                                    pdfDataUri); // Asegúrate de que tu iframe tenga el id 'pdfIframe'
+                                const pdfBase64 = response.pdf_base64;
+                                const pdfDataUri = `data:application/pdf;base64,${pdfBase64}`;
+                                $('#pdfIframe').attr('src', pdfDataUri);
                                 $('#pdfModal').modal('show');
                             },
                             error: function() {

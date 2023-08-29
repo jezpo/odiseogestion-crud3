@@ -119,20 +119,12 @@ class DocumentosController extends Controller
         return response()->json($documento);
     }
 
-
-    public function getDocumentBase64($id)
-    {
-        $documento = Documentos::find($id);
-        $pdfData = $documento->pdf_data;  // Asumiendo que pdf_data contiene el archivo PDF
-        $pdfBase64 = base64_encode($pdfData);
-
-        return response()->json(['pdf_base64' => $pdfBase64]);
-    }
     //como convierto pdf para la vista 
     public function verDocumento($id)
     {
         $documentos = Documentos::find($id);
-        $pdf = PDF::loadView('pdf.view', ['document' => $documentos]);
-        return $pdf->stream();
+        $pdfData = $documentos->documneto;
+        $pdfBase64 = base64_encode($pdfData);
+        return response()->json(['pdf_base64' => $pdfBase64]);
     }
 }
