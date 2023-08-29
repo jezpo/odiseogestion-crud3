@@ -76,10 +76,10 @@ Route::prefix('hermes')->group(function() {
     Route::post('documentos/store', 'DocumentosController@store')->name('documentos.store');
     Route::get('documentos/{id}', 'DocumentosController@show')->name('documentos.show');
     Route::get('documentos/edit/{id}', 'DocumentosController@edit')->name('documentos.edit');
-    Route::post('documentos/update/{id}', 'DocumentosController@update')->name('documentos.update');
+    Route::put('documentos/update/{id}', 'DocumentosController@update')->name('documentos.update');
     Route::get('documentos/destroy/{id}', [DocumentosController::class, 'destroy'])->name('documentos.destroy');
 
-    Route::get('documentos/preview-pdf/{id}', 'GeneratepdfController@previewPDF')->name('documentos.preview-pdf');
+    Route::get('/documentos/ver/{id}', 'DocumentosController@verDocumento');
 });
 
 

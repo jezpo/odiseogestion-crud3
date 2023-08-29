@@ -20,9 +20,9 @@ class DocumentosController extends Controller
 
             return DataTables::of($documentos)
                 ->addColumn('action', function ($documentos) {
-                    $btn = '<a href="javascript:void(0)" type="button" name="viewDocument" onclick="viewDocument('.$documentos->id.')" class="btn btn-primary btn-sm">Ver</a>';
-                    $btn .= '&nbsp;&nbsp;<a href="javascript:void(0)" type="button" data-toggle="tooltip" onclick="editDocument('.$documentos->id.')" class="edit btn btn-primary btn-sm ">Editar</a>';
-                    $btn .= '&nbsp;&nbsp;<button type="button" data-toggle="tooltip" name="deleteDocument" onclick="deleteDocument('.$documentos->id.')" class="delete btn btn-danger btn-sm ">Eliminar</button>';
+                    $btn = '<a href="javascript:void(0)" type="button" name="viewDocument" onclick="viewDocument(' . $documentos->id . ')" class="view btn btn-primary btn-sm">Ver</a>';
+                    $btn .= '&nbsp;&nbsp;<a href="javascript:void(0)" type="button" data-toggle="tooltip" onclick="editDocument(' . $documentos->id . ')" class="edit btn btn-primary btn-sm ">Editar</a>';
+                    $btn .= '&nbsp;&nbsp;<button type="button" data-toggle="tooltip" name="deleteDocument" onclick="deleteDocument(' . $documentos->id . ')" class="delete btn btn-danger btn-sm ">Eliminar</button>';
                     return $btn;
                 })
                 ->rawColumns(['action'])
@@ -117,5 +117,17 @@ class DocumentosController extends Controller
             return response()->json(['error' => 'Documento no encontrado'], 404);
         }
         return response()->json($documento);
+    }
+
+    //como convierto pdf para la vista 
+    public function verDocumento($id)
+    {
+        $documentos = Documentos::find($id);
+        $pdfBlob = $documentos->documentos;
+
+        return response($pdfBlob, 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="documento.pdf"'
+        ]);
     }
 }

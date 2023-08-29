@@ -397,6 +397,26 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <!-- Modal para visualizar PDF -->
+                                <div class="modal fade" id="pdfModal" tabindex="-1" role="dialog"
+                                    aria-labelledby="pdfModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="pdfModalLabel">Visualizar Documento</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <iframe id="pdfIframe" style="width:100%; height:500px;"
+                                                    frameborder="0"></iframe>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <!-- end panel-body -->
                         </div>
@@ -618,6 +638,7 @@
                             url: "/documentos/update/" + id2, // Asegúrate de que esta URL es correcta
                             type: 'POST',
                             data: {
+                                _method: 'PUT',
                                 id: id2,
                                 cite: cite2,
                                 descripcion: descripcion2,
@@ -648,5 +669,17 @@
                             placeholder: "Por favor selecciona el origen", // placeholder
                         });
                     });
+                </script>
+
+
+                <script>
+                    function viewDocument(id) {
+                        let url = "/documentos/ver/" + id; // Sustituye con la ruta de tu controlador que retorna el PDF
+                        let iframe = document.getElementById('pdfIframe');
+                        iframe.src = url;
+
+                        // Mostrar el modal de Bootstrap
+                        $('#pdfModal').modal('show');
+                    }
                 </script>
             @endpush
