@@ -8,8 +8,8 @@ use Yajra\DataTables\DataTables;
 use Modules\Hermes\Entities\Documentos;
 use Modules\Hermes\Entities\Programas;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade as PDF;
 
-use PDF;
 
 class DocumentosController extends Controller
 {
@@ -20,7 +20,7 @@ class DocumentosController extends Controller
 
             return DataTables::of($documentos)
                 ->addColumn('action', function ($documentos) {
-                    $btn = '<a href="javascript:void(0)" type="button" name="viewDocument" onclick="viewDocument(' . $documentos->id . ')" class="view btn btn-primary btn-sm">Ver</a>';
+                    $btn = '<a href="javascript:void(0)" type="button" name="viewDocument" onclick="loadPDF(' . $documentos->id . ')" class="view btn btn-primary btn-sm">Ver</a>';
                     $btn .= '&nbsp;&nbsp;<a href="javascript:void(0)" type="button" data-toggle="tooltip" onclick="editDocument(' . $documentos->id . ')" class="edit btn btn-primary btn-sm ">Editar</a>';
                     $btn .= '&nbsp;&nbsp;<button type="button" data-toggle="tooltip" name="deleteDocument" onclick="deleteDocument(' . $documentos->id . ')" class="delete btn btn-danger btn-sm ">Eliminar</button>';
                     return $btn;
@@ -123,11 +123,7 @@ class DocumentosController extends Controller
     public function verDocumento($id)
     {
         $documentos = Documentos::find($id);
-        $pdfBlob = $documentos->documentos;
-
-        return response($pdfBlob, 200, [
-            'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'inline; filename="documento.pdf"'
-        ]);
+        $pdf = PDF::loadView('pdf.view', ['document' => $documentos]);
+        return $pdf->stream();
     }
 }
