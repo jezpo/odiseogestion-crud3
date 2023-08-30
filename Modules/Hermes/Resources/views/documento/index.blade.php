@@ -57,7 +57,7 @@
                                             <div class="modal-body">
                                                 <!-- Formulario de creación -->
                                                 <form id="crearNuevoDocumentoForm" class="form-horizontal" method="PUT"
-                                                    enctype="multipart/form-data" action="{{ route('documentos.store') }}">
+                                                    enctype="multipart/form-data" action="{{ route('documents.store') }}">
                                                     @csrf
                                                     <div class="form-group row m-b-15">
                                                         <label class="col-md-4 col-sm-4 col-form-label"
@@ -399,19 +399,21 @@
                                 </div>
 
                                 <!-- Modal para visualizar PDF -->
+                                <!-- Modal -->
                                 <div class="modal fade" id="pdfModal" tabindex="-1" role="dialog"
                                     aria-labelledby="pdfModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="pdfModalLabel">Visualizar Documento</h5>
+                                                <h5 class="modal-title" id="pdfModalLabel">PDF Documento</h5>
                                                 <button type="button" class="close" data-dismiss="modal"
                                                     aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                <iframe id="pdfIframe" type="application/pdf" width="100%" height="600px"></iframe>
+                                                <iframe id="pdfFrame" style="width:100%; height:500px;"
+                                                    frameborder="0"></iframe>
                                             </div>
                                         </div>
                                     </div>
@@ -431,14 +433,14 @@
                 <!-- ================== END BASE CSS STYLE ================== -->
 
                 <link href="../assets/plugins/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
-                <link
-                    href="../assets/plugins/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css"rel="stylesheet" />
+                <link href="../assets/plugins/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css"
+                    rel="stylesheet" />
                 <link href="../assets/plugins/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css"
                     rel="stylesheet" />
                 <link href="../assets/plugins/datatables.net-autofill-bs4/css/autofill.bootstrap4.min.css"
                     rel="stylesheet" />
-                <link
-                    href="../assets/plugins/datatables.net-colreorder-bs4/css/colreorder.bootstrap4.min.css"rel="stylesheet" />
+                <link href="../assets/plugins/datatables.net-colreorder-bs4/css/colreorder.bootstrap4.min.css"
+                    rel="stylesheet" />
                 <link href="../assets/plugins/datatables.net-keytable-bs4/css/keytable.bootstrap4.min.css"
                     rel="stylesheet" />
                 <link href="../assets/plugins/datatables.net-rowreorder-bs4/css/rowreorder.bootstrap4.min.css"
@@ -482,7 +484,7 @@
                             processing: true,
                             serverSide: true,
                             ajax: {
-                                url: "{{ route('documentos.index') }}",
+                                url: "{{ route('documents.index') }}",
                             },
                             columns: [{
                                     data: 'id',
@@ -533,7 +535,7 @@
                                 var formData = new FormData(this);
                                 formData.append('_token', '{{ csrf_token() }}');
                                 $.ajax({
-                                    url: "{{ route('documentos.store') }}", // Ruta para almacenar el nuevo documento
+                                    url: "{{ route('documents.store') }}", // Ruta para almacenar el nuevo documento
                                     type: "POST",
                                     data: formData,
                                     processData: false,
@@ -565,9 +567,6 @@
                         });
                     });
                 </script>
-
-
-
                 <script>
                     // Definir la variable global 'doc_id' que almacenará el ID del documento a eliminar
                     var doc_id;
@@ -583,7 +582,7 @@
                     $('#btnDelete').click(function() {
                         if (doc_id) { // Solo procede si doc_id está establecido
                             $.ajax({
-                                url: "documentos/destroy/" + doc_id,
+                                url: "documents/destroy/" + doc_id,
                                 beforeSend: function() {
                                     $('#btnDelete').text('Eliminando...');
                                 },
@@ -613,7 +612,7 @@
                         });
                     });
                 </script>
-                
+
                 <script>
                     function editDocument(id) {
                         $.get('documentos/edit/' + id, function(data) {
@@ -640,7 +639,6 @@
                         var id_tipo_documento2 = $('#id_tipo_documento2').val();
                         var id_programa2 = $('#id_programa2').val();
                         var _token2 = $("input[name=_token]").val();
-
                         $.ajax({
                             url: "/documentos/update/" + id2, // Asegúrate de que esta URL es correcta
                             type: 'POST',
@@ -667,20 +665,24 @@
                         });
                     });
                 </script>
-
                 <script>
-                    function loadPDF(documentId) {
+                    function loadPDF(id) {
                         $.ajax({
-                            url: `documentos/ver/${documentId}`, // Asegúrate de que esta URL coincide con la definida en tu archivo de rutas.
+                            url: 'documents/verDocumento/' + id, // Asegúrate de que esta URL sea correcta
                             method: 'GET',
-                            success: function(response) {
-                                const pdfBase64 = response.pdf_base64;
-                                const pdfDataUri = `data:application/pdf;base64,${pdfBase64}`;
-                                $('#pdfIframe').attr('src', pdfDataUri);
+                            xhrFields: {
+                                responseType: 'blob' // Importante para manejar la respuesta como un Blob
+                            },
+                            success: function(response, status, xhr) {
+                                var blob = new Blob([response], {
+                                    type: 'application/pdf'
+                                });
+                                var url = window.URL.createObjectURL(blob);
+                                $('#pdfFrame').attr('src', url);
                                 $('#pdfModal').modal('show');
                             },
-                            error: function() {
-                                alert("No se pudo cargar el documento PDF.");
+                            error: function(xhr, status, error) {
+                                alert("Error al cargar el PDF: " + error);
                             }
                         });
                     }

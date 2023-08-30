@@ -8,9 +8,10 @@ use Modules\Hermes\Http\Controllers\HermesController;
 
 use Modules\Hermes\Http\Controllers\TipoDeTramiteController;
 use Modules\Hermes\Http\Controllers\ProgramasController;
-use Modules\Hermes\Http\Controllers\DocumentosController;
+
 use Modules\Hermes\Http\Controllers\FlujoDeDocumentosController;
 use Modules\Hermes\Http\Controllers\FlujoDeTramiteController;
+use Modules\Hermes\Http\Controllers\DocumentsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -72,14 +73,15 @@ Route::prefix('hermes')->group(function() {
     Route::get('tipotramite/destroy/{id}', [TipoDeTramiteController::class, 'destroy'])->name('tipotramite.destroy');
 
    
-    Route::get('/documentos', [DocumentosController::class, 'index'])->name('documentos.index');
-    Route::post('documentos/store', 'DocumentosController@store')->name('documentos.store');
-    Route::get('documentos/{id}', 'DocumentosController@show')->name('documentos.show');
-    Route::get('documentos/edit/{id}', 'DocumentosController@edit')->name('documentos.edit');
-    Route::put('documentos/update/{id}', 'DocumentosController@update')->name('documentos.update');
-    Route::get('documentos/destroy/{id}', [DocumentosController::class, 'destroy'])->name('documentos.destroy');
+    Route::get('/documents', [DocumentsController::class, 'index'])->name('documents.index');
+    Route::post('documents/store', 'DocumentsController@store')->name('documents.store');
+    Route::get('documents/{id}', 'DocumentsController@show')->name('documents.show');
+    Route::get('documents/edit/{id}', 'DocumentsController@edit')->name('documents.edit');
+    Route::put('documents/update/{id}', 'DocumentsController@update')->name('documents.update');
+    Route::get('documents/destroy/{id}', [DocumentsController::class, 'destroy'])->name('documents.destroy');
 
-    Route::get('documentos/ver/{id}', 'NombreDeTuControlador@verDocumento');
+    Route::get('documents/verDocumento/{id}', 'DocumentsController@verDocumento')->name('documents.verDocumento');
+    //Route::get('/verDocumento/{id}', 'Modules\Hermes\Http\Controllers\DocumentsController@verDocumento');
 });
 
 

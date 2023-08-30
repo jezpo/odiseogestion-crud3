@@ -2,8 +2,10 @@
 
 namespace Modules\Hermes\Http\Controllers;
 
-use Illuminate\Routing\Controller;
+use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
+
 use Yajra\DataTables\DataTables;
 use Modules\Hermes\Entities\Documentos;
 use Modules\Hermes\Entities\Programas;
@@ -11,9 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade as PDF;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
-
-
-class DocumentosController extends Controller
+class DocumentsController extends Controller
 {
     public function index(Request $request)
     {
@@ -22,9 +22,9 @@ class DocumentosController extends Controller
 
             return DataTables::of($documentos)
                 ->addColumn('action', function ($documentos) {
-                    $btn = '<a href="javascript:void(0)" type="button" name="viewDocument" onclick="loadPDF(' . $documentos->id . ')" class="view btn btn-yellow btn-sm">Ver</a>';
-                    $btn .= '&nbsp;&nbsp;<a href="javascript:void(0)" type="button" data-toggle="tooltip" onclick="editDocument(' . $documentos->id . ')" class="edit btn btn-primary btn-sm ">Editar</a>';
-                    $btn .= '&nbsp;&nbsp;<button type="button" data-toggle="tooltip" name="deleteDocument" onclick="deleteDocument(' . $documentos->id . ')" class="delete btn btn-danger btn-sm ">Eliminar</button>';
+                    $btn = '<a href="javascript:void(0)" type="button" name="viewDocument" onclick="loadPDF('.$documentos->id.')" class="view btn btn-yellow btn-sm">Ver</a>';
+                    $btn .= '&nbsp;&nbsp;<a href="javascript:void(0)" type="button" data-toggle="tooltip" onclick="editDocument('.$documentos->id.')" class="edit btn btn-primary btn-sm ">Editar</a>';
+                    $btn .= '&nbsp;&nbsp;<button type="button" data-toggle="tooltip" name="deleteDocument" onclick="deleteDocument('.$documentos->id.')" class="delete btn btn-danger btn-sm ">Eliminar</button>';
                     return $btn;
                 })
                 ->rawColumns(['action'])
