@@ -397,27 +397,30 @@
                                         </div>
                                     </div>
                                 </div>
-
+                                <div id="pdfModal" class="modal">
+                                    <div class="modal-content">
+                                      <iframe id="pdfFrame" style="width: 100%; height: 500px;"></iframe>
+                                    </div>
+                                </div>
                                 <!-- Modal para visualizar PDF -->
                                 <!-- Modal -->
-                                <div class="modal fade" id="pdfModal" tabindex="-1" role="dialog"
-                                    aria-labelledby="pdfModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
+                                {{-- <div class="modal fade" id="pdfModal" tabindex="-1" aria-labelledby="pdfModalLabel"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="pdfModalLabel">PDF Documento</h5>
-                                                <button type="button" class="close" data-dismiss="modal"
-                                                    aria-label="Close">
+                                                <h5 class="modal-title" id="pdfModalLabel">Mostrando documento</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                <iframe id="pdfFrame" style="width:100%; height:500px;"
-                                                    frameborder="0"></iframe>
+                                                <iframe id="pdfFrame" src="" width="100%"
+                                                    height="500px"></iframe>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                             <!-- end panel-body -->
                         </div>
@@ -665,7 +668,7 @@
                         });
                     });
                 </script>
-                <script>
+                {{-- <script>
                     function loadPDF(id) {
                         $.ajax({
                             url: 'documents/verDocumento/' + id, // Asegúrate de que esta URL sea correcta
@@ -686,5 +689,23 @@
                             }
                         });
                     }
+                </script> --}}
+                <script>
+                    function loadPDF(id) {
+                        $.ajax({
+                            url: 'documentos/downloadPdf/' + id,
+                            method: 'GET',
+                            success: function(response) {
+                                var base64 = response.base64;
+                                $('#pdfFrame').attr('src', 'data:application/pdf;base64,' + base64);
+                                $('#pdfModal').modal('show');
+                            },
+                            error: function() {
+                                alert('Documento no encontrado');
+                            }
+                        });
+                       
+                    }
+                    
                 </script>
             @endpush

@@ -17,14 +17,15 @@ class DocumentsController extends Controller
 {
     public function index(Request $request)
     {
+       
         if ($request->ajax()) {
             $documentos = Documentos::list_documents();
 
             return DataTables::of($documentos)
                 ->addColumn('action', function ($documentos) {
-                    $btn = '<a href="javascript:void(0)" type="button" name="viewDocument" onclick="loadPDF('.$documentos->id.')" class="view btn btn-yellow btn-sm">Ver</a>';
-                    $btn .= '&nbsp;&nbsp;<a href="javascript:void(0)" type="button" data-toggle="tooltip" onclick="editDocument('.$documentos->id.')" class="edit btn btn-primary btn-sm ">Editar</a>';
-                    $btn .= '&nbsp;&nbsp;<button type="button" data-toggle="tooltip" name="deleteDocument" onclick="deleteDocument('.$documentos->id.')" class="delete btn btn-danger btn-sm ">Eliminar</button>';
+                    $btn = '<a href="javascript:void(0)" type="button" name="viewDocument" onclick="loadPDF(' . $documentos->id . ')" class="view btn btn-yellow btn-sm">Ver</a>';
+                    $btn .= '&nbsp;&nbsp;<a href="javascript:void(0)" type="button" data-toggle="tooltip" onclick="editDocument(' . $documentos->id . ')" class="edit btn btn-primary btn-sm ">Editar</a>';
+                    $btn .= '&nbsp;&nbsp;<button type="button" data-toggle="tooltip" name="deleteDocument" onclick="deleteDocument(' . $documentos->id . ')" class="delete btn btn-danger btn-sm ">Eliminar</button>';
                     return $btn;
                 })
                 ->rawColumns(['action'])
@@ -122,11 +123,35 @@ class DocumentsController extends Controller
     }
 
     //como convierto pdf para la vista 
-    public function verDocumento($id)
+    
+    public function downloadPdf($id)
     {
-        $notificacion = Documentos::find($id);
-        $documentoBase64 = $notificacion->documento;
-        return response(base64_decode($documentoBase64))
-            ->header('Content-Type', 'application/pdf');
+
+        $documento = Documentos::where('id', $id);
+
+        // Si el documento existe
+        if ($documento) {
+            // Codificar el documento a base64
+            $pdfBase64 = base64_encode($documento->documento);
+            return response()->json(['base64' => $pdfBase64]);
+        } else {
+            return response()->json(['message' => 'Documento no encontrado'], 404);
+        }
+        // Recuperar el registro por id
+        // $documento = Documentos::where('id', $id)->first(['documento','cite']);
+
+        // // Si el documento existe
+        // if ($documento) {
+        //     // Recuperar los datos bytea
+        //     $pdfData = $documento->documento;
+
+        //     // Enviar una respuesta como archivo PDF
+        //     return response($pdfData, 200, [
+        //         'Content-Type' => 'application/pdf',
+        //         'Content-Disposition' => 'inline; filename="' . $documento->cite . '.pdf"'
+        //     ]);
+        // } else {
+        //     return response()->json(['message' => 'Documento no encontrado'], 404);
+        // }
     }
 }

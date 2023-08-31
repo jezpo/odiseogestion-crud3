@@ -35,7 +35,7 @@ Route::prefix('hermes')->group(function() {
 
 
     //ingresando la vista de programas 
-    Route::get('programas', [ProgramasController::class, 'index'])->name('programas.index');
+   /* Route::get('programas', [ProgramasController::class, 'index'])->name('programas.index');
     Route::post('programas/create', [ProgramasController::class, 'create'])->name('programas.create');
     Route::post('programas', [ProgramasController::class, 'store'])->name('programas.store');
     Route::get('programas/{id}', [ProgramasController::class, 'show'])->name('programas.show');
@@ -72,6 +72,8 @@ Route::prefix('hermes')->group(function() {
     Route::put('tipotramite/{id}', [TipoDeTramiteController::class, 'update'])->name('tipotramite.update');
     Route::get('tipotramite/destroy/{id}', [TipoDeTramiteController::class, 'destroy'])->name('tipotramite.destroy');
 
+    */
+
    
     Route::get('/documents', [DocumentsController::class, 'index'])->name('documents.index');
     Route::post('documents/store', 'DocumentsController@store')->name('documents.store');
@@ -80,8 +82,7 @@ Route::prefix('hermes')->group(function() {
     Route::put('documents/update/{id}', 'DocumentsController@update')->name('documents.update');
     Route::get('documents/destroy/{id}', [DocumentsController::class, 'destroy'])->name('documents.destroy');
 
-    Route::get('documents/verDocumento/{id}', 'DocumentsController@verDocumento')->name('documents.verDocumento');
-    //Route::get('/verDocumento/{id}', 'Modules\Hermes\Http\Controllers\DocumentsController@verDocumento');
+    Route::get('/documentos/downloadPdf/{id}',[DocumentsController::class, 'downloadPdf'] )->name('downloadPdf');
 });
 
 
