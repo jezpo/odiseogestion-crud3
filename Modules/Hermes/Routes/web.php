@@ -1,14 +1,17 @@
 <?php
 
-use Modules\Hermes\Http\Controllers\Hermes\HermesController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use Modules\Hermes\Entities\Documentos;
+use App\Http\Controllers\AuthController;
+use Modules\Hermes\Http\Controllers\HermesController;
+
 use Modules\Hermes\Http\Controllers\TipoDeTramiteController;
 use Modules\Hermes\Http\Controllers\ProgramasController;
-use Modules\Hermes\Http\Controllers\DocumentosController;
+
 use Modules\Hermes\Http\Controllers\FlujoDeDocumentosController;
 use Modules\Hermes\Http\Controllers\FlujoDeTramiteController;
-
+use Modules\Hermes\Http\Controllers\DocumentsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,9 +21,10 @@ use Modules\Hermes\Http\Controllers\FlujoDeTramiteController;
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
 
+*/
 Route::prefix('hermes')->group(function() {
+    
     Route::get('/', 'HermesController@index')->name('index');
     Route::get('/create', 'HermesController@create')->name('create');
     Route::post('store', 'HermesController@store')->name('store');
@@ -31,7 +35,7 @@ Route::prefix('hermes')->group(function() {
 
 
     //ingresando la vista de programas 
-    Route::get('programas', [ProgramasController::class, 'index'])->name('programas.index');
+   Route::get('programas', [ProgramasController::class, 'index'])->name('programas.index');
     Route::post('programas/create', [ProgramasController::class, 'create'])->name('programas.create');
     Route::post('programas', [ProgramasController::class, 'store'])->name('programas.store');
     Route::get('programas/{id}', [ProgramasController::class, 'show'])->name('programas.show');
@@ -68,18 +72,18 @@ Route::prefix('hermes')->group(function() {
     Route::put('tipotramite/{id}', [TipoDeTramiteController::class, 'update'])->name('tipotramite.update');
     Route::get('tipotramite/destroy/{id}', [TipoDeTramiteController::class, 'destroy'])->name('tipotramite.destroy');
 
-    //Route::resource('documentos', DocumentosController::class);
-    Route::get('/documentos', [DocumentosController::class, 'index'])->name('documentos.index');
-    //Route::get('documentos/', [DocumentosController::class, 'getDocumentos'])->name('documentos.data');
-    Route::get('documentos/fetchall', [DocumentosController::class, 'fetchAll'])->name('documentos-fetchAll');
-    //Route::post('documentos/create', 'DocumentosController@create')->name('documentos.create');
-    Route::post('documentos/store', 'DocumentosController@store')->name('documentos.store');
-    Route::get('documentos/{id}', 'DocumentosController@show')->name('documentos.show');
-    Route::get('documentos/edit/{id}', 'DocumentosController@edit')->name('documentos.edit');
-    Route::put('documentos/update/{id}', 'DocumentosController@update')->name('documentos.update');
-    Route::post('documentos/destroy/{id}', 'DocumentosController@destroy')->name('documentos.destroy');
 
-    
-    Route::get('/buscar-programas', 'BusquedaController@buscarProgramas')->name('buscar-programas');
-    Route::get('/documento/download/{id}', 'DocumentoController@download')->name('documento.download');
+
+   
+    Route::get('/documents', [DocumentsController::class, 'index'])->name('documents.index');
+    Route::post('documents/store', 'DocumentsController@store')->name('documents.store');
+    Route::get('documents/{id}', 'DocumentsController@show')->name('documents.show');
+    Route::get('documents/edit/{id}', 'DocumentsController@edit')->name('documents.edit');
+    Route::put('documents/update/{id}', 'DocumentsController@update')->name('documents.update');
+    Route::get('documents/destroy/{id}', [DocumentsController::class, 'destroy'])->name('documents.destroy');
+
+    Route::get('/documentos/downloadPdf/{id}',[DocumentsController::class, 'downloadPdf'] )->name('downloadPdf');
 });
+
+
+
