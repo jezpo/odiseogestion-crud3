@@ -76,13 +76,13 @@ Route::prefix('hermes')->group(function() {
 
    
     Route::get('/documents', [DocumentsController::class, 'index'])->name('documents.index');
-    Route::post('documents/store', 'DocumentsController@store')->name('documents.store');
-    Route::get('documents/{id}', 'DocumentsController@show')->name('documents.show');
-    Route::get('documents/edit/{id}', 'DocumentsController@edit')->name('documents.edit');
-    Route::put('documents/update/{id}', 'DocumentsController@update')->name('documents.update');
+    Route::post('documents/store', [DocumentsController::class, 'store'])->name('documents.store');
+    Route::get('documents/{id}', [DocumentsController::class, 'show'])->name('documents.show');
+    Route::get('documents/edit/{id}', [DocumentsController::class, 'edit'])->name('documents.edit');
+    Route::put('documents/update/{id}', [DocumentsController::class, 'update'])->name('documents.update');
     Route::get('documents/destroy/{id}', [DocumentsController::class, 'destroy'])->name('documents.destroy');
 
-    Route::get('/documentos/downloadPdf/{id}',[DocumentsController::class, 'downloadPdf'] )->name('downloadPdf');
+    Route::get('documents/downloadPdf/{id}', [DocumentsController::class, 'downloadPdf']);
 });
 
 

@@ -127,31 +127,17 @@ class DocumentsController extends Controller
     public function downloadPdf($id)
     {
 
-        $documento = Documentos::where('id', $id);
+        $documento = Documentos::where('id', $id)->first();
 
         // Si el documento existe
         if ($documento) {
+            // Si el documento está almacenado como un recurso, convertirlo a una cadena de bytes
+            $pdfData = is_resource($documento->documento) ? stream_get_contents($documento->documento) : $documento->documento;
             // Codificar el documento a base64
-            $pdfBase64 = base64_encode($documento->documento);
+            $pdfBase64 = base64_encode($pdfData);
             return response()->json(['base64' => $pdfBase64]);
         } else {
             return response()->json(['message' => 'Documento no encontrado'], 404);
         }
-        // Recuperar el registro por id
-        // $documento = Documentos::where('id', $id)->first(['documento','cite']);
-
-        // // Si el documento existe
-        // if ($documento) {
-        //     // Recuperar los datos bytea
-        //     $pdfData = $documento->documento;
-
-        //     // Enviar una respuesta como archivo PDF
-        //     return response($pdfData, 200, [
-        //         'Content-Type' => 'application/pdf',
-        //         'Content-Disposition' => 'inline; filename="' . $documento->cite . '.pdf"'
-        //     ]);
-        // } else {
-        //     return response()->json(['message' => 'Documento no encontrado'], 404);
-        // }
     }
 }

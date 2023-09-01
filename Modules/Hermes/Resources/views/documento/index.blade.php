@@ -397,30 +397,40 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div id="pdfModal" class="modal">
-                                    <div class="modal-content">
-                                      <iframe id="pdfFrame" style="width: 100%; height: 500px;"></iframe>
-                                    </div>
-                                </div>
-                                <!-- Modal para visualizar PDF -->
-                                <!-- Modal -->
-                                {{-- <div class="modal fade" id="pdfModal" tabindex="-1" aria-labelledby="pdfModalLabel"
-                                    aria-hidden="true">
+                                <div class="modal fade" id="pdfModal" tabindex="-1" role="dialog" aria-labelledby="pdfModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-lg">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="pdfModalLabel">Mostrando documento</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <iframe id="pdfFrame" src="" width="100%"
-                                                    height="500px"></iframe>
-                                            </div>
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h5 class="modal-title" id="pdfModalLabel">Vista previa del PDF</h5>
+                                          <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                                         </div>
+                                        <div class="modal-body">
+                                          <iframe id="pdfFrame" style="width:100%; height:500px;" frameborder="0"></iframe>
+                                        </div>
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                        </div>
+                                      </div>
                                     </div>
-                                </div> --}}
+                                  </div>
+
+                                <!-- modal para el uso de de alertas -->
+                                {{--
+                                    <div class="panel-body">
+                                    <p class="lead m-b-10 text-inverse">
+                                        SweetAlert for Bootstrap. A beautiful replacement for JavaScript's "alert"
+                                    </p>
+                                    <hr />
+                                    <p class="">
+                                        Try any of those!
+                                    </p>
+                                    <a href="javascript:;" data-click="swal-primary" class="btn btn-primary">Primary</a>
+                                    <a href="javascript:;" data-click="swal-info" class="btn btn-info">Info</a>
+                                    <a href="javascript:;" data-click="swal-success" class="btn btn-success">Success</a>
+                                    <a href="javascript:;" data-click="swal-warning" class="btn btn-warning">Warning</a>
+                                    <a href="javascript:;" data-click="swal-danger" class="btn btn-danger">Danger</a>
+                                </div>
+                                --}}
                             </div>
                             <!-- end panel-body -->
                         </div>
@@ -480,7 +490,7 @@
                 <link href="../assets/plugins/select2/dist/css/select2.min.css" rel="stylesheet" />
                 <link href="../assets/plugins/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet" />
                 <script src="../assets/plugins/select2/dist/js/select2.min.js"></script>
-
+                <script src="../assets/js/demo/ui-modal-notification.demo.js"></script>
                 <script>
                     $(document).ready(function() {
                         var documentTable = $('#documentos-table').DataTable({
@@ -618,7 +628,7 @@
 
                 <script>
                     function editDocument(id) {
-                        $.get('documentos/edit/' + id, function(data) {
+                        $.get('documents/edit/' + id, function(data) {
                             $('#txtId2').val(data.id);
                             $('#cite2').val(data.cite);
                             $('#descripcion2').val(data.descripcion);
@@ -643,7 +653,7 @@
                         var id_programa2 = $('#id_programa2').val();
                         var _token2 = $("input[name=_token]").val();
                         $.ajax({
-                            url: "/documentos/update/" + id2, // Asegúrate de que esta URL es correcta
+                            url: "documents/update/" + id2, // Asegúrate de que esta URL es correcta
                             type: 'POST',
                             data: {
                                 _method: 'PUT',
@@ -668,32 +678,10 @@
                         });
                     });
                 </script>
-                {{-- <script>
-                    function loadPDF(id) {
-                        $.ajax({
-                            url: 'documents/verDocumento/' + id, // Asegúrate de que esta URL sea correcta
-                            method: 'GET',
-                            xhrFields: {
-                                responseType: 'blob' // Importante para manejar la respuesta como un Blob
-                            },
-                            success: function(response, status, xhr) {
-                                var blob = new Blob([response], {
-                                    type: 'application/pdf'
-                                });
-                                var url = window.URL.createObjectURL(blob);
-                                $('#pdfFrame').attr('src', url);
-                                $('#pdfModal').modal('show');
-                            },
-                            error: function(xhr, status, error) {
-                                alert("Error al cargar el PDF: " + error);
-                            }
-                        });
-                    }
-                </script> --}}
                 <script>
                     function loadPDF(id) {
                         $.ajax({
-                            url: 'documentos/downloadPdf/' + id,
+                            url: '/hermes/documentos/downloadPdf/' + id, // Actualiza esta línea
                             method: 'GET',
                             success: function(response) {
                                 var base64 = response.base64;
@@ -704,8 +692,6 @@
                                 alert('Documento no encontrado');
                             }
                         });
-                       
                     }
-                    
                 </script>
             @endpush

@@ -5,7 +5,7 @@
         <span>Menu</span>
     </a>
     <ul class="sub-menu" style="">
-        <li class="active"><a href="{{url('hermes/documentos')}}">Documentos</a></li>
+        <li class="active"><a href="{{url('hermes/documents')}}">Documentos</a></li>
         <li><a href="{{url('hermes/programas')}}">Programa</a></li>
         <li><a href="{{url('hermes/flujotramite')}}">Flujo De Tramite</a></li>
         <li><a href="{{url('hermes/flujodocumentos')}}">Flujo De Documentos</a></li>
