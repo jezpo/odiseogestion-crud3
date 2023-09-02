@@ -11,552 +11,391 @@
 
 @section('content')
     <!-- begin col-10 -->
-    <div class="col-xl-10">
+    <div class="col-xl-12">
         <div class="panel panel-inverse">
             <!-- begin panel-heading -->
             <div class="panel-heading">
                 <h4 class="panel-title">DataTable - Extension Combination</h4>
                 <div class="panel-heading-btn">
-                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
-                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-redo"></i></a>
-                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
-                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i
+                            class="fa fa-expand"></i></a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i
+                            class="fa fa-redo"></i></a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i
+                            class="fa fa-minus"></i></a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i
+                            class="fa fa-times"></i></a>
                 </div>
             </div>
             <!-- end panel-heading -->
             <!-- begin panel-body -->
             <div class="panel-body">
-                <table id="data-table-combine" class="table table-striped table-bordered table-td-valign-middle">
-                    <thead>
-                        <tr>
-                            <th width="1%"></th>
-                            <th width="1%" data-orderable="false"></th>
-                            <th class="text-nowrap">Rendering engine</th>
-                            <th class="text-nowrap">Browser</th>
-                            <th class="text-nowrap">Platform(s)</th>
-                            <th class="text-nowrap">Engine version</th>
-                            <th class="text-nowrap">CSS grade</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="odd gradeX">
-                            <td width="1%" class="f-s-600 text-inverse">1</td>
-                            <td width="1%" class="with-img"><img src="../assets/img/user/user-1.jpg" class="img-rounded height-30" /></td>
-                            <td>Trident</td>
-                            <td>Internet Explorer 4.0</td>
-                            <td>Win 95+</td>
-                            <td>4</td>
-                            <td>X</td>
-                        </tr>
-                        <tr class="even gradeC">
-                            <td width="1%" class="f-s-600 text-inverse">2</td>
-                            <td width="1%" class="with-img"><img src="../assets/img/user/user-2.jpg" class="img-rounded height-30" /></td>
-                            <td>Trident</td>
-                            <td>Internet Explorer 5.0</td>
-                            <td>Win 95+</td>
-                            <td>5</td>
-                            <td>C</td>
-                        </tr>
-                        <tr class="odd gradeA">
-                            <td width="1%" class="f-s-600 text-inverse">3</td>
-                            <td width="1%" class="with-img"><img src="../assets/img/user/user-3.jpg" class="img-rounded height-30" /></td>
-                            <td>Trident</td>
-                            <td>Internet Explorer 5.5</td>
-                            <td>Win 95+</td>
-                            <td>5.5</td>
-                            <td>A</td>
-                        </tr>
-                        <tr class="even gradeA">
-                            <td width="1%" class="f-s-600 text-inverse">4</td>
-                            <td width="1%" class="with-img"><img src="../assets/img/user/user-4.jpg" class="img-rounded height-30" /></td>
-                            <td>Trident</td>
-                            <td>Internet Explorer 6</td>
-                            <td>Win 98+</td>
-                            <td>6</td>
-                            <td>A</td>
-                        </tr>
-                        <tr class="odd gradeA">
-                            <td width="1%" class="f-s-600 text-inverse">5</td>
-                            <td width="1%" class="with-img"><img src="../assets/img/user/user-5.jpg" class="img-rounded height-30" /></td>
-                            <td>Trident</td>
-                            <td>Internet Explorer 7</td>
-                            <td>Win XP SP2+</td>
-                            <td>7</td>
-                            <td>A</td>
-                        </tr>
-                        <tr class="even gradeA">
-                            <td width="1%" class="f-s-600 text-inverse">6</td>
-                            <td width="1%" class="with-img"><img src="../assets/img/user/user-6.jpg" class="img-rounded height-30" /></td>
-                            <td>Trident</td>
-                            <td>AOL browser (AOL desktop)</td>
-                            <td>Win XP</td>
-                            <td>6</td>
-                            <td>A</td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td width="1%" class="f-s-600 text-inverse">7</td>
-                            <td width="1%" class="with-img"><img src="../assets/img/user/user-7.jpg" class="img-rounded height-30" /></td>
-                            <td>Gecko</td>
-                            <td>Firefox 1.0</td>
-                            <td>Win 98+ / OSX.2+</td>
-                            <td>1.7</td>
-                            <td>A</td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td width="1%" class="f-s-600 text-inverse">8</td>
-                            <td width="1%" class="with-img"><img src="../assets/img/user/user-8.jpg" class="img-rounded height-30" /></td>
-                            <td>Gecko</td>
-                            <td>Firefox 1.5</td>
-                            <td>Win 98+ / OSX.2+</td>
-                            <td>1.8</td>
-                            <td>A</td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td width="1%" class="f-s-600 text-inverse">9</td>
-                            <td width="1%" class="with-img"><img src="../assets/img/user/user-9.jpg" class="img-rounded height-30" /></td>
-                            <td>Gecko</td>
-                            <td>Firefox 2.0</td>
-                            <td>Win 98+ / OSX.2+</td>
-                            <td>1.8</td>
-                            <td>A</td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td width="1%" class="f-s-600 text-inverse">10</td>
-                            <td width="1%" class="with-img"><img src="../assets/img/user/user-10.jpg" class="img-rounded height-30" /></td>
-                            <td>Gecko</td>
-                            <td>Firefox 3.0</td>
-                            <td>Win 2k+ / OSX.3+</td>
-                            <td>1.9</td>
-                            <td>A</td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td width="1%" class="f-s-600 text-inverse">11</td>
-                            <td width="1%" class="with-img"><img src="../assets/img/user/user-11.jpg" class="img-rounded height-30" /></td>
-                            <td>Gecko</td>
-                            <td>Camino 1.0</td>
-                            <td>OSX.2+</td>
-                            <td>1.8</td>
-                            <td>A</td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td width="1%" class="f-s-600 text-inverse">12</td>
-                            <td width="1%" class="with-img"><img src="../assets/img/user/user-12.jpg" class="img-rounded height-30" /></td>
-                            <td>Gecko</td>
-                            <td>Camino 1.5</td>
-                            <td>OSX.3+</td>
-                            <td>1.8</td>
-                            <td>A</td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td width="1%" class="f-s-600 text-inverse">13</td>
-                            <td width="1%" class="with-img"><img src="../assets/img/user/user-13.jpg" class="img-rounded height-30" /></td>
-                            <td>Gecko</td>
-                            <td>Netscape 7.2</td>
-                            <td>Win 95+ / Mac OS 8.6-9.2</td>
-                            <td>1.7</td>
-                            <td>A</td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td width="1%" class="f-s-600 text-inverse">14</td>
-                            <td width="1%" class="with-img"><img src="../assets/img/user/user-14.jpg" class="img-rounded height-30" /></td>
-                            <td>Gecko</td>
-                            <td>Netscape Browser 8</td>
-                            <td>Win 98SE+</td>
-                            <td>1.7</td>
-                            <td>A</td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td width="1%" class="f-s-600 text-inverse">15</td>
-                            <td width="1%" class="with-img"><img src="../assets/img/user/user-1.jpg" class="img-rounded height-30" /></td>
-                            <td>Gecko</td>
-                            <td>Netscape Navigator 9</td>
-                            <td>Win 98+ / OSX.2+</td>
-                            <td>1.8</td>
-                            <td>A</td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td width="1%" class="f-s-600 text-inverse">16</td>
-                            <td width="1%" class="with-img"><img src="../assets/img/user/user-2.jpg" class="img-rounded height-30" /></td>
-                            <td>Gecko</td>
-                            <td>Mozilla 1.0</td>
-                            <td>Win 95+ / OSX.1+</td>
-                            <td>1</td>
-                            <td>A</td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td width="1%" class="f-s-600 text-inverse">17</td>
-                            <td width="1%" class="with-img"><img src="../assets/img/user/user-3.jpg" class="img-rounded height-30" /></td>
-                            <td>Gecko</td>
-                            <td>Mozilla 1.1</td>
-                            <td>Win 95+ / OSX.1+</td>
-                            <td>1.1</td>
-                            <td>A</td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td width="1%" class="f-s-600 text-inverse">18</td>
-                            <td width="1%" class="with-img"><img src="../assets/img/user/user-4.jpg" class="img-rounded height-30" /></td>
-                            <td>Gecko</td>
-                            <td>Mozilla 1.2</td>
-                            <td>Win 95+ / OSX.1+</td>
-                            <td>1.2</td>
-                            <td>A</td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td width="1%" class="f-s-600 text-inverse">19</td>
-                            <td width="1%" class="with-img"><img src="../assets/img/user/user-5.jpg" class="img-rounded height-30" /></td>
-                            <td>Gecko</td>
-                            <td>Mozilla 1.3</td>
-                            <td>Win 95+ / OSX.1+</td>
-                            <td>1.3</td>
-                            <td>A</td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td width="1%" class="f-s-600 text-inverse">20</td>
-                            <td width="1%" class="with-img"><img src="../assets/img/user/user-6.jpg" class="img-rounded height-30" /></td>
-                            <td>Gecko</td>
-                            <td>Mozilla 1.4</td>
-                            <td>Win 95+ / OSX.1+</td>
-                            <td>1.4</td>
-                            <td>A</td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td width="1%" class="f-s-600 text-inverse">21</td>
-                            <td width="1%" class="with-img"><img src="../assets/img/user/user-7.jpg" class="img-rounded height-30" /></td>
-                            <td>Gecko</td>
-                            <td>Mozilla 1.5</td>
-                            <td>Win 95+ / OSX.1+</td>
-                            <td>1.5</td>
-                            <td>A</td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td width="1%" class="f-s-600 text-inverse">22</td>
-                            <td width="1%" class="with-img"><img src="../assets/img/user/user-8.jpg" class="img-rounded height-30" /></td>
-                            <td>Gecko</td>
-                            <td>Mozilla 1.6</td>
-                            <td>Win 95+ / OSX.1+</td>
-                            <td>1.6</td>
-                            <td>A</td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td width="1%" class="f-s-600 text-inverse">23</td>
-                            <td width="1%" class="with-img"><img src="../assets/img/user/user-9.jpg" class="img-rounded height-30" /></td>
-                            <td>Gecko</td>
-                            <td>Mozilla 1.7</td>
-                            <td>Win 98+ / OSX.1+</td>
-                            <td>1.7</td>
-                            <td>A</td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td width="1%" class="f-s-600 text-inverse">24</td>
-                            <td width="1%" class="with-img"><img src="../assets/img/user/user-10.jpg" class="img-rounded height-30" /></td>
-                            <td>Gecko</td>
-                            <td>Mozilla 1.8</td>
-                            <td>Win 98+ / OSX.1+</td>
-                            <td>1.8</td>
-                            <td>A</td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td width="1%" class="f-s-600 text-inverse">25</td>
-                            <td width="1%" class="with-img"><img src="../assets/img/user/user-11.jpg" class="img-rounded height-30" /></td>
-                            <td>Gecko</td>
-                            <td>Seamonkey 1.1</td>
-                            <td>Win 98+ / OSX.2+</td>
-                            <td>1.8</td>
-                            <td>A</td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td width="1%" class="f-s-600 text-inverse">26</td>
-                            <td width="1%" class="with-img"><img src="../assets/img/user/user-12.jpg" class="img-rounded height-30" /></td>
-                            <td>Gecko</td>
-                            <td>Epiphany 2.20</td>
-                            <td>Gnome</td>
-                            <td>1.8</td>
-                            <td>A</td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td width="1%" class="f-s-600 text-inverse">27</td>
-                            <td width="1%" class="with-img"><img src="../assets/img/user/user-13.jpg" class="img-rounded height-30" /></td>
-                            <td>Webkit</td>
-                            <td>Safari 1.2</td>
-                            <td>OSX.3</td>
-                            <td>125.5</td>
-                            <td>A</td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td width="1%" class="f-s-600 text-inverse">28</td>
-                            <td width="1%" class="with-img"><img src="../assets/img/user/user-14.jpg" class="img-rounded height-30" /></td>
-                            <td>Webkit</td>
-                            <td>Safari 1.3</td>
-                            <td>OSX.3</td>
-                            <td>312.8</td>
-                            <td>A</td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td width="1%" class="f-s-600 text-inverse">29</td>
-                            <td width="1%" class="with-img"><img src="../assets/img/user/user-1.jpg" class="img-rounded height-30" /></td>
-                            <td>Webkit</td>
-                            <td>Safari 2.0</td>
-                            <td>OSX.4+</td>
-                            <td>419.3</td>
-                            <td>A</td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td width="1%" class="f-s-600 text-inverse">30</td>
-                            <td width="1%" class="with-img"><img src="../assets/img/user/user-2.jpg" class="img-rounded height-30" /></td>
-                            <td>Webkit</td>
-                            <td>Safari 3.0</td>
-                            <td>OSX.4+</td>
-                            <td>522.1</td>
-                            <td>A</td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td width="1%" class="f-s-600 text-inverse">31</td>
-                            <td width="1%" class="with-img"><img src="../assets/img/user/user-3.jpg" class="img-rounded height-30" /></td>
-                            <td>Webkit</td>
-                            <td>OmniWeb 5.5</td>
-                            <td>OSX.4+</td>
-                            <td>420</td>
-                            <td>A</td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td width="1%" class="f-s-600 text-inverse">32</td>
-                            <td width="1%" class="with-img"><img src="../assets/img/user/user-4.jpg" class="img-rounded height-30" /></td>
-                            <td>Webkit</td>
-                            <td>iPod Touch / iPhone</td>
-                            <td>iPod</td>
-                            <td>420.1</td>
-                            <td>A</td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td width="1%" class="f-s-600 text-inverse">33</td>
-                            <td width="1%" class="with-img"><img src="../assets/img/user/user-5.jpg" class="img-rounded height-30" /></td>
-                            <td>Webkit</td>
-                            <td>S60</td>
-                            <td>S60</td>
-                            <td>413</td>
-                            <td>A</td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td width="1%" class="f-s-600 text-inverse">34</td>
-                            <td width="1%" class="with-img"><img src="../assets/img/user/user-6.jpg" class="img-rounded height-30" /></td>
-                            <td>Presto</td>
-                            <td>Opera 7.0</td>
-                            <td>Win 95+ / OSX.1+</td>
-                            <td>-</td>
-                            <td>A</td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td width="1%" class="f-s-600 text-inverse">35</td>
-                            <td width="1%" class="with-img"><img src="../assets/img/user/user-7.jpg" class="img-rounded height-30" /></td>
-                            <td>Presto</td>
-                            <td>Opera 7.5</td>
-                            <td>Win 95+ / OSX.2+</td>
-                            <td>-</td>
-                            <td>A</td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td width="1%" class="f-s-600 text-inverse">36</td>
-                            <td width="1%" class="with-img"><img src="../assets/img/user/user-8.jpg" class="img-rounded height-30" /></td>
-                            <td>Presto</td>
-                            <td>Opera 8.0</td>
-                            <td>Win 95+ / OSX.2+</td>
-                            <td>-</td>
-                            <td>A</td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td width="1%" class="f-s-600 text-inverse">37</td>
-                            <td width="1%" class="with-img"><img src="../assets/img/user/user-9.jpg" class="img-rounded height-30" /></td>
-                            <td>Presto</td>
-                            <td>Opera 8.5</td>
-                            <td>Win 95+ / OSX.2+</td>
-                            <td>-</td>
-                            <td>A</td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td width="1%" class="f-s-600 text-inverse">38</td>
-                            <td width="1%" class="with-img"><img src="../assets/img/user/user-10.jpg" class="img-rounded height-30" /></td>
-                            <td>Presto</td>
-                            <td>Opera 9.0</td>
-                            <td>Win 95+ / OSX.3+</td>
-                            <td>-</td>
-                            <td>A</td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td width="1%" class="f-s-600 text-inverse">39</td>
-                            <td width="1%" class="with-img"><img src="../assets/img/user/user-11.jpg" class="img-rounded height-30" /></td>
-                            <td>Presto</td>
-                            <td>Opera 9.2</td>
-                            <td>Win 88+ / OSX.3+</td>
-                            <td>-</td>
-                            <td>A</td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td width="1%" class="f-s-600 text-inverse">40</td>
-                            <td width="1%" class="with-img"><img src="../assets/img/user/user-12.jpg" class="img-rounded height-30" /></td>
-                            <td>Presto</td>
-                            <td>Opera 9.5</td>
-                            <td>Win 88+ / OSX.3+</td>
-                            <td>-</td>
-                            <td>A</td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td width="1%" class="f-s-600 text-inverse">41</td>
-                            <td width="1%" class="with-img"><img src="../assets/img/user/user-13.jpg" class="img-rounded height-30" /></td>
-                            <td>Presto</td>
-                            <td>Opera for Wii</td>
-                            <td>Wii</td>
-                            <td>-</td>
-                            <td>A</td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td width="1%" class="f-s-600 text-inverse">42</td>
-                            <td width="1%" class="with-img"><img src="../assets/img/user/user-14.jpg" class="img-rounded height-30" /></td>
-                            <td>Presto</td>
-                            <td>Nokia N800</td>
-                            <td>N800</td>
-                            <td>-</td>
-                            <td>A</td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td width="1%" class="f-s-600 text-inverse">43</td>
-                            <td width="1%" class="with-img"><img src="../assets/img/user/user-1.jpg" class="img-rounded height-30" /></td>
-                            <td>Presto</td>
-                            <td>Nintendo DS browser</td>
-                            <td>Nintendo DS</td>
-                            <td>8.5</td>
-                            <td>C/A<sup>1</sup></td>
-                        </tr>
-                        <tr class="gradeC">
-                            <td width="1%" class="f-s-600 text-inverse">44</td>
-                            <td width="1%" class="with-img"><img src="../assets/img/user/user-2.jpg" class="img-rounded height-30" /></td>
-                            <td>KHTML</td>
-                            <td>Konqureror 3.1</td>
-                            <td>KDE 3.1</td>
-                            <td>3.1</td>
-                            <td>C</td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td width="1%" class="f-s-600 text-inverse">45</td>
-                            <td width="1%" class="with-img"><img src="../assets/img/user/user-3.jpg" class="img-rounded height-30" /></td>
-                            <td>KHTML</td>
-                            <td>Konqureror 3.3</td>
-                            <td>KDE 3.3</td>
-                            <td>3.3</td>
-                            <td>A</td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td width="1%" class="f-s-600 text-inverse">46</td>
-                            <td width="1%" class="with-img"><img src="../assets/img/user/user-4.jpg" class="img-rounded height-30" /></td>
-                            <td>KHTML</td>
-                            <td>Konqureror 3.5</td>
-                            <td>KDE 3.5</td>
-                            <td>3.5</td>
-                            <td>A</td>
-                        </tr>
-                        <tr class="gradeX">
-                            <td width="1%" class="f-s-600 text-inverse">47</td>
-                            <td width="1%" class="with-img"><img src="../assets/img/user/user-5.jpg" class="img-rounded height-30" /></td>
-                            <td>Tasman</td>
-                            <td>Internet Explorer 4.5</td>
-                            <td>Mac OS 8-9</td>
-                            <td>-</td>
-                            <td>X</td>
-                        </tr>
-                        <tr class="gradeC">
-                            <td width="1%" class="f-s-600 text-inverse">48</td>
-                            <td width="1%" class="with-img"><img src="../assets/img/user/user-6.jpg" class="img-rounded height-30" /></td>
-                            <td>Tasman</td>
-                            <td>Internet Explorer 5.1</td>
-                            <td>Mac OS 7.6-9</td>
-                            <td>1</td>
-                            <td>C</td>
-                        </tr>
-                        <tr class="gradeC">
-                            <td width="1%" class="f-s-600 text-inverse">49</td>
-                            <td width="1%" class="with-img"><img src="../assets/img/user/user-7.jpg" class="img-rounded height-30" /></td>
-                            <td>Tasman</td>
-                            <td>Internet Explorer 5.2</td>
-                            <td>Mac OS 8-X</td>
-                            <td>1</td>
-                            <td>C</td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td width="1%" class="f-s-600 text-inverse">50</td>
-                            <td width="1%" class="with-img"><img src="../assets/img/user/user-8.jpg" class="img-rounded height-30" /></td>
-                            <td>Misc</td>
-                            <td>NetFront 3.1</td>
-                            <td>Embedded devices</td>
-                            <td>-</td>
-                            <td>C</td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td width="1%" class="f-s-600 text-inverse">51</td>
-                            <td width="1%" class="with-img"><img src="../assets/img/user/user-9.jpg" class="img-rounded height-30" /></td>
-                            <td>Misc</td>
-                            <td>NetFront 3.4</td>
-                            <td>Embedded devices</td>
-                            <td>-</td>
-                            <td>A</td>
-                        </tr>
-                        <tr class="gradeX">
-                            <td width="1%" class="f-s-600 text-inverse">52</td>
-                            <td width="1%" class="with-img"><img src="../assets/img/user/user-10.jpg" class="img-rounded height-30" /></td>
-                            <td>Misc</td>
-                            <td>Dillo 0.8</td>
-                            <td>Embedded devices</td>
-                            <td>-</td>
-                            <td>X</td>
-                        </tr>
-                        <tr class="gradeX">
-                            <td width="1%" class="f-s-600 text-inverse">53</td>
-                            <td width="1%" class="with-img"><img src="../assets/img/user/user-11.jpg" class="img-rounded height-30" /></td>
-                            <td>Misc</td>
-                            <td>Links</td>
-                            <td>Text only</td>
-                            <td>-</td>
-                            <td>X</td>
-                        </tr>
-                        <tr class="gradeX">
-                            <td width="1%" class="f-s-600 text-inverse">54</td>
-                            <td width="1%" class="with-img"><img src="../assets/img/user/user-12.jpg" class="img-rounded height-30" /></td>
-                            <td>Misc</td>
-                            <td>Lynx</td>
-                            <td>Text only</td>
-                            <td>-</td>
-                            <td>X</td>
-                        </tr>
-                        <tr class="gradeC">
-                            <td width="1%" class="f-s-600 text-inverse">55</td>
-                            <td width="1%" class="with-img"><img src="../assets/img/user/user-13.jpg" class="img-rounded height-30" /></td>
-                            <td>Misc</td>
-                            <td>IE Mobile</td>
-                            <td>Windows Mobile 6</td>
-                            <td>-</td>
-                            <td>C</td>
-                        </tr>
-                        <tr class="gradeC">
-                            <td width="1%" class="f-s-600 text-inverse">57</td>
-                            <td width="1%" class="with-img"><img src="../assets/img/user/user-14.jpg" class="img-rounded height-30" /></td>
-                            <td>Misc</td>
-                            <td>PSP browser</td>
-                            <td>PSP</td>
-                            <td>-</td>
-                            <td>C</td>
-                        </tr>
-                        <tr class="gradeU">
-                            <td width="1%" class="f-s-600 text-inverse">58</td>
-                            <td width="1%" class="with-img"><img src="../assets/img/user/user-1.jpg" class="img-rounded height-30" /></td>
-                            <td>Other browsers</td>
-                            <td>All others</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>U</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div id="data-table-combine_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                    <div class="dataTables_wrapper dt-bootstrap">
+                        <div class="row">
+                            <div class="col-xl-12">
+
+                                <!-- Botón para abrir el modal de creación -->
+                                <div>
+                                    <a id="abrirDocumentoModal" href="#modal-dialog" class="btn btn-sm btn btn-primary"
+                                        data-toggle="modal">Crear Nuevo</a>
+                                </div>
+                                <br>
+                                <!-- Modal para Nuevo -->
+                                <div class="modal fade" class="modal fade" id="modal-dialog">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+
+                                                <h5 class="modal-title" id="nuevoDocumentoModalLabel">Nuevo Documento</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <!-- Formulario de creación -->
+                                                <form id="crearNuevoDocumentoForm" class="form-horizontal" method="PUT"
+                                                    enctype="multipart/form-data" action="{{ route('documents.store') }}">
+                                                    @csrf
+                                                    <div class="form-group row m-b-15">
+                                                        <label class="col-md-4 col-sm-4 col-form-label"
+                                                            for="fullname">Cite:</label>
+                                                        <div class="col-md-8 col-sm-8">
+                                                            <input class="form-control" type="text" id="cite"
+                                                                value="" name="cite" placeholder="cite"
+                                                                data-parsley-required="true">
+                                                            @error('cite')
+                                                                <ul class="parsley-errors-list filled" id="parsley-id-5"
+                                                                    aria-hidden="false">
+                                                                    <li class="parsley-required">
+                                                                        {{ 'Este valor es requerido' }}</li>
+                                                                </ul>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group row m-b-15">
+                                                        <label class="col-md-4 col-sm-4 col-form-label"
+                                                            for="fullname">Descripcion:</label>
+                                                        <div class="col-md-8 col-sm-8">
+                                                            <input class="form-control" type="text" id="descripcion"
+                                                                value="" name="descripcion" placeholder="descripcion"
+                                                                data-parsley-required="true">
+                                                            @error('descripcion')
+                                                                <ul class="parsley-errors-list filled" id="parsley-id-5"
+                                                                    aria-hidden="false">
+                                                                    <li class="parsley-required">
+                                                                        {{ 'Este valor es requerido' }}</li>
+                                                                </ul>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row m-b-15">
+                                                        <label class="col-md-4 col-sm-4 col-form-label">Estado: </label>
+                                                        <div class="col-md-8 col-sm-8">
+                                                            <select class="form-control" id="estado" name="estado"
+                                                                data-parsley-required="true">
+                                                                <option value="">Por favor selecciona una opcion
+                                                                </option>
+                                                                <option value="A">Activo</option>
+                                                                <option value="I">Inactivo</option>
+                                                                @error('estado')
+                                                                    <ul class="parsley-errors-list filled" id="parsley-id-5"
+                                                                        aria-hidden="false">
+                                                                        <li class="parsley-required">
+                                                                            {{ 'este valor es requerido' }}</li>
+                                                                    </ul>
+                                                                @enderror
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row m-b-15">
+                                                        <label class="col-md-4 col-sm-4 col-form-label">Archivo:
+                                                        </label>
+                                                        <div class="col-md-8 col-sm-8">
+
+                                                            <div class="form-group">
+
+                                                                <input type="file" class="form-control-file"
+                                                                    id="docummento" name="documento" accept=".pdf">
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row m-b-15">
+                                                        <label class="col-md-4 col-sm-4 col-form-label">Tipo de
+                                                            documento: </label>
+                                                        <div class="col-md-8 col-sm-8">
+                                                            <select class="form-control" id="select-required"
+                                                                name="id_tipo_documento" data-parsley-required="true">
+                                                                <option value="">Por favor selecciona una opcion
+                                                                </option>
+                                                                <option value="1">Cata</option>
+                                                                <option value="2">Dictamen</option>
+                                                                @error('id_tipo_documento')
+                                                                    <ul class="parsley-errors-list filled" id="parsley-id-5"
+                                                                        aria-hidden="false">
+                                                                        <li class="parsley-required">
+                                                                            {{ 'este valor es requerido' }}</li>
+                                                                    </ul>
+                                                                @enderror
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="form-group row m-b-0">
+                                                        <label class="col-md-4 col-sm-4 col-form-label">&nbsp;</label>
+                                                        <div class="col-md-8 col-sm-8">
+                                                            <button type="submit"
+                                                                class="btn btn-primary">Registrar</button>
+                                                        </div>
+                                                    </div>
+
+
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--DONDE MUESTRA LAS TABLAS ATRAVES DE DATA TABLES -->
+                                <div style="position: absolute; height: 1px; width: 0px; overflow: hidden;">
+                                    <input type="text" tabindex="0">
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <table id="programa-table" class="table table-striped table-bordered table-td-valign-middle">
+                                            <thead>
+                                                <tr role="row">
+                                                    <th width="10%">Id</th>
+                                                    <th width="10%">Id Programa</th>
+                                                    <th width="10%">Programa</th>
+                                                    <th width="10%">Id Padre</th>
+                                                    <th width="10%">Estado</th>
+                                                    <th width="40%">Acciones</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                                <!--FINAL DE CODIGO DONDE MUESTRA LAS TABLAS -->
+
+                                <!-- Modal para Ver -->
+                                <div class="modal fade" id="verDocumentoModal" tabindex="-1" role="dialog"
+                                    aria-labelledby="verDocumentoModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="verDocumentoModalLabel">Detalles del Documento
+                                                </h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <!-- Contenido para mostrar detalles del documento -->
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Modal para Editar -->
+                                <div class="modal fade" id="editarDocumentoModal" tabindex="-1" role="dialog"
+                                    aria-labelledby="editarDocumentoModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="editarDocumentoModalLabel">Editar Documento
+                                                </h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <!-- Formulario de edición -->
+                                                <form id="editDocumentoForm" method="POST">
+                                                    @csrf
+                                                    <!-- Dentro del formulario -->
+                                                    <input type="hidden" id="txtId2" name="txtId2">
+                                                    <div class="form-group row m-b-15">
+                                                        <label class="col-md-4 col-sm-4 col-form-label"
+                                                            for="fullname">Cite:</label>
+                                                        <div class="col-md-8 col-sm-8">
+                                                            <input class="form-control" type="text" id="cite2"
+                                                                value="" name="cite2" placeholder="cite"
+                                                                data-parsley-required="true">
+                                                            @error('cite')
+                                                                <ul class="parsley-errors-list filled" id="parsley-id-5"
+                                                                    aria-hidden="false">
+                                                                    <li class="parsley-required">
+                                                                        {{ 'Este valor es requerido' }}</li>
+                                                                </ul>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group row m-b-15">
+                                                        <label class="col-md-4 col-sm-4 col-form-label"
+                                                            for="fullname">Descripcion:</label>
+                                                        <div class="col-md-8 col-sm-8">
+                                                            <input class="form-control" type="text" id="descripcion2"
+                                                                value="" name="descripcion2"
+                                                                placeholder="descripcion" data-parsley-required="true">
+                                                            @error('descripcion')
+                                                                <ul class="parsley-errors-list filled" id="parsley-id-5"
+                                                                    aria-hidden="false">
+                                                                    <li class="parsley-required">
+                                                                        {{ 'Este valor es requerido' }}</li>
+                                                                </ul>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row m-b-15">
+                                                        <label class="col-md-4 col-sm-4 col-form-label">Estado: </label>
+                                                        <div class="col-md-8 col-sm-8">
+                                                            <select class="form-control" id="estado2" name="estado2"
+                                                                data-parsley-required="true">
+                                                                <option value="">Por favor selecciona una opcion
+                                                                </option>
+                                                                <option value="A">Activo</option>
+                                                                <option value="I">Inactivo</option>
+                                                                @error('estado')
+                                                                    <ul class="parsley-errors-list filled" id="parsley-id-5"
+                                                                        aria-hidden="false">
+                                                                        <li class="parsley-required">
+                                                                            {{ 'este valor es requerido' }}</li>
+                                                                    </ul>
+                                                                @enderror
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row m-b-15">
+                                                        <label class="col-md-4 col-sm-4 col-form-label">Archivo:
+                                                        </label>
+                                                        <div class="col-md-8 col-sm-8">
+
+                                                            <div class="form-group">
+
+                                                                <input type="file" class="form-control-file"
+                                                                    id="docummento2" name="documento2" accept=".pdf">
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row m-b-15">
+                                                        <label class="col-md-4 col-sm-4 col-form-label">Tipo de
+                                                            documento: </label>
+                                                        <div class="col-md-8 col-sm-8">
+                                                            <select class="form-control" id="id_tipo_documento2"
+                                                                name="id_tipo_documento2" data-parsley-required="true">
+                                                                <option value="">Por favor selecciona una opcion
+                                                                </option>
+                                                                <option value="1">Cata</option>
+                                                                <option value="2">Dictamen</option>
+                                                                @error('id_tipo_documento')
+                                                                    <ul class="parsley-errors-list filled" id="parsley-id-5"
+                                                                        aria-hidden="false">
+                                                                        <li class="parsley-required">
+                                                                            {{ 'este valor es requerido' }}</li>
+                                                                    </ul>
+                                                                @enderror
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <!-- Agrega más campos de acuerdo a tus necesidades -->
+
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-dismiss="modal">Cancelar</button>
+                                                        <button type="submit" class="btn btn-primary">Actualizar</button>
+                                                    </div>
+
+
+                                                </form>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Modal para Eliminar -->
+                                <div class="modal fade" id="deleteDocument" tabindex="-1" role="dialog"
+                                    aria-labelledby="eliminarDocumentoModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="eliminarDocumentoModalLabel">Eliminar
+                                                    Documento</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>¿Estás seguro de que deseas eliminar este documento?</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-dismiss="modal">Cancelar</button>
+                                                <button type="button" class="btn btn-danger" id="btnDelete"
+                                                    name="btnDelete">Eliminar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal fade" id="pdfModal" tabindex="-1" role="dialog"
+                                    aria-labelledby="pdfModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="pdfModalLabel">Vista previa del PDF</h5>
+                                                <button type="button" class="btn-close" data-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <iframe id="pdfFrame" style="width:100%; height:500px;"
+                                                    frameborder="0"></iframe>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-dismiss="modal">Cerrar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- modal para el uso de de alertas -->
+                                {{--
+                                    <div class="panel-body">
+                                    <p class="lead m-b-10 text-inverse">
+                                        SweetAlert for Bootstrap. A beautiful replacement for JavaScript's "alert"
+                                    </p>
+                                    <hr />
+                                    <p class="">
+                                        Try any of those!
+                                    </p>
+                                    <a href="javascript:;" data-click="swal-primary" class="btn btn-primary">Primary</a>
+                                    <a href="javascript:;" data-click="swal-info" class="btn btn-info">Info</a>
+                                    <a href="javascript:;" data-click="swal-success" class="btn btn-success">Success</a>
+                                    <a href="javascript:;" data-click="swal-warning" class="btn btn-warning">Warning</a>
+                                    <a href="javascript:;" data-click="swal-danger" class="btn btn-danger">Danger</a>
+                                </div>
+                                --}}
+                            </div>
+                            <!-- end panel-body -->
+                        </div>
+                    </div>
+                </div>
             </div>
             <!-- end panel-body -->
         </div>
+
     </div>
     <!-- end col-10 -->
 
@@ -565,50 +404,134 @@
 @push('scripts')
     {{-- Aqui se coloca los JS de assets --}}
     <!-- ================== BEGIN BASE CSS STYLE ================== -->
-	<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet" />
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-	<link href="../assets/css/material/app.min.css" rel="stylesheet" />
-	<!-- ================== END BASE CSS STYLE ================== -->
-	
-	<!-- ================== BEGIN PAGE LEVEL STYLE ================== -->
-	<link href="../assets/plugins/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
-	<link href="../assets/plugins/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" />
-	<link href="../assets/plugins/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet" />
-	<link href="../assets/plugins/datatables.net-autofill-bs4/css/autofill.bootstrap4.min.css" rel="stylesheet" />
-	<link href="../assets/plugins/datatables.net-colreorder-bs4/css/colreorder.bootstrap4.min.css" rel="stylesheet" />
-	<link href="../assets/plugins/datatables.net-keytable-bs4/css/keytable.bootstrap4.min.css" rel="stylesheet" />
-	<link href="../assets/plugins/datatables.net-rowreorder-bs4/css/rowreorder.bootstrap4.min.css" rel="stylesheet" />
-	<link href="../assets/plugins/datatables.net-select-bs4/css/select.bootstrap4.min.css" rel="stylesheet" />
-	<!-- ================== END PAGE LEVEL STYLE ================== -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link href="../assets/css/material/app.min.css" rel="stylesheet" />
+    <!-- ================== END BASE CSS STYLE ================== -->
+
+    <!-- ================== BEGIN PAGE LEVEL STYLE ================== -->
+    <link href="../assets/plugins/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+    <link href="../assets/plugins/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" />
+    <link href="../assets/plugins/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet" />
+    <link href="../assets/plugins/datatables.net-autofill-bs4/css/autofill.bootstrap4.min.css" rel="stylesheet" />
+    <link href="../assets/plugins/datatables.net-colreorder-bs4/css/colreorder.bootstrap4.min.css" rel="stylesheet" />
+    <link href="../assets/plugins/datatables.net-keytable-bs4/css/keytable.bootstrap4.min.css" rel="stylesheet" />
+    <link href="../assets/plugins/datatables.net-rowreorder-bs4/css/rowreorder.bootstrap4.min.css" rel="stylesheet" />
+    <link href="../assets/plugins/datatables.net-select-bs4/css/select.bootstrap4.min.css" rel="stylesheet" />
+    <!-- ================== END PAGE LEVEL STYLE ================== -->
 
     <script src="../assets/js/app.min.js"></script>
-	<script src="../assets/js/theme/material.min.js"></script>
-	<!-- ================== END BASE JS ================== -->
-	
-	<!-- ================== BEGIN PAGE LEVEL JS ================== -->
-	<script src="../assets/plugins/datatables.net/js/jquery.dataTables.min.js"></script>
-	<script src="../assets/plugins/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
-	<script src="../assets/plugins/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-	<script src="../assets/plugins/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
-	<script src="../assets/plugins/datatables.net-autofill/js/dataTables.autofill.min.js"></script>
-	<script src="../assets/plugins/datatables.net-autofill-bs4/js/autofill.bootstrap4.min.js"></script>
-	<script src="../assets/plugins/datatables.net-colreorder/js/dataTables.colreorder.min.js"></script>
-	<script src="../assets/plugins/datatables.net-colreorder-bs4/js/colreorder.bootstrap4.min.js"></script>
-	<script src="../assets/plugins/datatables.net-keytable/js/dataTables.keytable.min.js"></script>
-	<script src="../assets/plugins/datatables.net-keytable-bs4/js/keytable.bootstrap4.min.js"></script>
-	<script src="../assets/plugins/datatables.net-rowreorder/js/dataTables.rowreorder.min.js"></script>
-	<script src="../assets/plugins/datatables.net-rowreorder-bs4/js/rowreorder.bootstrap4.min.js"></script>
-	<script src="../assets/plugins/datatables.net-select/js/dataTables.select.min.js"></script>
-	<script src="../assets/plugins/datatables.net-select-bs4/js/select.bootstrap4.min.js"></script>
-	<script src="../assets/plugins/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-	<script src="../assets/plugins/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
-	<script src="../assets/plugins/datatables.net-buttons/js/buttons.colVis.min.js"></script>
-	<script src="../assets/plugins/datatables.net-buttons/js/buttons.flash.min.js"></script>
-	<script src="../assets/plugins/datatables.net-buttons/js/buttons.html5.min.js"></script>
-	<script src="../assets/plugins/datatables.net-buttons/js/buttons.print.min.js"></script>
-	<script src="../assets/plugins/pdfmake/build/pdfmake.min.js"></script>
-	<script src="../assets/plugins/pdfmake/build/vfs_fonts.js"></script>
-	<script src="../assets/plugins/jszip/dist/jszip.min.js"></script>
-	<script src="../assets/js/demo/table-manage-combine.demo.js"></script>
-	<!-- ================== END PAGE LEVEL JS ================== -->
+    <script src="../assets/js/theme/material.min.js"></script>
+    <!-- ================== END BASE JS ================== -->
+
+    <!-- ================== BEGIN PAGE LEVEL JS ================== -->
+    <script src="../assets/plugins/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="../assets/plugins/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="../assets/plugins/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="../assets/plugins/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+    <script src="../assets/plugins/datatables.net-autofill/js/dataTables.autofill.min.js"></script>
+    <script src="../assets/plugins/datatables.net-autofill-bs4/js/autofill.bootstrap4.min.js"></script>
+    <script src="../assets/plugins/datatables.net-colreorder/js/dataTables.colreorder.min.js"></script>
+    <script src="../assets/plugins/datatables.net-colreorder-bs4/js/colreorder.bootstrap4.min.js"></script>
+    <script src="../assets/plugins/datatables.net-keytable/js/dataTables.keytable.min.js"></script>
+    <script src="../assets/plugins/datatables.net-keytable-bs4/js/keytable.bootstrap4.min.js"></script>
+    <script src="../assets/plugins/datatables.net-rowreorder/js/dataTables.rowreorder.min.js"></script>
+    <script src="../assets/plugins/datatables.net-rowreorder-bs4/js/rowreorder.bootstrap4.min.js"></script>
+    <script src="../assets/plugins/datatables.net-select/js/dataTables.select.min.js"></script>
+    <script src="../assets/plugins/datatables.net-select-bs4/js/select.bootstrap4.min.js"></script>
+    <script src="../assets/plugins/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="../assets/plugins/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
+    <script src="../assets/plugins/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+    <script src="../assets/plugins/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="../assets/plugins/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="../assets/plugins/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="../assets/plugins/pdfmake/build/pdfmake.min.js"></script>
+    <script src="../assets/plugins/pdfmake/build/vfs_fonts.js"></script>
+    <script src="../assets/plugins/jszip/dist/jszip.min.js"></script>
+    <script src="../assets/js/demo/table-manage-combine.demo.js"></script>
+    <!-- ================== END PAGE LEVEL JS ================== -->
+    <script>
+        $(document).ready(function() {
+            var documentTable = $('#programa-table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: "{{ route('programas.index') }}",
+                },
+                columns: [{
+                        data: 'id',
+                        name: 'id'
+                    },
+                    {
+                        data: 'id_programa',
+                        name: 'id_programa'
+                    },
+                    {
+                        data: 'programa',
+                        name: 'programa'
+                    },
+                    {
+                        data: 'id_padre',
+                        name: 'id_padre'
+                    },
+                    {
+                        data: 'estado',
+                        name: 'estado'
+                    },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false
+                    },
+                ],
+            });
+        });
+
+    </script>
+    {{--
+    <script>
+        function addPrograma() {
+            $.ajax({
+                url: '/programas',
+                method: 'POST',
+                data: { /* tus datos aquí */ },
+                success: function(response) {
+                    alert(response.success);
+                }
+            });
+        }
+        
+        function editPrograma(id) {
+            $.ajax({
+                url: '/programas/' + id + '/edit',
+                method: 'GET',
+                success: function(response) {
+                    // Llenar tus campos para edición aquí
+                }
+            });
+        }
+        
+        function updatePrograma(id) {
+            $.ajax({
+                url: '/programas/' + id,
+                method: 'PUT',
+                data: { /* tus datos actualizados aquí */ },
+                success: function(response) {
+                    alert(response.success);
+                }
+            });
+        }
+        
+        function deletePrograma(id) {
+            $.ajax({
+                url: '/programas/' + id,
+                method: 'DELETE',
+                success: function(response) {
+                    alert(response.success);
+                }
+            });
+        }
+        </script>
+        --}}
 @endpush

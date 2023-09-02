@@ -11,63 +11,49 @@ use Modules\Hermes\Entities\Documentos;
 use Modules\Hermes\Entities\FlujoDocumentos;
 use Modules\Hermes\Entities\Flujo_de_tramite;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class ProgramasController extends Controller
 {
-    
-    public function index()
+
+    public function index(Request $request)
     {
-        $programas = Programas::all();
-        return view('hermes::programas.index', compact('programas'));
-    }
-    
-    public function create(Request $request)
-    {
-        $programa = Programas::create([
-            'programa' => $request->programa,
-            'id_padre' => $request->id_padre,
-            'id_programa' => $request->id_programa,
-            'estado' => $request->estado
-        ]); 
-        $programa->save();
-        return back();
+        if ($request->ajax()) {
+            $data = Programas::all();
+            return DataTables::of($data)
+                ->addColumn('action', function($data){
+                    $button = '<a href="programas/edit/'.$data->id.'" class="edit btn btn-primary btn-sm">Editar</a>';
+                    $button .= '&nbsp;&nbsp;';
+                    $button .= '<a href="programas/delete/'.$data->id.'" class="delete btn btn-danger btn-sm">Eliminar</a>';
+                    return $button;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+        return view('hermes::programas.index');
     }
 
-    public function edit(Request $request, $id)
+    public function store(Request $request)
+    {
+        Programas::create($request->all());
+        return response()->json(['success' => 'Programa creado exitosamente.']);
+    }
+
+    public function edit($id)
     {
         $programa = Programas::find($id);
-
-        $programa->programa = $request->programa;
-        $programa->id_padre = $request->id_padre;
-        $programa->estado = $request->estado;
-        $programa->id_programa = $request->id_programa;
-        
-        $programa->save();
-        //$programa = Programas::findOrFail($id);
-        //return view('programas.edit', compact('programa'));
-        return back();
+        return response()->json($programa);
     }
-    
+
     public function update(Request $request, $id)
     {
-        $validatedData = $request->validate([
-            'programa' => 'required|string',
-            'id_padre' => 'required|integer',
-            'id_programa' => 'required|string|max:5|unique:programas,id,'.$id,
-            'estado' => 'required|string',
-        ]);
-
-        $programa = Programas::findOrFail($id);
-        $programa->update($validatedData);
-
-        return back();
+        Programas::whereId($id)->update($request->all());
+        return response()->json(['success' => 'Programa actualizado exitosamente.']);
     }
 
     public function destroy($id)
     {
-        $programa = Programas::findOrFail($id);
-        $programa->delete();
-        return redirect()->route('programas.index',  ['id' => $id]);
-        //return back();
+        Programas::find($id)->delete();
+        return response()->json(['success' => 'Programa eliminado exitosamente.']);
     }
 }

@@ -83,6 +83,7 @@ Route::prefix('hermes')->group(function() {
     Route::get('documents/destroy/{id}', [DocumentsController::class, 'destroy'])->name('documents.destroy');
 
     Route::get('documents/downloadPdf/{id}', [DocumentsController::class, 'downloadPdf']);
+    
 });
 
 

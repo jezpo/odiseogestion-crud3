@@ -37,7 +37,7 @@
 
                                 <!-- Botón para abrir el modal de creación -->
                                 <div>
-                                    <a id="abrirDocumentoModal" href="#modal-dialog" class="btn btn-sm btn btn-primary"
+                                    <a id="addDocumentoForm" href="#modal-dialog" class="btn btn-sm btn btn-primary"
                                         data-toggle="modal">Crear Nuevo</a>
 
                                 </div>
@@ -56,7 +56,7 @@
                                             </div>
                                             <div class="modal-body">
                                                 <!-- Formulario de creación -->
-                                                <form id="crearNuevoDocumentoForm" class="form-horizontal" method="PUT"
+                                                <form id="crearNuevoDocumentoForm" class="form-horizontal" method="POST"
                                                     enctype="multipart/form-data" action="{{ route('documents.store') }}">
                                                     @csrf
                                                     <div class="form-group row m-b-15">
@@ -397,22 +397,26 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="modal fade" id="pdfModal" tabindex="-1" role="dialog" aria-labelledby="pdfModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="pdfModal" tabindex="-1" role="dialog"
+                                    aria-labelledby="pdfModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-lg">
-                                      <div class="modal-content">
-                                        <div class="modal-header">
-                                          <h5 class="modal-title" id="pdfModalLabel">Vista previa del PDF</h5>
-                                          <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="pdfModalLabel">Vista previa del PDF</h5>
+                                                <button type="button" class="btn-close" data-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <iframe id="pdfFrame" style="width:100%; height:500px;"
+                                                    frameborder="0"></iframe>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-dismiss="modal">Cerrar</button>
+                                            </div>
                                         </div>
-                                        <div class="modal-body">
-                                          <iframe id="pdfFrame" style="width:100%; height:500px;" frameborder="0"></iframe>
-                                        </div>
-                                        <div class="modal-footer">
-                                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                                        </div>
-                                      </div>
                                     </div>
-                                  </div>
+                                </div>
 
                                 <!-- modal para el uso de de alertas -->
                                 {{--
@@ -436,262 +440,260 @@
                         </div>
                     </div>
                 </div>
-            @endsection
+            </div>
+        </div>
+    </div>
+
+@endsection
 
 
-            @push('scripts')
-                <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet" />
-                <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-                <link href="../assets/css/material/app.min.css" rel="stylesheet" />
-                <!-- ================== END BASE CSS STYLE ================== -->
+@push('scripts')
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link href="../assets/css/material/app.min.css" rel="stylesheet" />
+    <!-- ================== END BASE CSS STYLE ================== -->
 
-                <link href="../assets/plugins/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
-                <link href="../assets/plugins/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css"
-                    rel="stylesheet" />
-                <link href="../assets/plugins/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css"
-                    rel="stylesheet" />
-                <link href="../assets/plugins/datatables.net-autofill-bs4/css/autofill.bootstrap4.min.css"
-                    rel="stylesheet" />
-                <link href="../assets/plugins/datatables.net-colreorder-bs4/css/colreorder.bootstrap4.min.css"
-                    rel="stylesheet" />
-                <link href="../assets/plugins/datatables.net-keytable-bs4/css/keytable.bootstrap4.min.css"
-                    rel="stylesheet" />
-                <link href="../assets/plugins/datatables.net-rowreorder-bs4/css/rowreorder.bootstrap4.min.css"
-                    rel="stylesheet" />
-                <link href="../assets/plugins/datatables.net-select-bs4/css/select.bootstrap4.min.css" rel="stylesheet" />
-                <!-- ================== END PAGE LEVEL STYLE ================== -->
+    <link href="../assets/plugins/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+    <link href="../assets/plugins/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" />
+    <link href="../assets/plugins/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet" />
+    <link href="../assets/plugins/datatables.net-autofill-bs4/css/autofill.bootstrap4.min.css" rel="stylesheet" />
+    <link href="../assets/plugins/datatables.net-colreorder-bs4/css/colreorder.bootstrap4.min.css" rel="stylesheet" />
+    <link href="../assets/plugins/datatables.net-keytable-bs4/css/keytable.bootstrap4.min.css" rel="stylesheet" />
+    <link href="../assets/plugins/datatables.net-rowreorder-bs4/css/rowreorder.bootstrap4.min.css" rel="stylesheet" />
+    <link href="../assets/plugins/datatables.net-select-bs4/css/select.bootstrap4.min.css" rel="stylesheet" />
+    <!-- ================== END PAGE LEVEL STYLE ================== -->
 
-                <!-- ================== BEGIN PAGE LEVEL JS ================== -->
-                <script src="../assets/plugins/datatables.net/js/jquery.dataTables.min.js"></script>
-                <script src="../assets/plugins/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
-                <script src="../assets/plugins/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-                <script src="../assets/plugins/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
-                <script src="../assets/plugins/datatables.net-autofill/js/dataTables.autofill.min.js"></script>
-                <script src="../assets/plugins/datatables.net-autofill-bs4/js/autofill.bootstrap4.min.js"></script>
-                <script src="../assets/plugins/datatables.net-colreorder/js/dataTables.colreorder.min.js"></script>
-                <script src="../assets/plugins/datatables.net-colreorder-bs4/js/colreorder.bootstrap4.min.js"></script>
-                <script src="../assets/plugins/datatables.net-keytable/js/dataTables.keytable.min.js"></script>
-                <script src="../assets/plugins/datatables.net-keytable-bs4/js/keytable.bootstrap4.min.js"></script>
-                <script src="../assets/plugins/datatables.net-rowreorder/js/dataTables.rowreorder.min.js"></script>
-                <script src="../assets/plugins/datatables.net-rowreorder-bs4/js/rowreorder.bootstrap4.min.js"></script>
-                <script src="../assets/plugins/datatables.net-select/js/dataTables.select.min.js"></script>
-                <script src="../assets/plugins/datatables.net-select-bs4/js/select.bootstrap4.min.js"></script>
-                <script src="../assets/plugins/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-                <script src="../assets/plugins/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
-                <script src="../assets/plugins/datatables.net-buttons/js/buttons.colVis.min.js"></script>
-                <script src="../assets/plugins/datatables.net-buttons/js/buttons.flash.min.js"></script>
-                <script src="../assets/plugins/datatables.net-buttons/js/buttons.html5.min.js"></script>
-                <script src="../assets/plugins/datatables.net-buttons/js/buttons.print.min.js"></script>
-                <script src="../assets/plugins/pdfmake/build/pdfmake.min.js"></script>
-                <script src="../assets/plugins/pdfmake/build/vfs_fonts.js"></script>
-                <script src="../assets/plugins/jszip/dist/jszip.min.js"></script>
-                <script src="../assets/js/demo/table-manage-combine.demo.js"></script>
+    <!-- ================== BEGIN PAGE LEVEL JS ================== -->
+    <script src="../assets/plugins/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="../assets/plugins/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="../assets/plugins/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="../assets/plugins/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+    <script src="../assets/plugins/datatables.net-autofill/js/dataTables.autofill.min.js"></script>
+    <script src="../assets/plugins/datatables.net-autofill-bs4/js/autofill.bootstrap4.min.js"></script>
+    <script src="../assets/plugins/datatables.net-colreorder/js/dataTables.colreorder.min.js"></script>
+    <script src="../assets/plugins/datatables.net-colreorder-bs4/js/colreorder.bootstrap4.min.js"></script>
+    <script src="../assets/plugins/datatables.net-keytable/js/dataTables.keytable.min.js"></script>
+    <script src="../assets/plugins/datatables.net-keytable-bs4/js/keytable.bootstrap4.min.js"></script>
+    <script src="../assets/plugins/datatables.net-rowreorder/js/dataTables.rowreorder.min.js"></script>
+    <script src="../assets/plugins/datatables.net-rowreorder-bs4/js/rowreorder.bootstrap4.min.js"></script>
+    <script src="../assets/plugins/datatables.net-select/js/dataTables.select.min.js"></script>
+    <script src="../assets/plugins/datatables.net-select-bs4/js/select.bootstrap4.min.js"></script>
+    <script src="../assets/plugins/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="../assets/plugins/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
+    <script src="../assets/plugins/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+    <script src="../assets/plugins/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="../assets/plugins/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="../assets/plugins/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="../assets/plugins/pdfmake/build/pdfmake.min.js"></script>
+    <script src="../assets/plugins/pdfmake/build/vfs_fonts.js"></script>
+    <script src="../assets/plugins/jszip/dist/jszip.min.js"></script>
+    <script src="../assets/js/demo/table-manage-combine.demo.js"></script>
 
-                <link href="../assets/plugins/select2/dist/css/select2.min.css" rel="stylesheet" />
-                <link href="../assets/plugins/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet" />
-                <script src="../assets/plugins/select2/dist/js/select2.min.js"></script>
-                <script src="../assets/js/demo/ui-modal-notification.demo.js"></script>
-                <script>
-                    $(document).ready(function() {
-                        var documentTable = $('#documentos-table').DataTable({
-                            processing: true,
-                            serverSide: true,
-                            ajax: {
-                                url: "{{ route('documents.index') }}",
-                            },
-                            columns: [{
-                                    data: 'id',
-                                    name: 'id'
-                                },
-                                {
-                                    data: 'cite',
-                                    name: 'cite'
-                                },
-                                {
-                                    data: 'descripcion',
-                                    name: 'descripcion'
-                                },
-                                {
-                                    data: 'estado',
-                                    name: 'estado'
-                                },
-                                {
-                                    data: 'id_tipo_documento',
-                                    name: 'id_tipo_documento'
-                                },
-                                {
-                                    data: 'programa',
-                                    name: 'programa'
-                                },
+    <link href="../assets/plugins/select2/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="../assets/plugins/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet" />
+    <script src="../assets/plugins/select2/dist/js/select2.min.js"></script>
+    <script src="../assets/js/demo/ui-modal-notification.demo.js"></script>
+    <script>
+        $(document).ready(function() {
+            var documentTable = $('#documentos-table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: "{{ route('documents.index') }}",
+                },
+                columns: [{
+                        data: 'id',
+                        name: 'id'
+                    },
+                    {
+                        data: 'cite',
+                        name: 'cite'
+                    },
+                    {
+                        data: 'descripcion',
+                        name: 'descripcion'
+                    },
+                    {
+                        data: 'estado',
+                        name: 'estado'
+                    },
+                    {
+                        data: 'id_tipo_documento',
+                        name: 'id_tipo_documento'
+                    },
+                    {
+                        data: 'programa',
+                        name: 'programa'
+                    },
 
-                                {
-                                    data: 'action',
-                                    name: 'action',
-                                    orderable: true,
-                                    searchable: true,
-                                },
-                            ],
-                        });
-                    });
-                </script>
-                <script>
-                    //ingresar un nuevo documento
-                    $(function() {
-                        $('#abrirDocumentoModal').click(function() {
-                            // Limpia los mensajes de error y campos del formulario
-                            $('.parsley-errors-list').empty();
-                            $('#crearNuevoDocumentoForm input, #crearNuevoDocumentoForm textarea, #crearNuevoDocumentoForm select')
-                                .val('');
-                            // Agregar evento para enviar el formulario
-                            $('#crearNuevoDocumentoForm').on('submit', function(e) {
-                                e.preventDefault();
-                                var formData = new FormData(this);
-                                formData.append('_token', '{{ csrf_token() }}');
-                                $.ajax({
-                                    url: "{{ route('documents.store') }}", // Ruta para almacenar el nuevo documento
-                                    type: "POST",
-                                    data: formData,
-                                    processData: false,
-                                    contentType: false,
-                                    success: function(response) {
-                                        // Cerrar el modal
-                                        $('#modal-dialog').modal('hide');
-                                        // Recargar la tabla DataTables para mostrar el nuevo registro
-                                        $('#documentos-table').DataTable().ajax
-                                            .reload();
-                                    },
-                                    error: function(xhr) {
-                                        if (xhr.responseJSON.errors) {
-                                            // Mostrar mensajes de error de validación en el formulario
-                                            $.each(xhr.responseJSON.errors, function(
-                                                key, value) {
-                                                var errorElement = $('#' + key)
-                                                    .closest(
-                                                        '.form-group').find(
-                                                        '.parsley-errors-list');
-                                                errorElement.empty().append(
-                                                    '<li class="parsley-required">' +
-                                                    value + '</li>');
-                                            });
-                                        }
-                                    }
-                                });
-                            });
-                        });
-                    });
-                </script>
-                <script>
-                    // Definir la variable global 'doc_id' que almacenará el ID del documento a eliminar
-                    var doc_id;
-
-                    // Función que será llamada cuando se haga clic en el botón "Eliminar"
-                    function deleteDocument(docId) {
-                        doc_id = docId;
-                        console.log("doc_id establecido como: ", doc_id); // Para depuración
-                        $('#deleteDocument').modal('show'); // Mostrar el modal de confirmación
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: true,
+                        searchable: true,
+                    },
+                ],
+            });
+        });
+    </script>
+    <script>
+        //ingresar un nuevo documento
+        $(document).ready(function() {
+            $("#addDocumentoForm").on("submit", function(e) {
+                e.preventDefault();
+                let formData = new FormData(this);
+                $.ajax({
+                    url: "{{ route('documents.store') }}", // Reemplaza esto con la URL del controlador
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        $('#addDocumentoModal').modal('hide');
+                        location.reload(); // O actualizar una tabla/lista en tu vista
+                    },
+                    error: function(error) {
+                        console.log(error);
                     }
+                });
+            });
+        });
+    </script>
+    <script>
+        // Definir la variable global 'doc_id' que almacenará el ID del documento a eliminar
+        var doc_id;
 
-                    // Manejador para el botón dentro del modal que confirma la eliminación
-                    $('#btnDelete').click(function() {
-                        if (doc_id) { // Solo procede si doc_id está establecido
-                            $.ajax({
-                                url: "documents/destroy/" + doc_id,
-                                beforeSend: function() {
-                                    $('#btnDelete').text('Eliminando...');
-                                },
-                                success: function(data) {
-                                    setTimeout(function() {
-                                        $('#deleteDocument').modal('hide');
-                                        // Usar alert en lugar de toastr
-                                        alert('El registro fue eliminado correctamente');
-                                        // Asumiendo que tienes DataTable y quieres recargar los datos
-                                        $('#documentos-table').DataTable().ajax.reload();
-                                    }, 2000);
-                                },
-                                error: function(xhr, status, error) {
-                                    console.error("Error: ", xhr, status, error); // Para depuración
-                                }
-                            });
-                        } else {
-                            console.error("doc_id no está establecido."); // Para depuración
-                        }
-                    });
-                </script>
+        // Función que será llamada cuando se haga clic en el botón "Eliminar"
+        function deleteDocument(docId) {
+            doc_id = docId;
+            console.log("doc_id establecido como: ", doc_id); // Para depuración
+            $('#deleteDocument').modal('show'); // Mostrar el modal de confirmación
+        }
 
-                <script type="text/javascript">
-                    $(document).ready(function() {
-                        $('.select2_programas').select2({
-                            placeholder: "Por favor selecciona el origen", // placeholder
-                        });
-                    });
-                </script>
-
-                <script>
-                    function editDocument(id) {
-                        $.get('documents/edit/' + id, function(data) {
-                            $('#txtId2').val(data.id);
-                            $('#cite2').val(data.cite);
-                            $('#descripcion2').val(data.descripcion);
-                            $('#estado2').val(data.estado).trigger('change');
-                            //$('#archivo').val(data.archivo).trigger('change');
-                            $('#id_tipo_documento2').val(data.id_tipo_documento).trigger('change');
-                            $('#id_programa2').val(data.id_programa).trigger('change');
-                            $("input[name=_token]").val();
-                            $('#editarDocumentoModal').modal('show');
-                        })
+        // Manejador para el botón dentro del modal que confirma la eliminación
+        $('#btnDelete').click(function() {
+            if (doc_id) { // Solo procede si doc_id está establecido
+                $.ajax({
+                    url: "documents/destroy/" + doc_id,
+                    beforeSend: function() {
+                        $('#btnDelete').text('Eliminando...');
+                    },
+                    success: function(data) {
+                        setTimeout(function() {
+                            $('#deleteDocument').modal('hide');
+                            // Usar alert en lugar de toastr
+                            alert('El registro fue eliminado correctamente');
+                            // Asumiendo que tienes DataTable y quieres recargar los datos
+                            $('#documentos-table').DataTable().ajax.reload();
+                        }, 2000);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Error: ", xhr, status, error); // Para depuración
                     }
-                </script>
+                });
+            } else {
+                console.error("doc_id no está establecido."); // Para depuración
+            }
+        });
+    </script>
 
-                <script>
-                    $('#editDocumentoForm').submit(function(e) {
-                        e.preventDefault();
-                        var id2 = $('#txtId2').val();
-                        var cite2 = $('#cite2').val();
-                        var descripcion2 = $('#descripcion2').val();
-                        var estado2 = $('#estado2').val();
-                        var id_tipo_documento2 = $('#id_tipo_documento2').val();
-                        var id_programa2 = $('#id_programa2').val();
-                        var _token2 = $("input[name=_token]").val();
-                        $.ajax({
-                            url: "documents/update/" + id2, // Asegúrate de que esta URL es correcta
-                            type: 'POST',
-                            data: {
-                                _method: 'PUT',
-                                id: id2,
-                                cite: cite2,
-                                descripcion: descripcion2,
-                                estado: estado2,
-                                id_tipo_documento: id_tipo_documento2,
-                                id_programa: id_programa2,
-                                _token: _token2
-                            },
-                            success: function(response) {
-                                if (response) {
-                                    $('#editarDocumentoModal').modal('hide');
-                                    alert('El registro fue actualizado correctamente');
-                                    $('#documentos-table').DataTable().ajax.reload();
-                                }
-                            },
-                            error: function(jqXHR, textStatus, errorThrown) {
-                                console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
-                            }
-                        });
-                    });
-                </script>
-                <script>
-                    function loadPDF(id) {
-                        $.ajax({
-                            url: '/hermes/documentos/downloadPdf/' + id, // Actualiza esta línea
-                            method: 'GET',
-                            success: function(response) {
-                                var base64 = response.base64;
-                                $('#pdfFrame').attr('src', 'data:application/pdf;base64,' + base64);
-                                $('#pdfModal').modal('show');
-                            },
-                            error: function() {
-                                alert('Documento no encontrado');
-                            }
-                        });
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.select2_programas').select2({
+                placeholder: "Por favor selecciona el origen", // placeholder
+            });
+        });
+    </script>
+
+    <script>
+        function editDocument(id) {
+            $.get('documents/edit/' + id, function(data) {
+                $('#txtId2').val(data.id);
+                $('#cite2').val(data.cite);
+                $('#descripcion2').val(data.descripcion);
+                $('#estado2').val(data.estado).trigger('change');
+                //$('#archivo').val(data.archivo).trigger('change');
+                $('#id_tipo_documento2').val(data.id_tipo_documento).trigger('change');
+                $('#id_programa2').val(data.id_programa).trigger('change');
+                $("input[name=_token]").val();
+                $('#editarDocumentoModal').modal('show');
+            })
+        }
+    </script>
+
+    <script>
+        $('#editDocumentoForm').submit(function(e) {
+            e.preventDefault();
+            var id2 = $('#txtId2').val();
+            var cite2 = $('#cite2').val();
+            var descripcion2 = $('#descripcion2').val();
+            var estado2 = $('#estado2').val();
+            var id_tipo_documento2 = $('#id_tipo_documento2').val();
+            var id_programa2 = $('#id_programa2').val();
+            var _token2 = $("input[name=_token]").val();
+            $.ajax({
+                url: "documents/update/" + id2, // Asegúrate de que esta URL es correcta
+                type: 'POST',
+                data: {
+                    _method: 'PUT',
+                    id: id2,
+                    cite: cite2,
+                    descripcion: descripcion2,
+                    estado: estado2,
+                    id_tipo_documento: id_tipo_documento2,
+                    id_programa: id_programa2,
+                    _token: _token2
+                },
+                success: function(response) {
+                    if (response) {
+                        $('#editarDocumentoModal').modal('hide');
+                        alert('El registro fue actualizado correctamente');
+                        $('#documentos-table').DataTable().ajax.reload();
                     }
-                </script>
-            @endpush
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+                }
+            });
+        });
+    </script>
+    <script>
+        function b64toBlob(b64Data, contentType = '', sliceSize = 512) {
+            const byteCharacters = atob(b64Data);
+            const byteArrays = [];
+
+            for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+                const slice = byteCharacters.slice(offset, offset + sliceSize);
+
+                const byteNumbers = new Array(slice.length);
+                for (let i = 0; i < slice.length; i++) {
+                    byteNumbers[i] = slice.charCodeAt(i);
+                }
+
+                const byteArray = new Uint8Array(byteNumbers);
+                byteArrays.push(byteArray);
+            }
+
+            const blob = new Blob(byteArrays, {
+                type: contentType
+            });
+            return blob;
+        }
+
+        function loadPDF(id) {
+            $.ajax({
+                url: '/hermes/documentos/downloadPdf/' + id,
+                method: 'GET',
+                success: function(response) {
+                    var blob = b64toBlob(response.base64, 'application/pdf');
+                    var blobUrl = URL.createObjectURL(blob);
+                    $('#pdfFrame').attr('src', blobUrl);
+                    $('#pdfModal').modal('show');
+                },
+                error: function() {
+                    alert('Documento no encontrado');
+                }
+            });
+        }
+    </script>
+@endpush

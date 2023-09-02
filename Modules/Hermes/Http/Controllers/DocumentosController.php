@@ -124,9 +124,22 @@ class DocumentosController extends Controller
     //como convierto pdf para la vista 
     public function verDocumento($id)
     {
-        $notificacion = Documentos::find($id);
-        $documentoBase64 = $notificacion->documento;
-        return response(base64_decode($documentoBase64))
-            ->header('Content-Type', 'application/pdf');
+        $documento = Documentos::find($id);
+
+        if (!$documento) {
+            return response()->json(['error' => 'Documento no encontrado'], 404);
+        }
+
+        if (!isset($documento->documento) || empty($documento->documento)) {
+            return response()->json(['error' => 'Campo de documento vacío'], 404);
+        }
+
+        try {
+            return response()->json([
+                'base64' => base64_encode($documento->documento)
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Error al procesar el documento: ' . $e->getMessage()], 500);
+        }
     }
 }

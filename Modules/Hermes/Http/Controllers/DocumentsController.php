@@ -17,7 +17,7 @@ class DocumentsController extends Controller
 {
     public function index(Request $request)
     {
-       
+
         if ($request->ajax()) {
             $documentos = Documentos::list_documents();
 
@@ -50,37 +50,25 @@ class DocumentsController extends Controller
 
     public function store(Request $request)
     {
-
-        $request->validate([
-            'cite' => 'required',
-            'descripcion' => 'required',
-            'id_tipo_documento' => 'required',
-            'documento' => 'required',
-            'id_programa' => 'required',
-        ]);
-
-        $archivo = $request->file('documento');
-        $name_document = time() . '_' . $archivo->getClientOriginalName();
-
-
-        $documento = Documentos::create([
-            'cite' => $request->cite,
-            'descripcion' => $request->descripcion,
-            'estado' => $request->estado,
-            'id_tipo_documento' => $request->id_tipo_documento,
-            'hash' =>  hash_file('md5', $request->documento),
-            'documento' => "documento",
-            'name_document' => (string)$name_document,
-            'id_programa' => $request->id_programa,
-        ]);
-
-        if ($request->file('documento')) {
-            $documento->documento = $request->file('documento')->store('documentos', 'public');
-            $documento->save();
+        $file = $request->file('documento');
+        if ($request->ajax()) {
+            $file = $request->file('documento');
+            $documento = file_get_contents($file);
+    
+            DB::table('documentos')->insert([
+                'cite' => $request->input('cite'),
+                'descripcion' => $request->input('descripcion'),
+                'estado' => $request->input('estado'),
+                'hash' => $request->input('hash'),
+                'id_tipo_documento' => $request->input('id_tipo_documento'),
+                'documento' => $documento,
+                'id_programa' => $request->input('id_programa')
+            ]);
+    
+            return response()->json(['message' => 'Documento agregado correctamente.']);
         }
-
-        return response()->json(['message' => 'Documento creado exitosamente', 'documento' => $documento]);
     }
+
 
     public function update(Request $request, $id)
     {
@@ -115,7 +103,7 @@ class DocumentsController extends Controller
 
     public function show($id)
     {
-        $documento = Documentos::select('*')->find($id);
+        $documento = Documentos::select('id', 'cite', 'descripcion', 'estado', 'id_tipo_documento', 'id_programa')->find($id);
         if (!$documento) {
             return response()->json(['error' => 'Documento no encontrado'], 404);
         }
@@ -123,11 +111,10 @@ class DocumentsController extends Controller
     }
 
     //como convierto pdf para la vista 
-    
+
     public function downloadPdf($id)
     {
-
-        $documento = Documentos::where('id', $id)->first();
+        $documento = Documentos::find($id);
 
         // Si el documento existe
         if ($documento) {
