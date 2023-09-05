@@ -48,27 +48,41 @@ class DocumentsController extends Controller
         return response()->json($documentos);
     }
 
+
     public function store(Request $request)
     {
-        $file = $request->file('documento');
-        if ($request->ajax()) {
-            $file = $request->file('documento');
-            $documento = file_get_contents($file);
-    
-            DB::table('documentos')->insert([
-                'cite' => $request->input('cite'),
-                'descripcion' => $request->input('descripcion'),
-                'estado' => $request->input('estado'),
-                'hash' => $request->input('hash'),
-                'id_tipo_documento' => $request->input('id_tipo_documento'),
-                'documento' => $documento,
-                'id_programa' => $request->input('id_programa')
-            ]);
-    
-            return response()->json(['message' => 'Documento agregado correctamente.']);
-        }
-    }
+        $request->validate([
+            'cite' => 'required',
+            'descripcion' => 'required',
+            'id_tipo_documento' => 'required',
+            'documento' => 'required',
+            'id_programa' => 'required',
+        ]);
 
+        // Convertir el archivo a una cadena en formato base64
+        $archivo = $request->file('documento');
+        $name_document = time() . '_' . $archivo->getClientOriginalName();
+        $contenidoArchivo = file_get_contents($archivo->getRealPath());
+        $archivoBase64 = base64_encode($contenidoArchivo);
+
+        // Convertir la cadena base64 a binario para almacenarla en PostgreSQL
+        $archivoBinario = base64_decode($archivoBase64);
+
+        // Almacenar la cadena binaria y otros datos en la base de datos
+        $documento = new Documentos;
+        $documento->cite = $request->cite;
+        $documento->descripcion = $request->descripcion;
+        $documento->estado = $request->estado;
+        $documento->id_tipo_documento = $request->id_tipo_documento;
+        $documento->hash = hash_file('md5', $request->documento);
+        $documento->documento = $archivoBinario; // Aquí guardas el contenido binario en la columna "documento"
+        $documento->name_document = (string)$name_document;
+        $documento->id_programa = $request->id_programa;
+        $documento->save();
+
+        // Redirigir al usuario después de guardar
+        return redirect()->route('hermes::documents.index')->with('success', 'Documento creado exitosamente');
+    }
 
     public function update(Request $request, $id)
     {

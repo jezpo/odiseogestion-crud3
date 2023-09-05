@@ -228,6 +228,21 @@
                                     </div>
                                 </div>
 
+                                <div class="panel-body">
+                                    <p class="lead m-b-10 text-inverse">
+                                        SweetAlert for Bootstrap. A beautiful replacement for JavaScript's "alert"
+                                    </p>
+                                    <hr />
+                                    <p class="">
+                                        Try any of those!
+                                    </p>
+                                    <a href="javascript:;" data-click="swal-primary" class="btn btn-primary">Primary</a>
+                                    <a href="javascript:;" data-click="swal-info" class="btn btn-info">Info</a>
+                                    <a href="javascript:;" data-click="swal-success" class="btn btn-success">Success</a>
+                                    <a href="javascript:;" data-click="swal-warning" class="btn btn-warning">Warning</a>
+                                    <a href="javascript:;" data-click="swal-danger" class="btn btn-danger">Danger</a>
+                                </div>
+
                                 <!-- Modal para Editar -->
                                 <div class="modal fade" id="editarDocumentoModal" tabindex="-1" role="dialog"
                                     aria-labelledby="editarDocumentoModalLabel" aria-hidden="true">
@@ -493,6 +508,9 @@
     <link href="../assets/plugins/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet" />
     <script src="../assets/plugins/select2/dist/js/select2.min.js"></script>
     <script src="../assets/js/demo/ui-modal-notification.demo.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="../assets/plugins/gritter/css/jquery.gritter.css" rel="stylesheet" />
+
     <script>
         $(document).ready(function() {
             var documentTable = $('#documentos-table').DataTable({
@@ -538,23 +556,46 @@
     </script>
     <script>
         //ingresar un nuevo documento
-        $(document).ready(function() {
-            $("#addDocumentoForm").on("submit", function(e) {
-                e.preventDefault();
-                let formData = new FormData(this);
-                $.ajax({
-                    url: "{{ route('documents.store') }}", // Reemplaza esto con la URL del controlador
-                    type: 'POST',
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function(response) {
-                        $('#addDocumentoModal').modal('hide');
-                        location.reload(); // O actualizar una tabla/lista en tu vista
-                    },
-                    error: function(error) {
-                        console.log(error);
-                    }
+        $(function() {
+            $('#abrirDocumentoModal').click(function() {
+                // Limpia los mensajes de error y campos del formulario
+                $('.parsley-errors-list').empty();
+                $('#crearNuevoDocumentoForm input, #crearNuevoDocumentoForm textarea, #crearNuevoDocumentoForm select')
+                    .val('');
+                // Agregar evento para enviar el formulario
+                $('#crearNuevoDocumentoForm').on('submit', function(e) {
+                    e.preventDefault();
+                    var formData = new FormData(this);
+                    formData.append('_token', '{{ csrf_token() }}');
+                    $.ajax({
+                        url: "{{ route('documents.index') }}", // Ruta para almacenar el nuevo documento
+                        type: "POST",
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function(response) {
+                            // Cerrar el modal
+                            $('#modal-dialog').modal('hide');
+                            // Recargar la tabla DataTables para mostrar el nuevo registro
+                            $('#documentos-table').DataTable().ajax
+                                .reload();
+                        },
+                        error: function(xhr) {
+                            if (xhr.responseJSON.errors) {
+                                // Mostrar mensajes de error de validación en el formulario
+                                $.each(xhr.responseJSON.errors, function(
+                                    key, value) {
+                                    var errorElement = $('#' + key)
+                                        .closest(
+                                            '.form-group').find(
+                                            '.parsley-errors-list');
+                                    errorElement.empty().append(
+                                        '<li class="parsley-required">' +
+                                        value + '</li>');
+                                });
+                            }
+                        }
+                    });
                 });
             });
         });
