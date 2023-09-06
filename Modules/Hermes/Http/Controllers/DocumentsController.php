@@ -59,31 +59,28 @@ class DocumentsController extends Controller
             'id_programa' => 'required',
         ]);
 
-        // Convertir el archivo a una cadena en formato base64
+        // Obtener el archivo y el nombre del archivo
         $archivo = $request->file('documento');
         $name_document = time() . '_' . $archivo->getClientOriginalName();
+
+        // Guardar el contenido binario directamente
         $contenidoArchivo = file_get_contents($archivo->getRealPath());
-        $archivoBase64 = base64_encode($contenidoArchivo);
 
-        // Convertir la cadena base64 a binario para almacenarla en PostgreSQL
-        $archivoBinario = base64_decode($archivoBase64);
-
-        // Almacenar la cadena binaria y otros datos en la base de datos
+        // Almacenar el contenido binario y otros datos en la base de datos
         $documento = new Documentos;
         $documento->cite = $request->cite;
         $documento->descripcion = $request->descripcion;
         $documento->estado = $request->estado;
         $documento->id_tipo_documento = $request->id_tipo_documento;
         $documento->hash = hash_file('md5', $request->documento);
-        $documento->documento = $archivoBinario; // Aquí guardas el contenido binario en la columna "documento"
-        $documento->name_document = (string)$name_document;
+        $documento->documento = $contenidoArchivo; // Guardas el contenido binario
+        $documento->name_document = $name_document;
         $documento->id_programa = $request->id_programa;
         $documento->save();
 
-        // Redirigir al usuario después de guardar
         return redirect()->route('hermes::documents.index')->with('success', 'Documento creado exitosamente');
     }
-
+    
     public function update(Request $request, $id)
     {
         $documentos = Documentos::find($id);
