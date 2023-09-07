@@ -228,20 +228,6 @@
                                     </div>
                                 </div>
 
-                                <div class="panel-body">
-                                    <p class="lead m-b-10 text-inverse">
-                                        SweetAlert for Bootstrap. A beautiful replacement for JavaScript's "alert"
-                                    </p>
-                                    <hr />
-                                    <p class="">
-                                        Try any of those!
-                                    </p>
-                                    <a href="javascript:;" data-click="swal-primary" class="btn btn-primary">Primary</a>
-                                    <a href="javascript:;" data-click="swal-info" class="btn btn-info">Info</a>
-                                    <a href="javascript:;" data-click="swal-success" class="btn btn-success">Success</a>
-                                    <a href="javascript:;" data-click="swal-warning" class="btn btn-warning">Warning</a>
-                                    <a href="javascript:;" data-click="swal-danger" class="btn btn-danger">Danger</a>
-                                </div>
 
                                 <!-- Modal para Editar -->
                                 <div class="modal fade" id="editarDocumentoModal" tabindex="-1" role="dialog"

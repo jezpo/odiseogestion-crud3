@@ -51,36 +51,27 @@ class DocumentsController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'cite' => 'required',
-            'descripcion' => 'required',
-            'id_tipo_documento' => 'required',
-            'documento' => 'required',
-            'id_programa' => 'required',
-        ]);
-
-        // Obtener el archivo y el nombre del archivo
         $archivo = $request->file('documento');
         $name_document = time() . '_' . $archivo->getClientOriginalName();
 
-        // Guardar el contenido binario directamente
-        $contenidoArchivo = file_get_contents($archivo->getRealPath());
+        // Almacena el archivo en el sistema de archivos (p.ej., 'public' o 's3')
+        $path = $archivo->storeAs('pdfs', $name_document, 'public');
 
-        // Almacenar el contenido binario y otros datos en la base de datos
+        $hash = md5($path);
+        // Guarda la referencia del archivo en la base de datos
         $documento = new Documentos;
         $documento->cite = $request->cite;
         $documento->descripcion = $request->descripcion;
         $documento->estado = $request->estado;
         $documento->id_tipo_documento = $request->id_tipo_documento;
-        $documento->hash = hash_file('md5', $request->documento);
-        $documento->documento = $contenidoArchivo; // Guardas el contenido binario
+        $documento->hash = $hash;
+        $documento->documento = $path; // Guarda la ruta del archivo
         $documento->name_document = $name_document;
         $documento->id_programa = $request->id_programa;
         $documento->save();
 
-        return redirect()->route('hermes::documents.index')->with('success', 'Documento creado exitosamente');
+        return response()->json(['success' => 'Documento creado exitosamente']);
     }
-    
     public function update(Request $request, $id)
     {
         $documentos = Documentos::find($id);
