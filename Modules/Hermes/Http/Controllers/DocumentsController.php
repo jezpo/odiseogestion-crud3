@@ -10,6 +10,8 @@ use Yajra\DataTables\DataTables;
 use Modules\Hermes\Entities\Documentos;
 use Modules\Hermes\Entities\Programas;
 use Illuminate\Support\Facades\DB;
+use PgSql\Connection;
+use PDO;
 use Barryvdh\DomPDF\Facade as PDF;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
@@ -48,54 +50,39 @@ class DocumentsController extends Controller
         return response()->json($documentos);
     }
 
-
     public function store(Request $request)
-    {
-        $archivo = $request->file('documento');
-        $name_document = time() . '_' . $archivo->getClientOriginalName();
+{
+    // Establecer la conexión a la base de datos
+    $conn = pg_connect("host=127.0.0.1 dbname=hermes4 user=postgres password=postgres");
 
-        // Almacena el archivo en el sistema de archivos (p.ej., 'public' o 's3')
-        $path = $archivo->storeAs('pdfs', $name_document, 'public');
+    // 1. Leer el archivo PDF
+    $archivo = $request->file('documento');
+    $name_document = time() . '_' . $archivo->getClientOriginalName();
+    $contenidoArchivo = file_get_contents($archivo->getRealPath());
 
-        $hash = md5($path);
-        // Guarda la referencia del archivo en la base de datos
-        $documento = new Documentos;
-        $documento->cite = $request->cite;
-        $documento->descripcion = $request->descripcion;
-        $documento->estado = $request->estado;
-        $documento->id_tipo_documento = $request->id_tipo_documento;
-        $documento->hash = $hash;
-        $documento->documento = $path; // Guarda la ruta del archivo
-        $documento->name_document = $name_document;
-        $documento->id_programa = $request->id_programa;
-        $documento->save();
+    // 2. Convertir el contenido del archivo en binario utilizando pg_escape_bytea
+    $contenidoBinario = pg_escape_bytea($conn, $contenidoArchivo);
 
-        return response()->json(['success' => 'Documento creado exitosamente']);
-    }
-    public function update(Request $request, $id)
-    {
-        $documentos = Documentos::find($id);
+    // Generar un valor hash para el archivo
+    $hash = md5($contenidoArchivo);
 
-        if (!$documentos) {
-            return response()->json(['error' => 'Documento no encontrado'], 404);
-        }
+    // 3. Almacenar el binario en la base de datos
+    $documentos = new Documentos;
+    $documentos->cite = $request->cite;
+    $documentos->descripcion = $request->descripcion;
+    $documentos->estado = $request->estado;
+    $documentos->id_tipo_documento = $request->id_tipo_documento;
+    $documentos->hash = $hash;
+    $documentos->documento = $contenidoBinario; // Guardar el contenido binario
+    $documentos->name_document = $name_document;
+    $documentos->id_programa = $request->id_programa;
+    $documentos->save();
 
-        $documentos->cite = $request->cite;
-        $documentos->descripcion = $request->descripcion;
-        $documentos->estado = $request->estado;
-        $documentos->id_tipo_documento = $request->id_tipo_documento;
-        $documentos->documento = $request->documento;
-        $documentos->id_programa = $request->id_programa;
+    // Cerrar la conexión a la base de datos
+    pg_close($conn);
 
-        //$documentos->update($request->all());
-        if ($documentos->save()) {
-            return response()->json(['message' => 'Documento actualizado con éxito']);
-        } else {
-            return response()->json(['error' => 'Error al actualizar el documento'], 500);
-        }
-    }
-
-
+    return redirect()->back()->with('message', '¡Documento guardado exitosamente!');
+}
     public function destroy($id)
     {
         Documentos::findOrFail($id)->delete();
