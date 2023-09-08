@@ -540,18 +540,20 @@
         });
     </script>
     <script>
-        //ingresar un nuevo documento
+        // Ingresar un nuevo documento
         $(function() {
             $('#abrirDocumentoModal').click(function() {
                 // Limpia los mensajes de error y campos del formulario
                 $('.parsley-errors-list').empty();
                 $('#crearNuevoDocumentoForm input, #crearNuevoDocumentoForm textarea, #crearNuevoDocumentoForm select')
                     .val('');
+
                 // Agregar evento para enviar el formulario
                 $('#crearNuevoDocumentoForm').on('submit', function(e) {
                     e.preventDefault();
                     var formData = new FormData(this);
                     formData.append('_token', '{{ csrf_token() }}');
+
                     $.ajax({
                         url: "{{ route('documents.index') }}", // Ruta para almacenar el nuevo documento
                         type: "POST",
@@ -562,23 +564,36 @@
                             // Cerrar el modal
                             $('#modal-dialog').modal('hide');
                             // Recargar la tabla DataTables para mostrar el nuevo registro
-                            $('#documentos-table').DataTable().ajax
-                                .reload();
+
+                            // Utilizar SweetAlert para mostrar un mensaje de éxito
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Éxito',
+                                text: 'El nuevo documento se ha ingresado correctamente.'
+                            }).then(() => {
+                                $('#documentos-table').DataTable().ajax
+                            .reload();
+                            });
                         },
                         error: function(xhr) {
                             if (xhr.responseJSON.errors) {
                                 // Mostrar mensajes de error de validación en el formulario
-                                $.each(xhr.responseJSON.errors, function(
-                                    key, value) {
-                                    var errorElement = $('#' + key)
-                                        .closest(
-                                            '.form-group').find(
-                                            '.parsley-errors-list');
+                                $.each(xhr.responseJSON.errors, function(key, value) {
+                                    var errorElement = $('#' + key).closest(
+                                        '.form-group').find(
+                                        '.parsley-errors-list');
                                     errorElement.empty().append(
                                         '<li class="parsley-required">' +
                                         value + '</li>');
                                 });
                             }
+
+                            // Utilizar SweetAlert para mostrar un mensaje de error
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: 'Hubo un error al ingresar el nuevo documento.'
+                            });
                         }
                     });
                 });
@@ -593,34 +608,49 @@
         function deleteDocument(docId) {
             doc_id = docId;
             console.log("doc_id establecido como: ", doc_id); // Para depuración
-            $('#deleteDocument').modal('show'); // Mostrar el modal de confirmación
-        }
 
-        // Manejador para el botón dentro del modal que confirma la eliminación
-        $('#btnDelete').click(function() {
-            if (doc_id) { // Solo procede si doc_id está establecido
-                $.ajax({
-                    url: "documents/destroy/" + doc_id,
-                    beforeSend: function() {
-                        $('#btnDelete').text('Eliminando...');
-                    },
-                    success: function(data) {
-                        setTimeout(function() {
-                            $('#deleteDocument').modal('hide');
-                            // Usar alert en lugar de toastr
-                            alert('El registro fue eliminado correctamente');
-                            // Asumiendo que tienes DataTable y quieres recargar los datos
-                            $('#documentos-table').DataTable().ajax.reload();
-                        }, 2000);
-                    },
-                    error: function(xhr, status, error) {
-                        console.error("Error: ", xhr, status, error); // Para depuración
-                    }
-                });
-            } else {
-                console.error("doc_id no está establecido."); // Para depuración
-            }
-        });
+            // Utiliza SweetAlert para mostrar un diálogo de confirmación
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "Esta acción no se puede deshacer",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, eliminarlo'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // El usuario confirmó la eliminación, ejecuta la solicitud AJAX
+                    $.ajax({
+                        url: "documents/destroy/" + doc_id,
+                        beforeSend: function() {
+                            // Cambia el texto del botón mientras se realiza la solicitud
+                            Swal.showLoading();
+                        },
+                        success: function(data) {
+                            setTimeout(function() {
+                                Swal.fire(
+                                    'Eliminado',
+                                    'El registro fue eliminado correctamente',
+                                    'success'
+                                );
+
+                                // Asumiendo que tienes DataTable y quieres recargar los datos
+                                $('#documentos-table').DataTable().ajax.reload();
+                            }, 2000);
+                        },
+                        error: function(xhr, status, error) {
+                            console.error("Error: ", xhr, status, error); // Para depuración
+                            Swal.fire(
+                                'Error',
+                                'Hubo un error al eliminar el registro',
+                                'error'
+                            );
+                        }
+                    });
+                }
+            });
+        }
     </script>
 
     <script type="text/javascript">
@@ -675,7 +705,12 @@
                 success: function(response) {
                     if (response) {
                         $('#editarDocumentoModal').modal('hide');
-                        alert('El registro fue actualizado correctamente');
+                        Swal.fire({
+                            icon: 'success',
+                            title: '¡Registro actualizado!',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
                         $('#documentos-table').DataTable().ajax.reload();
                     }
                 },
