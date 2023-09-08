@@ -306,9 +306,8 @@
                                                         <div class="col-md-8 col-sm-8">
 
                                                             <div class="form-group">
-
                                                                 <input type="file" class="form-control-file"
-                                                                    id="docummento2" name="documento2" accept=".pdf">
+                                                                    id="documento2" name="documento2" accept=".pdf">
                                                             </div>
 
                                                         </div>
@@ -639,16 +638,14 @@
                 $('#cite2').val(data.cite);
                 $('#descripcion2').val(data.descripcion);
                 $('#estado2').val(data.estado).trigger('change');
-                //$('#archivo').val(data.archivo).trigger('change');
+                $('#documento2').val(''); // Limpiar el campo de entrada de archivo
                 $('#id_tipo_documento2').val(data.id_tipo_documento).trigger('change');
                 $('#id_programa2').val(data.id_programa).trigger('change');
                 $("input[name=_token]").val();
                 $('#editarDocumentoModal').modal('show');
             })
         }
-    </script>
 
-    <script>
         $('#editDocumentoForm').submit(function(e) {
             e.preventDefault();
             var id2 = $('#txtId2').val();
@@ -657,20 +654,24 @@
             var estado2 = $('#estado2').val();
             var id_tipo_documento2 = $('#id_tipo_documento2').val();
             var id_programa2 = $('#id_programa2').val();
+            var documento2 = $('#documento2')[0].files[0]; // Obtener los datos del archivo
             var _token2 = $("input[name=_token]").val();
+            var formData = new FormData();
+            formData.append('_method', 'PUT');
+            formData.append('id', id2);
+            formData.append('cite', cite2);
+            formData.append('descripcion', descripcion2);
+            formData.append('estado', estado2);
+            formData.append('id_tipo_documento', id_tipo_documento2);
+            formData.append('id_programa', id_programa2);
+            formData.append('documento', documento2); // Agregar los datos del archivo a los datos del formulario
+            formData.append('_token', _token2);
             $.ajax({
                 url: "documents/update/" + id2, // Asegúrate de que esta URL es correcta
                 type: 'POST',
-                data: {
-                    _method: 'PUT',
-                    id: id2,
-                    cite: cite2,
-                    descripcion: descripcion2,
-                    estado: estado2,
-                    id_tipo_documento: id_tipo_documento2,
-                    id_programa: id_programa2,
-                    _token: _token2
-                },
+                data: formData,
+                contentType: false,
+                processData: false,
                 success: function(response) {
                     if (response) {
                         $('#editarDocumentoModal').modal('hide');
@@ -679,7 +680,7 @@
                     }
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
-                    console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+                    console.log("Error de AJAX: " + textStatus + ' : ' + errorThrown);
                 }
             });
         });
