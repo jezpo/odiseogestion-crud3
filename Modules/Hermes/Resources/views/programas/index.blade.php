@@ -15,7 +15,7 @@
         <div class="panel panel-inverse">
             <!-- begin panel-heading -->
             <div class="panel-heading">
-                <h4 class="panel-title">DataTable - Extension Combination</h4>
+                <h4 class="panel-title">Unidad O Carrera</h4>
                 <div class="panel-heading-btn">
                     <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i
                             class="fa fa-expand"></i></a>
@@ -47,7 +47,8 @@
                                         <div class="modal-content">
                                             <div class="modal-body">
 
-                                                <h5 class="modal-title" id="nuevoDocumentoModalLabel">Nuevo Documento</h5>
+                                                <h5 class="modal-title" id="nuevoDocumentoModalLabel">Nuevo Unidad O Carrera
+                                                </h5>
                                                 <button type="button" class="close" data-dismiss="modal"
                                                     aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
@@ -55,17 +56,18 @@
                                             </div>
                                             <div class="modal-body">
                                                 <!-- Formulario de creación -->
-                                                <form id="crearNuevoDocumentoForm" class="form-horizontal" method="PUT"
-                                                    enctype="multipart/form-data" action="{{ route('documents.store') }}">
+                                                <form id="crearNuevoProgramaForm" class="form-horizontal" method="PUT"
+                                                    enctype="multipart/form-data" action="{{ route('programas.store') }}">
                                                     @csrf
                                                     <div class="form-group row m-b-15">
-                                                        <label class="col-md-4 col-sm-4 col-form-label"
-                                                            for="fullname">Cite:</label>
+                                                        <label class="col-md-4 col-sm-4 col-form-label" for="fullname">Id
+                                                            Unidad o carrera:</label>
                                                         <div class="col-md-8 col-sm-8">
-                                                            <input class="form-control" type="text" id="cite"
-                                                                value="" name="cite" placeholder="cite"
+                                                            <input class="form-control" type="text" id="id_programa"
+                                                                value="" name="id_programa"
+                                                                placeholder="ingrese la abrebiatura de la unidad o carrera"
                                                                 data-parsley-required="true">
-                                                            @error('cite')
+                                                            @error('id_programa')
                                                                 <ul class="parsley-errors-list filled" id="parsley-id-5"
                                                                     aria-hidden="false">
                                                                     <li class="parsley-required">
@@ -77,12 +79,31 @@
 
                                                     <div class="form-group row m-b-15">
                                                         <label class="col-md-4 col-sm-4 col-form-label"
-                                                            for="fullname">Descripcion:</label>
+                                                            for="fullname">Nombre Unidad O Carrrea:</label>
                                                         <div class="col-md-8 col-sm-8">
-                                                            <input class="form-control" type="text" id="descripcion"
-                                                                value="" name="descripcion" placeholder="descripcion"
+                                                            <input class="form-control" type="text" id="programa"
+                                                                value="" name="programa"
+                                                                placeholder="Nombre de Unidad O Carrera"
                                                                 data-parsley-required="true">
-                                                            @error('descripcion')
+                                                            @error('programa')
+                                                                <ul class="parsley-errors-list filled" id="parsley-id-5"
+                                                                    aria-hidden="false">
+                                                                    <li class="parsley-required">
+                                                                        {{ 'Este valor es requerido' }}</li>
+                                                                </ul>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group row m-b-15">
+                                                        <label class="col-md-4 col-sm-4 col-form-label" for="fullname">Id
+                                                            Padre:</label>
+                                                        <div class="col-md-8 col-sm-8">
+                                                            <input class="form-control" type="text" id="id_padre"
+                                                                value="" name="id_padre"
+                                                                placeholder="Nombre de Unidad O Carrera"
+                                                                data-parsley-required="true">
+                                                            @error('id_padre')
                                                                 <ul class="parsley-errors-list filled" id="parsley-id-5"
                                                                     aria-hidden="false">
                                                                     <li class="parsley-required">
@@ -110,40 +131,6 @@
                                                             </select>
                                                         </div>
                                                     </div>
-                                                    <div class="form-group row m-b-15">
-                                                        <label class="col-md-4 col-sm-4 col-form-label">Archivo:
-                                                        </label>
-                                                        <div class="col-md-8 col-sm-8">
-
-                                                            <div class="form-group">
-
-                                                                <input type="file" class="form-control-file"
-                                                                    id="docummento" name="documento" accept=".pdf">
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row m-b-15">
-                                                        <label class="col-md-4 col-sm-4 col-form-label">Tipo de
-                                                            documento: </label>
-                                                        <div class="col-md-8 col-sm-8">
-                                                            <select class="form-control" id="select-required"
-                                                                name="id_tipo_documento" data-parsley-required="true">
-                                                                <option value="">Por favor selecciona una opcion
-                                                                </option>
-                                                                <option value="1">Cata</option>
-                                                                <option value="2">Dictamen</option>
-                                                                @error('id_tipo_documento')
-                                                                    <ul class="parsley-errors-list filled" id="parsley-id-5"
-                                                                        aria-hidden="false">
-                                                                        <li class="parsley-required">
-                                                                            {{ 'este valor es requerido' }}</li>
-                                                                    </ul>
-                                                                @enderror
-                                                            </select>
-                                                        </div>
-                                                    </div>
-
 
                                                     <div class="form-group row m-b-0">
                                                         <label class="col-md-4 col-sm-4 col-form-label">&nbsp;</label>
@@ -165,7 +152,8 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <table id="programa-table" class="table table-striped table-bordered table-td-valign-middle">
+                                        <table id="programa-table"
+                                            class="table table-striped table-bordered table-td-valign-middle">
                                             <thead>
                                                 <tr role="row">
                                                     <th width="10%">Id</th>
@@ -203,7 +191,7 @@
                                 </div>
 
                                 <!-- Modal para Editar -->
-                                <div class="modal fade" id="editarDocumentoModal" tabindex="-1" role="dialog"
+                                <div class="modal fade" id="editarProgramaModal" tabindex="-1" role="dialog"
                                     aria-labelledby="editarDocumentoModalLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
@@ -217,18 +205,18 @@
                                             </div>
                                             <div class="modal-body">
                                                 <!-- Formulario de edición -->
-                                                <form id="editDocumentoForm" method="POST">
+                                                <form id="editarProgramaForm" class="form-horizontal" method="PUT"
+                                                    enctype="multipart/form-data" action="{{ route('programas.store') }}">
                                                     @csrf
-                                                    <!-- Dentro del formulario -->
-                                                    <input type="hidden" id="txtId2" name="txtId2">
                                                     <div class="form-group row m-b-15">
-                                                        <label class="col-md-4 col-sm-4 col-form-label"
-                                                            for="fullname">Cite:</label>
+                                                        <label class="col-md-4 col-sm-4 col-form-label" for="fullname">Id
+                                                            Unidad o carrera:</label>
                                                         <div class="col-md-8 col-sm-8">
-                                                            <input class="form-control" type="text" id="cite2"
-                                                                value="" name="cite2" placeholder="cite"
+                                                            <input class="form-control" type="text" id="id_programa"
+                                                                value="" name="id_programa"
+                                                                placeholder="ingrese la abrebiatura de la unidad o carrera"
                                                                 data-parsley-required="true">
-                                                            @error('cite')
+                                                            @error('id_programa')
                                                                 <ul class="parsley-errors-list filled" id="parsley-id-5"
                                                                     aria-hidden="false">
                                                                     <li class="parsley-required">
@@ -240,12 +228,31 @@
 
                                                     <div class="form-group row m-b-15">
                                                         <label class="col-md-4 col-sm-4 col-form-label"
-                                                            for="fullname">Descripcion:</label>
+                                                            for="fullname">Nombre Unidad O Carrrea:</label>
                                                         <div class="col-md-8 col-sm-8">
-                                                            <input class="form-control" type="text" id="descripcion2"
-                                                                value="" name="descripcion2"
-                                                                placeholder="descripcion" data-parsley-required="true">
-                                                            @error('descripcion')
+                                                            <input class="form-control" type="text" id="programa"
+                                                                value="" name="programa"
+                                                                placeholder="Nombre de Unidad O Carrera"
+                                                                data-parsley-required="true">
+                                                            @error('programa')
+                                                                <ul class="parsley-errors-list filled" id="parsley-id-5"
+                                                                    aria-hidden="false">
+                                                                    <li class="parsley-required">
+                                                                        {{ 'Este valor es requerido' }}</li>
+                                                                </ul>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group row m-b-15">
+                                                        <label class="col-md-4 col-sm-4 col-form-label" for="fullname">Id
+                                                            Padre:</label>
+                                                        <div class="col-md-8 col-sm-8">
+                                                            <input class="form-control" type="text" id="id_padre"
+                                                                value="" name="id_padre"
+                                                                placeholder="Nombre de Unidad O Carrera"
+                                                                data-parsley-required="true">
+                                                            @error('id_padre')
                                                                 <ul class="parsley-errors-list filled" id="parsley-id-5"
                                                                     aria-hidden="false">
                                                                     <li class="parsley-required">
@@ -257,7 +264,7 @@
                                                     <div class="form-group row m-b-15">
                                                         <label class="col-md-4 col-sm-4 col-form-label">Estado: </label>
                                                         <div class="col-md-8 col-sm-8">
-                                                            <select class="form-control" id="estado2" name="estado2"
+                                                            <select class="form-control" id="estado" name="estado"
                                                                 data-parsley-required="true">
                                                                 <option value="">Por favor selecciona una opcion
                                                                 </option>
@@ -273,47 +280,13 @@
                                                             </select>
                                                         </div>
                                                     </div>
-                                                    <div class="form-group row m-b-15">
-                                                        <label class="col-md-4 col-sm-4 col-form-label">Archivo:
-                                                        </label>
+
+                                                    <div class="form-group row m-b-0">
+                                                        <label class="col-md-4 col-sm-4 col-form-label">&nbsp;</label>
                                                         <div class="col-md-8 col-sm-8">
-
-                                                            <div class="form-group">
-
-                                                                <input type="file" class="form-control-file"
-                                                                    id="docummento2" name="documento2" accept=".pdf">
-                                                            </div>
-
+                                                            <button type="submit"
+                                                                class="btn btn-primary">Registrar</button>
                                                         </div>
-                                                    </div>
-                                                    <div class="form-group row m-b-15">
-                                                        <label class="col-md-4 col-sm-4 col-form-label">Tipo de
-                                                            documento: </label>
-                                                        <div class="col-md-8 col-sm-8">
-                                                            <select class="form-control" id="id_tipo_documento2"
-                                                                name="id_tipo_documento2" data-parsley-required="true">
-                                                                <option value="">Por favor selecciona una opcion
-                                                                </option>
-                                                                <option value="1">Cata</option>
-                                                                <option value="2">Dictamen</option>
-                                                                @error('id_tipo_documento')
-                                                                    <ul class="parsley-errors-list filled" id="parsley-id-5"
-                                                                        aria-hidden="false">
-                                                                        <li class="parsley-required">
-                                                                            {{ 'este valor es requerido' }}</li>
-                                                                    </ul>
-                                                                @enderror
-                                                            </select>
-                                                        </div>
-                                                    </div>
-
-
-                                                    <!-- Agrega más campos de acuerdo a tus necesidades -->
-
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                            data-dismiss="modal">Cancelar</button>
-                                                        <button type="submit" class="btn btn-primary">Actualizar</button>
                                                     </div>
 
 
@@ -487,51 +460,90 @@
                 ],
             });
         });
-
     </script>
-    {{--
     <script>
-        function addPrograma() {
+        $(document).ready(function() {
+            $("#crearNuevoProgramaForm").submit(function(e) {
+                e.preventDefault();
+
+                let formData = new FormData(this);
+
+                $.ajax({
+                    url: '{{ route('programas.store') }}',
+                    method: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        if (response.success) {
+                            alert('Programa registrado con éxito!');
+                            $('#modal-dialog').modal('hide');
+                            location
+                                .reload(); // Opcional, si deseas recargar la página después de una inserción exitosa.
+                        } else {
+                            alert('Hubo un error al registrar el programa.');
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        alert('Error: ' + textStatus);
+                    }
+                });
+            });
+        });
+    </script>
+    <script>
+        function editProgram(id) {
             $.ajax({
-                url: '/programas',
-                method: 'POST',
-                data: { /* tus datos aquí */ },
-                success: function(response) {
-                    alert(response.success);
+                url: "programas/edit/" + id,
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    // Rellenando el formulario con los datos del programa
+                    $('#id_programa').val(data.id_programa);
+                    $('#programa').val(data.programa);
+                    $('#id_padre').val(data.id_padre);
+                    $('#estado').val(data.estado);
+
+                    // Mostrando el modal
+                    $('#editarProgramaModal').modal('show');
+
+                    // Actualizar el formulario con la nueva URL y el ID
+                    $('#editarProgramaForm').data('id',
+                    id); // Guarda el ID en el formulario como data attribute
+                },
+                error: function(error) {
+                    console.log(error);
+                    alert('No se pudo recuperar la información del programa. Inténtalo de nuevo.');
                 }
             });
         }
-        
-        function editPrograma(id) {
+
+        $('#editarProgramaForm').submit(function(e) {
+            e.preventDefault();
+
+            var id = $(this).data('id'); // Recupera el ID del formulario
+            var formData = new FormData(this);
+
             $.ajax({
-                url: '/programas/' + id + '/edit',
-                method: 'GET',
-                success: function(response) {
-                    // Llenar tus campos para edición aquí
+                url: "programas/update/" + id, // Corregimos la URL aquí
+                type: 'PUT',
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function(data) {
+                    if (data.success) {
+                        alert(data.message);
+                        location.reload();
+                    } else {
+                        alert(data.message);
+                    }
+                },
+                error: function(error) {
+                    console.log(error);
+                    alert('Hubo un error al enviar el formulario. Inténtalo de nuevo.');
                 }
             });
-        }
-        
-        function updatePrograma(id) {
-            $.ajax({
-                url: '/programas/' + id,
-                method: 'PUT',
-                data: { /* tus datos actualizados aquí */ },
-                success: function(response) {
-                    alert(response.success);
-                }
-            });
-        }
-        
-        function deletePrograma(id) {
-            $.ajax({
-                url: '/programas/' + id,
-                method: 'DELETE',
-                success: function(response) {
-                    alert(response.success);
-                }
-            });
-        }
-        </script>
-        --}}
+        });
+    </script>
 @endpush

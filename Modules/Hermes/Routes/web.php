@@ -39,8 +39,8 @@ Route::prefix('hermes')->group(function() {
     Route::post('programas/create', [ProgramasController::class, 'create'])->name('programas.create');
     Route::post('programas', [ProgramasController::class, 'store'])->name('programas.store');
     Route::get('programas/{id}', [ProgramasController::class, 'show'])->name('programas.show');
-    Route::post('programas/edit/{id}', [ProgramasController::class, 'edit'])->name('programas.edit');
-    Route::post('programas/{id}', [ProgramasController::class, 'update'])->name('programas.update');
+    Route::get('programas/edit/{id}', [ProgramasController::class, 'edit'])->name('programas.edit');
+    Route::put('programas/update/{id}', [ProgramasController::class, 'update'])->name('programas.update');
     Route::get('programas/{id}', [ProgramasController::class, 'destroy'])->name('programas.destroy');
     //llamando a flujo de tramite controller 
     
