@@ -212,8 +212,8 @@
                                                         <label class="col-md-4 col-sm-4 col-form-label" for="fullname">Id
                                                             Unidad o carrera:</label>
                                                         <div class="col-md-8 col-sm-8">
-                                                            <input class="form-control" type="text" id="id_programa"
-                                                                value="" name="id_programa"
+                                                            <input class="form-control" type="text" id="id_programa2"
+                                                                value="" name="id_programa2"
                                                                 placeholder="ingrese la abrebiatura de la unidad o carrera"
                                                                 data-parsley-required="true">
                                                             @error('id_programa')
@@ -230,8 +230,8 @@
                                                         <label class="col-md-4 col-sm-4 col-form-label"
                                                             for="fullname">Nombre Unidad O Carrrea:</label>
                                                         <div class="col-md-8 col-sm-8">
-                                                            <input class="form-control" type="text" id="programa"
-                                                                value="" name="programa"
+                                                            <input class="form-control" type="text" id="programa2"
+                                                                value="" name="programa2"
                                                                 placeholder="Nombre de Unidad O Carrera"
                                                                 data-parsley-required="true">
                                                             @error('programa')
@@ -248,8 +248,8 @@
                                                         <label class="col-md-4 col-sm-4 col-form-label" for="fullname">Id
                                                             Padre:</label>
                                                         <div class="col-md-8 col-sm-8">
-                                                            <input class="form-control" type="text" id="id_padre"
-                                                                value="" name="id_padre"
+                                                            <input class="form-control" type="text" id="id_padre2"
+                                                                value="" name="id_padre2"
                                                                 placeholder="Nombre de Unidad O Carrera"
                                                                 data-parsley-required="true">
                                                             @error('id_padre')
@@ -264,7 +264,7 @@
                                                     <div class="form-group row m-b-15">
                                                         <label class="col-md-4 col-sm-4 col-form-label">Estado: </label>
                                                         <div class="col-md-8 col-sm-8">
-                                                            <select class="form-control" id="estado" name="estado"
+                                                            <select class="form-control" id="estado2" name="estado2"
                                                                 data-parsley-required="true">
                                                                 <option value="">Por favor selecciona una opcion
                                                                 </option>
@@ -422,6 +422,7 @@
     <script src="../assets/plugins/pdfmake/build/vfs_fonts.js"></script>
     <script src="../assets/plugins/jszip/dist/jszip.min.js"></script>
     <script src="../assets/js/demo/table-manage-combine.demo.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- ================== END PAGE LEVEL JS ================== -->
     <script>
         $(document).ready(function() {
@@ -493,57 +494,109 @@
     </script>
     <script>
         function editProgram(id) {
-            $.ajax({
-                url: "programas/edit/" + id,
-                type: 'GET',
-                dataType: 'json',
-                success: function(data) {
-                    // Rellenando el formulario con los datos del programa
-                    $('#id_programa').val(data.id_programa);
-                    $('#programa').val(data.programa);
-                    $('#id_padre').val(data.id_padre);
-                    $('#estado').val(data.estado);
-
-                    // Mostrando el modal
-                    $('#editarProgramaModal').modal('show');
-
-                    // Actualizar el formulario con la nueva URL y el ID
-                    $('#editarProgramaForm').data('id',
-                    id); // Guarda el ID en el formulario como data attribute
-                },
-                error: function(error) {
-                    console.log(error);
-                    alert('No se pudo recuperar la información del programa. Inténtalo de nuevo.');
-                }
+            $.get('programas/edit/' + id, function(data) {
+                $('#id2').val(data.id); // Asegúrate de tener un input con id='id' en tu modal
+                $('#id_programa2').val(data.id_programa);
+                $('#programa2').val(data.programa);
+                $('#id_padre2').val(data.id_padre);
+                $('#estado').val(data.estado).trigger('change');
+                $("input[name=_token]").val();
+                $('#editarProgramaModal').modal('show');
             });
         }
 
-        $('#editarProgramaForm').submit(function(e) {
+        $('#editProgramaForm').submit(function(e) {
             e.preventDefault();
+            var id2 = $('#id2').val();
+            var id_programa2 = $('#id_programa2').val();
+            var programa2 = $('#programa2').val();
+            var id_padre2 = $('#id_padre2').val();
+            var estado2 = $('#estado2').val();
+            var _token2 = $("input[name=_token]").val();
 
-            var id = $(this).data('id'); // Recupera el ID del formulario
-            var formData = new FormData(this);
+            var formData = new FormData();
+            formData.append('_method', 'PUT');
+            formData.append('id', id2);
+            formData.append('id_programa', id_programa2);
+            formData.append('programa', programa2);
+            formData.append('id_padre', id_padre2);
+            formData.append('estado', estado2);
+            formData.append('_token', _token2);
 
             $.ajax({
-                url: "programas/update/" + id, // Corregimos la URL aquí
-                type: 'PUT',
+                url: "programas/update/" + id2, // Asegúrate de que esta URL es correcta
+                type: 'POST',
                 data: formData,
-                dataType: 'json',
                 contentType: false,
                 processData: false,
-                success: function(data) {
-                    if (data.success) {
-                        alert(data.message);
-                        location.reload();
-                    } else {
-                        alert(data.message);
+                success: function(response) {
+                    if (response) {
+                        $('#editarProgramaModal').modal('hide');
+                        Swal.fire({
+                            icon: 'success',
+                            title: '¡Registro actualizado!',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        // Si estás usando DataTable para mostrar programas, recarga la tabla. Si no, omite esta línea.
+                        $('#programas-table').DataTable().ajax.reload();
                     }
                 },
-                error: function(error) {
-                    console.log(error);
-                    alert('Hubo un error al enviar el formulario. Inténtalo de nuevo.');
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.log("Error de AJAX: " + textStatus + ' : ' + errorThrown);
                 }
             });
         });
+    </script>
+    <script>
+        // Definir la variable global 'doc_id' que almacenará el ID del documento a eliminar
+        var doc_id;
+        // Función que será llamada cuando se haga clic en el botón "Eliminar"
+        function deleteProgram(id) {
+            doc_id = id;
+            console.log("doc_id establecido como: ", doc_id); // Para depuración
+            // Utiliza SweetAlert para mostrar un diálogo de confirmación
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "Esta acción no se puede deshacer",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, eliminarlo'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // El usuario confirmó la eliminación, ejecuta la solicitud AJAX
+                    $.ajax({
+                        url: "programas/destroy/" + doc_id,
+                        method: 'DELETE',
+                        beforeSend: function() {
+                            // Cambia el texto del botón mientras se realiza la solicitud
+                            Swal.showLoading();
+                        },
+                        success: function(data) {
+                            setTimeout(function() {
+                                Swal.fire(
+                                    'Eliminado',
+                                    'El registro fue eliminado correctamente',
+                                    'success'
+                                );
+
+                                // Asumiendo que tienes DataTable y quieres recargar los datos
+                                $('#documentos-table').DataTable().ajax.reload();
+                            }, 2000);
+                        },
+                        error: function(xhr, status, error) {
+                            console.error("Error: ", xhr, status, error); // Para depuración
+                            Swal.fire(
+                                'Error',
+                                'Hubo un error al eliminar el registro',
+                                'error'
+                            );
+                        }
+                    });
+                }
+            });
+        }
     </script>
 @endpush

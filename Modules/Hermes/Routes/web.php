@@ -41,7 +41,7 @@ Route::prefix('hermes')->group(function() {
     Route::get('programas/{id}', [ProgramasController::class, 'show'])->name('programas.show');
     Route::get('programas/edit/{id}', [ProgramasController::class, 'edit'])->name('programas.edit');
     Route::put('programas/update/{id}', [ProgramasController::class, 'update'])->name('programas.update');
-    Route::get('programas/{id}', [ProgramasController::class, 'destroy'])->name('programas.destroy');
+    Route::get('programas/destroy/{id}', [ProgramasController::class, 'destroy'])->name('programas.destroy');
     //llamando a flujo de tramite controller 
     
     //ruta de flujo de tramite 

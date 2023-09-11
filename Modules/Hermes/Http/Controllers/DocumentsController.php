@@ -53,22 +53,18 @@ class DocumentsController extends Controller
     public function store(Request $request)
     {
         // Establecer la conexión a la base de datos
-        //$conn = pg_connect("host=127.0.0.1 dbname=hermes4 user=postgres password=postgres");
+        $conn = pg_connect("host=127.0.0.1 dbname=hermes4 user=postgres password=postgres");
 
         // 1. Leer el archivo PDF
         $archivo = $request->file('documento');
         $name_document = time() . '_' . $archivo->getClientOriginalName();
-        //$contenidoArchivo = file_get_contents($archivo->getRealPath());
+        $contenidoArchivo = file_get_contents($archivo->getRealPath());
 
         // 2. Convertir el contenido del archivo en binario utilizando pg_escape_bytea
-        //$contenidoBinario = pg_escape_bytea($conn, $contenidoArchivo);
+        $contenidoBinario = pg_escape_bytea($conn, $contenidoArchivo);
 
-
-        $micontenido = file_get_contents($archivo);
-        //$PdfBynary=DB::connection()->getPdo()->pgsqlLOBCreate();
-       // pg_escape_bytea($PdfBynary, $micontenido);
         // Generar un valor hash para el archivo
-        $hash = md5($micontenido);
+        $hash = md5($contenidoArchivo);
 
         // 3. Almacenar el binario en la base de datos
         $documentos = new Documentos;
@@ -77,25 +73,14 @@ class DocumentsController extends Controller
         $documentos->estado = $request->estado;
         $documentos->id_tipo_documento = $request->id_tipo_documento;
         $documentos->hash = $hash;
-        $documentos->documento = $micontenido; // Guardar el contenido binario
+        $documentos->documento = $contenidoBinario; // Guardar el contenido binario
         $documentos->name_document = $name_document;
         $documentos->id_programa = $request->id_programa;
         $documentos->save();
 
         // Cerrar la conexión a la base de datos
         pg_close($conn);
-// $file =base64_encode(file_get_contents($request->file('documento')));
-//         $documentos =$request->all();
-//         $documentos['cite'] = $request->cite;
-//         $documentos['descripcion ']= $request->descripcion;
-//         $documentos['estado'] = $request->estado;
-//         $documentos['id_tipo_documento'] = $request->id_tipo_documento;
-//         $documentos['hash'] = $hash;
-//         $documentos['documento'] = $file; // Guardar el contenido binario
-//         $documentos['name_document'] = $name_document;
-//         $documentos['id_programa'] = $request->id_programa;
-//         //$documentos->save();
-//         Documentos::create($documentos);
+
         return redirect()->back()->with('message', '¡Documento guardado exitosamente!');
     }
 
