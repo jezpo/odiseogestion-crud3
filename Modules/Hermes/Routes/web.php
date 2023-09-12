@@ -70,7 +70,7 @@ Route::prefix('hermes')->group(function() {
     Route::get('tipotramite/{id}', [TipoDeTramiteController::class, 'show'])->name('tipotramite.show');
     Route::get('tipotramite/edit/{id}', [TipoDeTramiteController::class, 'edit'])->name('tipotramite.edit');
     Route::put('tipotramite/{id}', [TipoDeTramiteController::class, 'update'])->name('tipotramite.update');
-    Route::get('tipotramite/destroy/{id}', [TipoDeTramiteController::class, 'destroy'])->name('tipotramite.destroy');
+    Route::delete('tipotramite/destroy/{id}', [TipoDeTramiteController::class, 'destroy'])->name('tipotramite.destroy');
 
 
 

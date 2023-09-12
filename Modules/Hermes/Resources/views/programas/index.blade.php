@@ -495,11 +495,11 @@
     <script>
         function editProgram(id) {
             $.get('programas/edit/' + id, function(data) {
-                $('#id2').val(data.id); // Asegúrate de tener un input con id='id' en tu modal
+                $('#id2').val(data.id);
                 $('#id_programa2').val(data.id_programa);
                 $('#programa2').val(data.programa);
                 $('#id_padre2').val(data.id_padre);
-                $('#estado').val(data.estado).trigger('change');
+                $('#estado2').val(data.estado).trigger('change');
                 $("input[name=_token]").val();
                 $('#editarProgramaModal').modal('show');
             });
@@ -515,7 +515,7 @@
             var _token2 = $("input[name=_token]").val();
 
             var formData = new FormData();
-            formData.append('_method', 'PUT');
+            formData.append('_method', 'DELETE'); // Cambiar a DELETE si se está enviando una solicitud DELETE
             formData.append('id', id2);
             formData.append('id_programa', id_programa2);
             formData.append('programa', programa2);
@@ -524,7 +524,7 @@
             formData.append('_token', _token2);
 
             $.ajax({
-                url: "programas/update/" + id2, // Asegúrate de que esta URL es correcta
+                url: 'programas/update/' + id2,
                 type: 'POST',
                 data: formData,
                 contentType: false,
@@ -538,7 +538,6 @@
                             showConfirmButton: false,
                             timer: 1500
                         });
-                        // Si estás usando DataTable para mostrar programas, recarga la tabla. Si no, omite esta línea.
                         $('#programas-table').DataTable().ajax.reload();
                     }
                 },
@@ -547,10 +546,10 @@
                 }
             });
         });
-    </script>
-    <script>
-        // Definir la variable global 'doc_id' que almacenará el ID del documento a eliminar
-        var doc_id;
+    </script> 
+    <script >
+            // Definir la variable global 'doc_id' que almacenará el ID del documento a eliminar
+            var doc_id;
         // Función que será llamada cuando se haga clic en el botón "Eliminar"
         function deleteProgram(id) {
             doc_id = id;
@@ -568,7 +567,7 @@
                 if (result.isConfirmed) {
                     // El usuario confirmó la eliminación, ejecuta la solicitud AJAX
                     $.ajax({
-                        url: "programas/destroy/" + doc_id,
+                        url: 'programas/destroy/' + doc_id,
                         method: 'DELETE',
                         beforeSend: function() {
                             // Cambia el texto del botón mientras se realiza la solicitud
