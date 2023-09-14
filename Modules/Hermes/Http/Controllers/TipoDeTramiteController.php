@@ -96,4 +96,5 @@ class TipoDeTramiteController extends Controller
 
         return response()->json(['status' => 'success', 'message' => 'Trámite eliminado correctamente']);
     }
+   
 }

@@ -220,7 +220,7 @@
                                         <td width="10%">{{ $dato->id_programa }}</td>
                                         <td width="10%">{{ $dato->obs }}</td>
                                         <td>
-                                            <!--<a href="{{ route('documentos.show', $dato->id) }}" class="btn btn-info">Ver</a> -->
+                                            {{--<!--<a href="{{ route('documentos.show', $dato->id) }}" class="btn btn-info">Ver</a> -->--}}
                                             <!--<a href="" data-bs-toggle="modal" data-bs-target="#modalEditar{{ $dato->id }}" class="btn btn-sm btn-warning">Editar</a> -->
                                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal{{ $dato->id }}"data-whatever="@mdo">Editar</button>
                                             <form action="{{ route('flujodocumentos.destroy', $dato) }}" method="POST" class="d-inline">

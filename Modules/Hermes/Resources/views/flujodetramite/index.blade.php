@@ -213,7 +213,6 @@
                                     aria-controls="data-table-select"></label>
                         </div>
                     </div>
-
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
@@ -234,7 +233,6 @@
                             <tbody>
                                 @foreach ($flujoTramite as $dato)
                                     <tr class="gradeX odd" role="row">
-
                                         <td width="10%">{{ $dato->id }}</td>
                                         <td width="15%">{{ $dato->id_tipo_tramite}}</td>
                                         <td width="10%">{{ $dato->orden }}</td>
@@ -243,7 +241,8 @@
                                         <td width="10%">{{ $dato->id_programa }}</td>
 
                                         <td>
-                                            <!--<a href="{{ route('documentos.show', $dato->id) }}" class="btn btn-info">Ver</a> -->
+                                            {{--}}
+                                            <!--<a href="{{ route('documentos.show', $dato->id) }}" class="btn btn-info">Ver</a> -->--}}
                                             <!--<a href="" data-bs-toggle="modal" data-bs-target="#modalEditar{{ $dato->id }}" class="btn btn-sm btn-warning">Editar</a> -->
                                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal{{ $dato->id }}"data-whatever="@mdo">Editar</button>
                                             <form action="{{ route('tipotramite.destroy', $dato) }}" method="POST" class="d-inline">
