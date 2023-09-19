@@ -11,24 +11,8 @@ use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Register Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users as well as their
-    | validation and creation. By default this controller uses a trait to
-    | provide this functionality without requiring any additional code.
-    |
-    */
-
     use RegistersUsers;
 
-    /**
-     * Where to redirect users after registration.
-     *
-     * @var string
-     */
     protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
@@ -50,8 +34,10 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'nombres' => ['required', 'string', 'max:255'],
+            'apellido_paterno' => ['required', 'string', 'max:255'],
+            'apellido_materno' => ['required', 'string', 'max:255'],
+            'ci' => ['required', 'string', 'max:15', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
@@ -65,9 +51,15 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
+            'nombres' => $data['nombres'],
+            'apellido_paterno' => $data['apellido_paterno'],
+            'apellido_materno' => $data['apellido_materno'],
+            'ci' => $data['ci'],
             'password' => Hash::make($data['password']),
         ]);
+    }
+    public function showRegistrationForm()
+    {
+        return view('auth.register',compact('register'));  // Asume que tu plantilla se llama register.blade.php y está en la carpeta auth.
     }
 }

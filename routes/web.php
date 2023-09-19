@@ -19,11 +19,17 @@ use Modules\Hermes\Http\Controllers\HermesController;
 Route::get('/', function () {
     return view('welcome');
 });
+// Ruta para mostrar el formulario de inicio de sesión
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 
-Route::view('/login', 'login')->name('login');
-Route::view('/registro', "register")->name('registro');
+// Ruta para procesar el inicio de sesión
+Route::post('/login', [LoginController::class, 'login'])->name('inicia-session');
 
+// Ruta para mostrar el formulario de registro
+Route::get('/register', [LoginController::class, 'showRegistrationForm'])->name('register');
 
-Route::view ('/validar-registro', [LoginController::class, 'register'])->name('validar-registro');
-Route::view ('/inicia-session', [LoginController::class, 'register'])->name('inicia-session');
-Route::view ('/logout', [LoginController::class, 'logout'])->name('logout');
+// Ruta para procesar el registro
+Route::post('/register', [LoginController::class, 'register']);
+
+// Ruta para cerrar sesión
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');

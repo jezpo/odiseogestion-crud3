@@ -49,24 +49,25 @@
 			<!-- end brand -->
 			<!-- begin login-content -->
 			<div class="login-content">
-				<form action="index.html" method="GET" class="margin-bottom-0">
-					<div class="form-group m-b-20">
-						<input type="text" class="form-control form-control-lg" placeholder="Email Address" required />
+				<form action="{{ route('inicia-session') }}" method="POST">
+					@csrf
+					<label class="control-label">CI <span class="text-danger">*</span></label>
+					<div class="row m-b-15">
+						<div class="col-md-12">
+							<input type="text" name="ci" class="form-control" placeholder="CI" required />
+						</div>
 					</div>
-					<div class="form-group m-b-20">
-						<input type="password" class="form-control form-control-lg" placeholder="Password" required />
+					<label class="control-label">Password <span class="text-danger">*</span></label>
+					<div class="row m-b-15">
+						<div class="col-md-12">
+							<input type="password" name="password" class="form-control" placeholder="Password" required />
+						</div>
 					</div>
-					<div class="checkbox checkbox-css m-b-20">
-						<input type="checkbox" id="remember_checkbox" /> 
-						<label for="remember_checkbox">
-							Remember Me
-						</label>
+					<div class="register-buttons">
+						<button type="submit" class="btn btn-primary btn-block btn-lg">Iniciar Sesión</button>
 					</div>
-					<div class="login-buttons">
-						<button type="submit" class="btn btn-aqua btn-block btn-lg">Sign me in</button>
-					</div>
-					<div class="m-t-20">
-						Not a member yet? Click <a href="javascript:;">here</a> to register.
+					<div class="m-t-30 m-b-30 p-b-30">
+						¿No tienes una cuenta? Haz clic <a href="{{ route('register') }}">aquí</a> para registrarte.
 					</div>
 				</form>
 			</div>

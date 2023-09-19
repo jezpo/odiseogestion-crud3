@@ -1,6 +1,6 @@
 @extends('layouts.default')
 
-@section('title', config('hermes.name') . ' :: ' . 'unidad')
+@section('title', config('hermes.name') . ' :: ' . 'Unidad o Carrera')
 
 @push('css')
 @endpush
@@ -466,9 +466,7 @@
         $(document).ready(function() {
             $("#crearNuevoProgramaForm").submit(function(e) {
                 e.preventDefault();
-
                 let formData = new FormData(this);
-
                 $.ajax({
                     url: '{{ route('programas.store') }}',
                     method: 'POST',
@@ -477,16 +475,31 @@
                     contentType: false,
                     success: function(response) {
                         if (response.success) {
-                            alert('Programa registrado con éxito!');
-                            $('#modal-dialog').modal('hide');
-                            location
+                            Swal.fire({
+                                icon: 'success',
+                                title: '¡Éxito!',
+                                text: 'Programa registrado con éxito!'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    $('#modal-dialog').modal('hide');
+                                    location
                                 .reload(); // Opcional, si deseas recargar la página después de una inserción exitosa.
+                                }
+                            });
                         } else {
-                            alert('Hubo un error al registrar el programa.');
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: 'Hubo un error al registrar el programa.'
+                            });
                         }
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
-                        alert('Error: ' + textStatus);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Error: ' + textStatus
+                        });
                     }
                 });
             });
@@ -546,10 +559,10 @@
                 }
             });
         });
-    </script> 
-    <script >
-            // Definir la variable global 'doc_id' que almacenará el ID del documento a eliminar
-            var doc_id;
+    </script>
+    <script>
+        // Definir la variable global 'doc_id' que almacenará el ID del documento a eliminar
+        var doc_id;
         // Función que será llamada cuando se haga clic en el botón "Eliminar"
         function deleteProgram(id) {
             doc_id = id;

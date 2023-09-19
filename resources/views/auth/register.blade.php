@@ -1,83 +1,4 @@
-@extends('layouts.app')
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
-
-                <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
-                        @csrf
-
-                        <div class="row mb-3">
-                            <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
-
-                        <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-@endsection
-
-{{--
-    
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -130,53 +51,65 @@
 				<!-- end register-header -->
 				<!-- begin register-content -->
 				<div class="register-content">
-					<form action="index.html" method="GET" class="margin-bottom-0">
-						<label class="control-label">Name <span class="text-danger">*</span></label>
+					<form action="{{ route('register') }}" method="POST" class="margin-bottom-0">
+						@csrf
+					
+						<label class="control-label">Nombres <span class="text-danger">*</span></label>
 						<div class="row row-space-10">
 							<div class="col-md-6 m-b-15">
-								<input type="text" class="form-control" placeholder="First name" required />
+								<input type="text" name="nombres" class="form-control" placeholder="Nombres" value="{{ old('nombres') }}" required />
+								@error('nombres') <span class="text-danger">{{ $message }}</span> @enderror
 							</div>
 							<div class="col-md-6 m-b-15">
-								<input type="text" class="form-control" placeholder="Last name" required />
+								<input type="text" name="apellido_paterno" class="form-control" placeholder="Apellido Paterno" value="{{ old('apellido_paterno') }}" required />
+								@error('apellido_paterno') <span class="text-danger">{{ $message }}</span> @enderror
+							</div>
+							<div class="col-md-6 m-b-15">
+								<input type="text" name="apellido_materno" class="form-control" placeholder="Apellido Materno" value="{{ old('apellido_materno') }}" required />
+								@error('apellido_materno') <span class="text-danger">{{ $message }}</span> @enderror
+							</div>
+							<div class="col-md-6 m-b-15">
+								<input type="text" name="ci" class="form-control" placeholder="CI" value="{{ old('ci') }}" required />
+								@error('ci') <span class="text-danger">{{ $message }}</span> @enderror
 							</div>
 						</div>
-						<label class="control-label">Email <span class="text-danger">*</span></label>
-						<div class="row m-b-15">
-							<div class="col-md-12">
-								<input type="text" class="form-control" placeholder="Email address" required />
-							</div>
-						</div>
-						<label class="control-label">Re-enter Email <span class="text-danger">*</span></label>
-						<div class="row m-b-15">
-							<div class="col-md-12">
-								<input type="text" class="form-control" placeholder="Re-enter email address" required />
-							</div>
-						</div>
+					
 						<label class="control-label">Password <span class="text-danger">*</span></label>
 						<div class="row m-b-15">
 							<div class="col-md-12">
-								<input type="password" class="form-control" placeholder="Password" required />
+								<input type="password" name="password" class="form-control" placeholder="Password" required />
+								@error('password') <span class="text-danger">{{ $message }}</span> @enderror
 							</div>
 						</div>
+						<label class="control-label">Confirm Password <span class="text-danger">*</span></label>
+						<div class="row m-b-15">
+							<div class="col-md-12">
+								<input type="password" name="password_confirmation" class="form-control" placeholder="Confirm Password" required />
+							</div>
+						</div>
+					
 						<div class="checkbox checkbox-css m-b-30">
-							<div class="checkbox checkbox-css m-b-30">
-								<input type="checkbox" id="agreement_checkbox" value="">
-								<label for="agreement_checkbox">
+							<input type="checkbox" id="agreement_checkbox" value="">
+							<label for="agreement_checkbox">
 								By clicking Sign Up, you agree to our <a href="javascript:;">Terms</a> and that you have read our <a href="javascript:;">Data Policy</a>, including our <a href="javascript:;">Cookie Use</a>.
-								</label>
-							</div>
+							</label>
 						</div>
+					
 						<div class="register-buttons">
 							<button type="submit" class="btn btn-primary btn-block btn-lg">Sign Up</button>
 						</div>
+					
 						<div class="m-t-30 m-b-30 p-b-30">
-							Already a member? Click <a href="login_v3.html">here</a> to login.
+							Already a member? Click <a href="{{ route('login') }}">here</a> to login.
 						</div>
+					
 						<hr />
+					
 						<p class="text-center mb-0">
 							&copy; Color Admin All Right Reserved 2020
 						</p>
 					</form>
+					
 				</div>
 				<!-- end register-content -->
 			</div>
@@ -346,4 +279,3 @@
 	<!-- ================== END BASE JS ================== -->
 </body>
 </html>
---}}

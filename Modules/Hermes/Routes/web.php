@@ -50,7 +50,7 @@ Route::prefix('hermes')->group(function() {
     Route::post('flujotramite', [FlujoDeTramiteController::class, 'store'])->name('flujotramite.store');
     Route::get('flujotramite/{id}', [FlujoDeTramiteController::class, 'show'])->name('flujotramite.show');
     Route::post('flujotramite/edit/{id}', [FlujoDeTramiteController::class, 'edit'])->name('flujotramite.edit');
-    Route::post('flujotramite/{id}', [FlujoDeTramiteController::class, 'update'])->name('flujotramite.update');
+    Route::post('flujotramite/update/{id}', [FlujoDeTramiteController::class, 'update'])->name('flujotramite.update');
     Route::get('flujotramite/destroy/{id}', [FlujoDeTramiteController::class, 'destroy'])->name('flujotramite.destroy');
 
     //ruta para flujo de documentos
@@ -75,7 +75,7 @@ Route::prefix('hermes')->group(function() {
 
 
    
-    Route::get('/documents', [DocumentsController::class, 'index'])->name('documents.index');
+    Route::get('documents', [DocumentsController::class, 'index'])->name('documents.index');
     Route::post('documents/store', [DocumentsController::class, 'store'])->name('documents.store');
     Route::get('documents/{id}', [DocumentsController::class, 'show'])->name('documents.show');
     Route::get('documents/edit/{id}', [DocumentsController::class, 'edit'])->name('documents.edit');

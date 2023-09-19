@@ -10,14 +10,12 @@ class User extends Authenticatable
     use Notifiable;
 
     protected $fillable = [
-        'nombre', 'apellido_paterno', 'apellido_materno', 'ci', 'password',
+        'nombres', 'apellido_paterno', 'apellido_materno', 'ci', 'password',
     ];
 
     protected $hidden = [
         'password', 'remember_token',
     ];
 
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    
 }

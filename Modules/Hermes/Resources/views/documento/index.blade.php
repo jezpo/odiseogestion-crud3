@@ -540,62 +540,60 @@
         });
     </script>
     <script>
-        // Ingresar un nuevo documento
         $(function() {
+            // Limpia el formulario y abre el modal
             $('#abrirDocumentoModal').click(function() {
                 // Limpia los mensajes de error y campos del formulario
                 $('.parsley-errors-list').empty();
                 $('#crearNuevoDocumentoForm input, #crearNuevoDocumentoForm textarea, #crearNuevoDocumentoForm select')
                     .val('');
+            });
 
-                // Agregar evento para enviar el formulario
-                $('#crearNuevoDocumentoForm').on('submit', function(e) {
-                    e.preventDefault();
-                    var formData = new FormData(this);
-                    formData.append('_token', '{{ csrf_token() }}');
+            // Agregar evento para enviar el formulario
+            $('#crearNuevoDocumentoForm').on('submit', function(e) {
+                e.preventDefault();
+                var formData = new FormData(this);
+                formData.append('_token', '{{ csrf_token() }}');
 
-                    $.ajax({
-                        url: "{{ route('documents.index') }}", // Ruta para almacenar el nuevo documento
-                        type: "POST",
-                        data: formData,
-                        processData: false,
-                        contentType: false,
-                        success: function(response) {
-                            // Cerrar el modal
-                            $('#modal-dialog').modal('hide');
-                            // Recargar la tabla DataTables para mostrar el nuevo registro
+                $.ajax({
+                    url: "{{ route('documents.store') }}",
+                    type: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        // Cerrar el modal
+                        $('#modal-dialog').modal('hide');
 
-                            // Utilizar SweetAlert para mostrar un mensaje de éxito
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Éxito',
-                                text: 'El nuevo documento se ha ingresado correctamente.'
-                            }).then(() => {
-                                $('#documentos-table').DataTable().ajax
-                                    .reload();
-                            });
-                        },
-                        error: function(xhr) {
-                            if (xhr.responseJSON.errors) {
-                                // Mostrar mensajes de error de validación en el formulario
-                                $.each(xhr.responseJSON.errors, function(key, value) {
-                                    var errorElement = $('#' + key).closest(
-                                        '.form-group').find(
-                                        '.parsley-errors-list');
-                                    errorElement.empty().append(
-                                        '<li class="parsley-required">' +
-                                        value + '</li>');
-                                });
-                            }
-
-                            // Utilizar SweetAlert para mostrar un mensaje de error
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Error',
-                                text: 'Hubo un error al ingresar el nuevo documento.'
+                        $('#crearNuevoDocumentoForm')[0].reset();
+                        // Utilizar SweetAlert para mostrar un mensaje de éxito
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Éxito',
+                            text: 'El nuevo documento se ha ingresado correctamente.'
+                        }).then(() => {
+                            $('#documentos-table').DataTable().ajax.reload();
+                        });
+                    },
+                    error: function(xhr) {
+                        if (xhr.responseJSON.errors) {
+                            // Mostrar mensajes de error de validación en el formulario
+                            $.each(xhr.responseJSON.errors, function(key, value) {
+                                var errorElement = $('#' + key).closest('.form-group')
+                                    .find('.parsley-errors-list');
+                                errorElement.empty().append(
+                                    '<li class="parsley-required">' + value +
+                                    '</li>');
                             });
                         }
-                    });
+
+                        // Utilizar SweetAlert para mostrar un mensaje de error
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Hubo un error al ingresar el nuevo documento.'
+                        });
+                    }
                 });
             });
         });
@@ -661,67 +659,67 @@
         });
     </script>
 
-<script>
-    function editDocument(id) {
-        $.get('documents/edit/' + id, function(data) {
-            $('#txtId2').val(data.id);
-            $('#cite2').val(data.cite);
-            $('#descripcion2').val(data.descripcion);
-            $('#estado2').val(data.estado).trigger('change');
-            $('#documento2').val(''); // Limpiar el campo de entrada de archivo
-            $('#id_tipo_documento2').val(data.id_tipo_documento).trigger('change');
-            $('#id_programa2').val(data.id_programa).trigger('change');
-            $("input[name=_token]").val();
-            $('#editarDocumentoModal').modal('show');
-        })
-    }
+    <script>
+        function editDocument(id) {
+            $.get('documents/edit/' + id, function(data) {
+                $('#txtId2').val(data.id);
+                $('#cite2').val(data.cite);
+                $('#descripcion2').val(data.descripcion);
+                $('#estado2').val(data.estado).trigger('change');
+                $('#documento2').val(''); // Limpiar el campo de entrada de archivo
+                $('#id_tipo_documento2').val(data.id_tipo_documento).trigger('change');
+                $('#id_programa2').val(data.id_programa).trigger('change');
+                $("input[name=_token]").val();
+                $('#editarDocumentoModal').modal('show');
+            })
+        }
 
-    $('#editDocumentoForm').submit(function(e) {
-        e.preventDefault();
-        var id2 = $('#txtId2').val();
-        var cite2 = $('#cite2').val();
-        var descripcion2 = $('#descripcion2').val();
-        var estado2 = $('#estado2').val();
-        var id_tipo_documento2 = $('#id_tipo_documento2').val();
-        var id_programa2 = $('#id_programa2').val();
-        var documento2 = $('#documento2')[0].files[0]; // Obtener los datos del archivo
-        var _token2 = $("input[name=_token]").val();
-        
-        var formData = new FormData();
-        formData.append('_method', 'PUT');
-        formData.append('id', id2);
-        formData.append('cite', cite2);
-        formData.append('descripcion', descripcion2);
-        formData.append('estado', estado2);
-        formData.append('id_tipo_documento', id_tipo_documento2);
-        formData.append('id_programa', id_programa2);
-        formData.append('documento', documento2); // Agregar los datos del archivo a los datos del formulario
-        formData.append('_token', _token2);
-        $.ajax({
-            url: "documents/update/" + id2, // Asegúrate de que esta URL es correcta
-            type: 'POST',
-            data: formData,
-            contentType: false,
-            processData: false,
-            success: function(response) {
-                if (response) {
-                    $('#editarDocumentoModal').modal('hide');
-                    Swal.fire({
-                        icon: 'success',
-                        title: '¡Registro actualizado!',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-                    $('#documentos-table').DataTable().ajax.reload();
+        $('#editDocumentoForm').submit(function(e) {
+            e.preventDefault();
+            var id2 = $('#txtId2').val();
+            var cite2 = $('#cite2').val();
+            var descripcion2 = $('#descripcion2').val();
+            var estado2 = $('#estado2').val();
+            var id_tipo_documento2 = $('#id_tipo_documento2').val();
+            var id_programa2 = $('#id_programa2').val();
+            var documento2 = $('#documento2')[0].files[0]; // Obtener los datos del archivo
+            var _token2 = $("input[name=_token]").val();
+
+            var formData = new FormData();
+            formData.append('_method', 'PUT');
+            formData.append('id', id2);
+            formData.append('cite', cite2);
+            formData.append('descripcion', descripcion2);
+            formData.append('estado', estado2);
+            formData.append('id_tipo_documento', id_tipo_documento2);
+            formData.append('id_programa', id_programa2);
+            formData.append('documento', documento2); // Agregar los datos del archivo a los datos del formulario
+            formData.append('_token', _token2);
+            $.ajax({
+                url: "documents/update/" + id2, // Asegúrate de que esta URL es correcta
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                    if (response) {
+                        $('#editarDocumentoModal').modal('hide');
+                        Swal.fire({
+                            icon: 'success',
+                            title: '¡Registro actualizado!',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        $('#documentos-table').DataTable().ajax.reload();
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.log("Error de AJAX: " + textStatus + ' : ' + errorThrown);
                 }
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.log("Error de AJAX: " + textStatus + ' : ' + errorThrown);
-            }
+            });
         });
-    });
-</script>
     </script>
+
     <script>
         function b64toBlob(b64Data, contentType = '', sliceSize = 512) {
             const byteCharacters = atob(b64Data);
@@ -747,7 +745,7 @@
 
         function loadPDF(id) {
             $.ajax({
-                url: '/hermes/documentos/downloadPdf/' + id,
+                url: '/hermes/documents/downloadPdf/' + id,
                 method: 'GET',
                 success: function(response) {
                     var blob = b64toBlob(response.base64, 'application/pdf');
@@ -756,7 +754,11 @@
                     $('#pdfModal').modal('show');
                 },
                 error: function() {
-                    alert('Documento no encontrado');
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Documento no encontrado'
+                    });
                 }
             });
         }
