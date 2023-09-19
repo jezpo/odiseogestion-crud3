@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller;
 use Modules\Hermes\Entities\Documentos;
 use Modules\Hermes\Entities\Programas;
 use Modules\Hermes\Entities\FlujoDocumentos;
+use Yajra\DataTables\Facades\DataTables;
 
 class FlujoDeDocumentosController extends Controller
 {
@@ -15,28 +16,46 @@ class FlujoDeDocumentosController extends Controller
      * Display a listing of the resource.
      * @return Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
-        $flujosdoc = FlujoDocumentos::all();
-        $documentos = Documentos::all();
-        $programas = Programas::all();
-        return view('hermes::flujodedocumento.index', compact('flujosdoc', 'documentos', 'programas'));
+            if ($request->ajax()) {
+                $flujos = FlujoDocumentos::with('documento', 'programa')->get();
+
+                return DataTables::of($flujos)
+                    ->addColumn('actions', function ($flujo) {
+                        $btn = '<a href="javascript:void(0)" type="button" data-toggle="tooltip" onclick="editFlujo(' . $flujo->id . ')" class="edit btn btn-primary btn-sm">Editar</a>';
+                        $btn .= '&nbsp;&nbsp <button type="button" data-toggle="tooltip" name="deleteFlujo" onclick="deleteFlujo(' . $flujo->id . ')" class="delete btn btn-danger btn-sm">Eliminar</button>';
+                        return $btn;
+                    })
+                    ->rawColumns(['actions'])
+                    ->toJson();
+            }
+
+            $documentos = Documentos::all();
+            $programas = Programas::all();
+
+            return view('hermes::flujodedocumento.index', compact('documentos', 'programas'));
     }
-    
     /**
      * Show the form for creating a new resource.
      * @return Renderable
      */
     public function create(Request $request)
     {
-        $flujosdoc = FlujoDocumentos::create([
+        $flujos = FlujoDocumentos::create([
             'id_documento' => $request->id_documento,
             'fecha_recepcion' => $request->fecha_recepcion,
             'id_programa' => $request->id_programa,
             'obs' => $request->obs
-        ])->save();
-
-        return back();
+        ]);
+    
+        if ($request->ajax()) {
+            // Si la solicitud es AJAX, devuelve una respuesta JSON
+            return response()->json(['message' => 'Flujo de documentos creado con éxito', 'flujos' => $flujos]);
+        } else {
+            // Si la solicitud no es AJAX, realiza una redirección
+            return back()->with('success', 'Flujo de documentos creado con éxito');
+        }
     }
 
     /**
@@ -66,13 +85,13 @@ class FlujoDeDocumentosController extends Controller
      */
     public function edit(Request $request, $id)
     {
-        $flujosdoc = FlujoDocumentos::find($id);
-        $flujosdoc->id_documento = $request->id_documento;
-        $flujosdoc->fecha_recepcion = $request->fecha_recepcion;
-        $flujosdoc->id_programa = $request->id_programa;
-        $flujosdoc->obs = $request->obs;
-        
-        $flujosdoc->save();
+        $flujos = FlujoDocumentos::find($id);
+        $flujos->id_documento = $request->id_documento;
+        $flujos->fecha_recepcion = $request->fecha_recepcion;
+        $flujos->id_programa = $request->id_programa;
+        $flujos->obs = $request->obs;
+
+        $flujos->save();
         return back();
     }
 
@@ -105,8 +124,13 @@ class FlujoDeDocumentosController extends Controller
      */
     public function destroy($id)
     {
-        $flujosdoc = FlujoDocumentos::findOrFail($id);
-        $flujosdoc->delete();
+        $flujos = FlujoDocumentos::findOrFail($id);
+        $flujos->delete();
         return redirect()->route('flujodedocumento.index',  ['id' => $id]);
+    }
+
+    public function documento()
+    {
+        return $this->belongsTo(Documentos::class, 'id_documento');
     }
 }

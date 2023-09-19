@@ -70,13 +70,9 @@
                                 <div class="form-group row m-b-15">
                                     <label class="col-md-4 col-sm-4 col-form-label" for="fullname">Id Tipo Tramite:</label>
                                     <div class="col-md-8 col-sm-8">
-                                        <select class="form-control" id="select-required" name="id_tipo_tramite" data-parsley-required="true">
-                                        @foreach ($flujoTramite as $dato)
-                                        <option value="{{ $dato->id_tipo_tramite }}"
-                                            {{ $dato->id_tipo_tramite == old('programa', $dato->id_tipo_tramite) ? 'selected' : '' }}>
-                                            {{ $dato->id_tipo_tramite}}
-                                        </option>
-                                            
+                                        <select class="form-control" id="id_tipo_tramite" name="id_tipo_tramite" data-parsley-required="true">
+                                            @foreach ($tipotramite as $tipo)
+                                            <option value="{{ $tipo->id }}">{{ $tipo->id }} - {{ $tipo->tramite }}</option>
                                         @endforeach
                                         @error('id_tipo_tramite')
                                             <ul class="parsley-errors-list filled" id="parsley-id-5" aria-hidden="false">
@@ -140,7 +136,7 @@
                                         <select class="form-control" id="select-required" name="programa" data-parsley-required="true">
                                             @foreach ($programas as $programa)
                                                 <option value='{{ $programa->id_programa }}'
-                                                    {{ $programa->id == old('programa', $dato->id_programa) ? 'selected' : '' }}>
+                                                    {{ $programa->id == old('programa', $programa->id_programa) ? 'selected' : '' }}>
                                                     {{ $programa->programa }}
                                                 </option>
                                             @endforeach

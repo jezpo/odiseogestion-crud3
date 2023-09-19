@@ -23,8 +23,8 @@ class FlujoDocumentos extends Model
     {
         return $this->belongsTo(Documentos::class);
     }
-    public function programas()
+    public function programa()
     {
-        return $this->belongsto(Programas::class);
+        return $this->belongsTo(Programas::class);
     }
 }
