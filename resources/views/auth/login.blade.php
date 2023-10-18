@@ -49,15 +49,15 @@
 			<!-- end brand -->
 			<!-- begin login-content -->
 			<div class="login-content">
-				<form action="{{ route('inicia-session') }}" method="POST">
+				<form action="{{ route('login.post') }}" method="POST" id="handleAjax">
 					@csrf
-					<label class="control-label">CI <span class="text-danger">*</span></label>
+					<label class="control-label">Cedula de identidad<span class="text-danger">*</span></label>
 					<div class="row m-b-15">
 						<div class="col-md-12">
 							<input type="text" name="ci" class="form-control" placeholder="CI" required />
 						</div>
 					</div>
-					<label class="control-label">Password <span class="text-danger">*</span></label>
+					<label class="control-label">Contraseña <span class="text-danger">*</span></label>
 					<div class="row m-b-15">
 						<div class="col-md-12">
 							<input type="password" name="password" class="form-control" placeholder="Password" required />
@@ -250,5 +250,47 @@
 	<!-- ================== BEGIN PAGE LEVEL JS ================== -->
 	<script src="../assets/js/demo/login-v2.demo.js"></script>
 	<!-- ================== END PAGE LEVEL JS ================== -->
+
+	<script type="text/javascript">
+ 
+		$(function() {
+			  
+			/*------------------------------------------
+			--------------------------------------------
+			Submit Event
+			--------------------------------------------
+			--------------------------------------------*/
+			$(document).on("submit", "#handleAjax", function() {
+				var e = this;
+		
+				$(this).find("[type='submit']").html("Login...");
+		
+				$.ajax({
+					url: $(this).attr('action'),
+					data: $(this).serialize(),
+					type: "POST",
+					dataType: 'json',
+					success: function (data) {
+		
+					  $(e).find("[type='submit']").html("Login");
+		
+					  if (data.status) {
+						  window.location = data.redirect;
+					  }else{
+						  $(".alert").remove();
+						  $.each(data.errors, function (key, val) {
+							  $("#errors-list").append("<div class='alert alert-danger'>" + val + "</div>");
+						  });
+					  }
+					 
+					}
+				});
+		
+				return false;
+			});
+		
+		  });
+		
+	  </script>
 </body>
 </html>

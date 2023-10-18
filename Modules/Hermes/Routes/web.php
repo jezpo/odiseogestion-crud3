@@ -12,17 +12,9 @@ use Modules\Hermes\Http\Controllers\ProgramasController;
 use Modules\Hermes\Http\Controllers\FlujoDeDocumentosController;
 use Modules\Hermes\Http\Controllers\FlujoDeTramiteController;
 use Modules\Hermes\Http\Controllers\DocumentsController;
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
+use Modules\Hermes\Http\Controllers\PermissionController;
+use Modules\Hermes\Http\Controllers\ReportController;
 
-*/
 
 Route::prefix('hermes')->group(function () {
 
@@ -48,25 +40,25 @@ Route::prefix('hermes')->group(function () {
     //ruta de flujo de tramite 
     Route::get('flujotramite', [FlujoDeTramiteController::class, 'index'])->name('flujotramite.index');
     Route::post('flujotramite/create', [FlujoDeTramiteController::class, 'create'])->name('flujotramite.create');
-    Route::post('flujotramite', [FlujoDeTramiteController::class, 'store'])->name('flujotramite.store');
+    Route::post('flujotramite/store', [FlujoDeTramiteController::class, 'store'])->name('flujotramite.store');
     Route::get('flujotramite/{id}', [FlujoDeTramiteController::class, 'show'])->name('flujotramite.show');
     Route::post('flujotramite/edit/{id}', [FlujoDeTramiteController::class, 'edit'])->name('flujotramite.edit');
     Route::post('flujotramite/update/{id}', [FlujoDeTramiteController::class, 'update'])->name('flujotramite.update');
-    Route::get('flujotramite/destroy/{id}', [FlujoDeTramiteController::class, 'destroy'])->name('flujotramite.destroy');
+    Route::delete('flujotramite/destroy/{id}', [FlujoDeTramiteController::class, 'destroy'])->name('flujotramite.destroy');
 
     //ruta para flujo de documentos
     Route::get('flujodocumentos', [FlujoDeDocumentosController::class, 'index'])->name('flujodedocumento.index'); // Cambia 'flujodocumentos' a 'flujodedocumento'
     Route::post('flujodocumentos/create', [FlujoDeDocumentosController::class, 'create'])->name('flujodocumentos.create');
-    Route::post('flujodocumentos', [FlujoDeDocumentosController::class, 'store'])->name('flujodocumentos.store');
+    Route::post('flujodocumentos/store', [FlujoDeDocumentosController::class, 'store'])->name('flujodocumentos.store');
     Route::get('flujodocumentos/{id}', [FlujoDeDocumentosController::class, 'show'])->name('flujodocumentos.show');
-    Route::post('flujodocumentos/edit/{id}', [FlujoDeDocumentosController::class, 'edit'])->name('flujodocumentos.edit');
-    Route::post('flujodocumentos/{id}', [FlujoDeDocumentosController::class, 'update'])->name('flujodocumentos.update');
-    Route::get('flujodocumentos/destroy/{id}', [FlujoDeDocumentosController::class, 'destroy'])->name('flujodocumentos.destroy');
+    Route::get('flujodocumentos/edit/{id}', [FlujoDeDocumentosController::class, 'edit'])->name('flujodocumentos.edit');
+    Route::put('flujodocumentos/update/{id}', [FlujoDeDocumentosController::class, 'update'])->name('flujodocumentos.update');
+    Route::delete('flujodocumentos/destroy/{id}', [FlujoDeDocumentosController::class, 'destroy'])->name('flujodocumentos.destroy');
 
     //ruta para tipo de tramite 
     Route::get('tipotramite/', [TipoDeTramiteController::class, 'index'])->name('tipotramite.index');
     Route::post('tipotramite/create', [TipoDeTramiteController::class, 'create'])->name('tipotramite.create');
-    Route::post('tipotramite', [TipoDeTramiteController::class, 'store'])->name('tipotramite.store');
+    Route::post('tipotramite/store', [TipoDeTramiteController::class, 'store'])->name('tipotramite.store');
     Route::get('tipotramite/{id}', [TipoDeTramiteController::class, 'show'])->name('tipotramite.show');
     Route::get('tipotramite/edit/{id}', [TipoDeTramiteController::class, 'edit'])->name('tipotramite.edit');
     Route::put('tipotramite/update/{id}', [TipoDeTramiteController::class, 'update'])->name('tipotramite.update');
@@ -83,4 +75,8 @@ Route::prefix('hermes')->group(function () {
     Route::get('documents/destroy/{id}', [DocumentsController::class, 'destroy'])->name('documents.destroy');
 
     Route::get('documents/downloadPdf/{id}', [DocumentsController::class, 'downloadPdf']);
+
+   
+    Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
+    Route::post('/get-report-data', [ReportController::class, 'getReportData']);
 });

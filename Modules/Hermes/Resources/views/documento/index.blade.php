@@ -14,8 +14,13 @@
     <div class="col-xl-12 ui-sortable">
         <div class="panel panel-inverse">
             <!-- begin panel-heading -->
-            <div class="panel-heading ui-sortable-handle">
-                <h4 class="panel-title">Documentos</h4>
+            <div class="panel-heading ui-sortable-handle d-flex justify-content-between align-items-center">
+
+                <button id="addDocumentoForm" class="btn btn-sm btn btn-primary" data-toggle="modal"
+                    data-target="#modal-dialog">
+                    <i class="fas fa-plus"></i> Crear Nuevo
+                </button>
+
                 <div class="panel-heading-btn">
                     <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i
                             class="fa fa-expand"></i></a>
@@ -33,14 +38,24 @@
                 <div id="data-table-combine_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
                     <div class="dataTables_wrapper dt-bootstrap">
                         <div class="row">
+
+                            <div class="d-block d-lg-inline-flex">
+                                <div class="dt-buttons btn-group flex-wrap"> <button
+                                        class="btn btn-secondary buttons-copy buttons-html5 btn-sm" tabindex="0"
+                                        aria-controls="data-table-combine" type="button"><span>Copy</span></button> <button
+                                        class="btn btn-secondary buttons-csv buttons-html5 btn-sm" tabindex="0"
+                                        aria-controls="data-table-combine" type="button"><span>CSV</span></button> <button
+                                        class="btn btn-secondary buttons-excel buttons-html5 btn-sm" tabindex="0"
+                                        aria-controls="data-table-combine" type="button"><span>Excel</span></button>
+                                    <button class="btn btn-secondary buttons-pdf buttons-html5 btn-sm" tabindex="0"
+                                        aria-controls="data-table-combine" type="button"><span>PDF</span></button> <button
+                                        class="btn btn-secondary buttons-print btn-sm" tabindex="0"
+                                        aria-controls="data-table-combine" type="button"><span>Print</span></button> </div>
+                            </div>
                             <div class="col-xl-12">
 
                                 <!-- Botón para abrir el modal de creación -->
-                                <div>
-                                    <a id="addDocumentoForm" href="#modal-dialog" class="btn btn-sm btn btn-primary"
-                                        data-toggle="modal">Crear Nuevo</a>
 
-                                </div>
                                 <br>
                                 <!-- Modal para Nuevo -->
                                 <div class="modal fade" class="modal fade" id="modal-dialog">
@@ -48,7 +63,9 @@
                                         <div class="modal-content">
                                             <div class="modal-body">
 
-                                                <h5 class="modal-title" id="nuevoDocumentoModalLabel">Nuevo Documento</h5>
+                                                <h5 class="modal-title" id="nuevoDocumentoModalLabel">
+                                                    <i class="fas fa-plus"></i> Nuevo Documento
+                                                </h5>
                                                 <button type="button" class="close" data-dismiss="modal"
                                                     aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>

@@ -11,6 +11,7 @@ class FlujoTramite extends Model
     protected $table = 'flujo_tramite';
     protected $primaryKey = 'id';
     public $incrementing = true;
+    public $timestamps = false;
 
     protected $fillable = [
         'id_tipo_tramite',
@@ -21,12 +22,13 @@ class FlujoTramite extends Model
     ];
     public function tipoTramite()
     {
-        return $this->belongsTo(TipoTramite::class);
+        return $this->belongsTo(\Modules\Hermes\Entities\TipoTramite::class);
     }
 
     public function programa()
     {
-        return $this->belongsTo(Programas::class);
+        return $this->belongsTo(\Modules\Hermes\Entities\Programas::class);
+
     }
    
 }

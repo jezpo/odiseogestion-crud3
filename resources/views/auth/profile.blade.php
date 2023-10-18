@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Color Admin | Register Page</title>
+    <title>Editar Perfil</title>
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
     <meta content="" name="description" />
     <meta content="" name="author" />
@@ -49,13 +49,15 @@
             <div class="right-content">
                 <!-- begin register-header -->
                 <h1 class="register-header">
-                    Sign Up
+                    Actuliza tus datos 
                     <small>Create your Color Admin Account. It’s free and always will be.</small>
                 </h1>
                 <!-- end register-header -->
                 <!-- begin register-content -->
+
+
                 <div class="register-content">
-                    <form action="{{ route('register') }}" method="POST" class="margin-bottom-0" id="handleAjax">
+                    <form action="{{ route('perfil.actualizar') }}" method="POST" class="margin-bottom-0">
                         @csrf
                         <label class="control-label">Nombres <span class="text-danger">*</span></label>
                         <div class="row m-b-15">
@@ -102,15 +104,15 @@
                         </div>
 
                         <label class="control-label">Foto</label>
-                            <div class="row m-b-15">
-                                <div class="col-md-12">
-                                    <input type="file" name="foto" class="form-control" />
-                                    @error('foto')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
+                        <div class="row m-b-15">
+                            <div class="col-md-12">
+                                <input type="file" name="foto" class="form-control" />
+                                @error('foto')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
-                        
+                        </div>
+
 
                         <label class="control-label">Password <span class="text-danger">*</span></label>
                         <div class="row m-b-15">
@@ -131,18 +133,10 @@
                         </div>
 
                         <div class="register-buttons">
-                            <button type="submit" class="btn btn-primary btn-block btn-lg">Sign Up</button>
+                            <button type="button" id="btn-actualizar-perfil" class="btn btn-primary btn-block btn-lg">Actualizar Perfil</button>
                         </div>
 
-                        <div class="m-t-30 m-b-30 p-b-30">
-                            Already a member? Click <a href="{{ route('login') }}">here</a> to login.
-                        </div>
-
-                        <hr />
-
-                        <p class="text-center mb-0">
-                            &copy; Color Admin All Right Reserved 2020
-                        </p>
+                        
                     </form>
 
                 </div>
@@ -357,42 +351,40 @@
     <script src="../assets/js/app.min.js"></script>
     <script src="../assets/js/theme/material.min.js"></script>
     <!-- ================== END BASE JS ================== -->
-    <script type="text/javascript">
-  
-        $(function() {
-            $(document).on("submit", "#handleAjax", function() {
-                var e = this;
-        
-                $(this).find("[type='submit']").html("Register...");
-        
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Escuchar el clic en el botón "Actualizar Perfil"
+            $('#btn-actualizar-perfil').click(function() {
+                // Obtener los datos del formulario
+                var formData = $('#form-editar-perfil').serialize();
+
+                // Realizar una solicitud AJAX al controlador para actualizar el perfil
                 $.ajax({
-                    url: $(this).attr('action'),
-                    data: $(this).serialize(),
-                    type: "POST",
-                    dataType: 'json',
-                    success: function (data) {
-        
-                      $(e).find("[type='submit']").html("Register");
-                        
-                      if (data.status) {
-                          window.location = data.redirect;
-                      }else{
-        
-                          $(".alert").remove();
-                          $.each(data.errors, function (key, val) {
-                              $("#errors-list").append("<div class='alert alert-danger'>" + val + "</div>");
-                          });
-                      }
-                   
+                    type: 'POST',
+                    url: '{{ route('perfil.actualizar') }}',
+                    data: formData,
+                    dataType: 'json', // Esperamos una respuesta JSON del controlador
+                    success: function(data) {
+                        if (data.status === true) {
+                            // La actualización fue exitosa, puedes redirigir o mostrar un mensaje de éxito
+                            alert('Perfil actualizado exitosamente');
+                        } else {
+                            // Hubo un error en la actualización, muestra errores si es necesario
+                            if (data.errors) {
+                                // Muestra los errores en algún lugar de tu página, por ejemplo, en un div con ID "errors"
+                                $('#errors').html(data.errors.join('<br>'));
+                            }
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        // Manejar errores de la solicitud AJAX aquí
+                        console.error(error);
                     }
                 });
-        
-                return false;
             });
-        
-          });
-        
-      </script>
+        });
+    </script>
 </body>
 
 </html>

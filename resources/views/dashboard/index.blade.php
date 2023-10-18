@@ -19,17 +19,13 @@
             <div class="card">
                 <div class="card-header">Estadísticas de Usuarios</div>
                 <div class="card-body">
-                    {{--
                     <p><strong>Total de Usuarios:</strong> {{ $totalUsuarios }}</p>
                     <p><strong>Últimos Usuarios Registrados:</strong></p>
-                    {{--<ul>
-                        
+                    <ul>
                         @foreach($ultimosUsuarios as $usuario)
                             <li>{{ $usuario->nombreCompleto }}</li>
                         @endforeach
-                        
                     </ul>
-                --}}
                 </div>
             </div>
         </div>
@@ -37,22 +33,17 @@
             <div class="card">
                 <div class="card-header">Estadísticas de Roles</div>
                 <div class="card-body">
-                    {{--}}
                     <p><strong>Total de Roles:</strong> {{ $totalRoles }}</p>
                     <p><a href="{{ route('roles.index') }}" class="btn btn-primary">Administrar Roles</a></p>
-                --}}
                 </div>
-
             </div>
         </div>
         <div class="col-md-4">
             <div class="card">
                 <div class="card-header">Estadísticas de Permisos</div>
                 <div class="card-body">
-                    {{--
                     <p><strong>Total de Permisos:</strong> {{ $totalPermisos }}</p>
                     <p><a href="{{ route('permisos.index') }}" class="btn btn-primary">Administrar Permisos</a></p>
-                    --}}
                 </div>
             </div>
         </div>

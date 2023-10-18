@@ -1,6 +1,11 @@
 <?php
 
 namespace App\Providers;
+use App\Models\Usuario;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\View;
+
+
 
 use Illuminate\Support\ServiceProvider;
 
@@ -23,6 +28,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        View::composer('*', function ($view) {
+            if (auth()->check()) {
+                $usuario = Usuario::find(auth()->user()->id);
+                $view->with('usuario', $usuario);
+            }
+        });
     }
 }

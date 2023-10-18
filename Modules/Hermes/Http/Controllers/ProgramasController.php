@@ -22,8 +22,8 @@ class ProgramasController extends Controller
             $data = Programas::all();
             return DataTables::of($data)
                 ->addColumn('action', function ($data) {
-                    $button = '&nbsp;&nbsp;<a href="javascript:void(0)" type="button" data-toggle="tooltip" onclick="editProgram('.$data->id.')" class="edit btn btn-primary btn-sm ">Editar</a>';
-                    $button .= '&nbsp;&nbsp;<button type="button" data-toggle="tooltip" name="deleteDocument" onclick="deleteProgram('.$data->id.')" class="delete btn btn-danger btn-sm ">Eliminar</button>';
+                    $button = '&nbsp;&nbsp;<a href="javascript:void(0)" type="button" data-toggle="tooltip" onclick="editProgram(' . $data->id . ')" class="edit btn btn-primary btn-sm "><i class="fas fa-edit"></i> Editar</a>';
+                    $button .= '&nbsp;&nbsp;<button type="button" data-toggle="tooltip" name="deleteDocument" onclick="deleteProgram(' . $data->id . ')" class="delete btn btn-danger btn-sm "><i class="fas fa-trash"></i> Eliminar</button>';
 
                     return $button;
                 })

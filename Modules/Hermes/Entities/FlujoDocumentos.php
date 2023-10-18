@@ -11,7 +11,7 @@ class FlujoDocumentos extends Model
 
     protected $table = 'flujo_documentos';
     protected $primaryKey = 'id';
-    public $timestamps = true;
+    public $timestamps = false;
     protected $fillable = [
         'id_documento',
         'fecha_recepcion',

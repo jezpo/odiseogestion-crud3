@@ -1,9 +1,9 @@
 @php
-$sidebarHide = true;
-$headerClass = !empty($headerInverse) ? 'navbar-inverse ' : 'navbar-default ';
-$headerMenu = !empty($headerMenu) ? $headerMenu : '';
-$hiddenSearch = !empty($headerLanguageBar) ? 'hidden-xs' : '';
-$headerMegaMenu = !empty($headerMegaMenu) ? $headerMegaMenu : '';
+    $sidebarHide = true;
+    $headerClass = !empty($headerInverse) ? 'navbar-inverse ' : 'navbar-default ';
+    $headerMenu = !empty($headerMenu) ? $headerMenu : '';
+    $hiddenSearch = !empty($headerLanguageBar) ? 'hidden-xs' : '';
+    $headerMegaMenu = !empty($headerMegaMenu) ? $headerMegaMenu : '';
 @endphp
 <!-- begin #header -->
 <div id="header" class="header {{ $headerClass }}">
@@ -42,36 +42,17 @@ $headerMegaMenu = !empty($headerMegaMenu) ? $headerMegaMenu : '';
 
     <!-- begin header-nav -->
     <ul class="navbar-nav navbar-right">
-       {{--@role('dircarrera', true)--}}
-            <li>
-                <a href="" data-toggle="navbar-search" class="form-label">CARRERA:
-                    <select name="carreras" onchange="getListCar(this)" data-live-search="true"
-                        style="background: transparent; border: none; font-size: 13px; ">
-                        {{--@foreach (Session::get('group_car') as $row)
-                        @if (session('programa') === $row->programa)
-                            <option value="{{ $row->id_programa }}" selected>{{ $row->programa }}</option>
-                        @else
-                            <option value="{{ $row->id_programa }}">{{ $row->programa }}</option>
-                        @endif
-                    @endforeach--}}
-                    </select>
-                </a>
-            </li>
-            <li class="">
-                <a href="#" onclick="cambiar_gestion_periodo_header()" data-toggle="navbar-search" class="icon"> GESTIÓN:
-                    @php
-                        echo session('id_gestion');
-                    @endphp
-                </a>
-            </li>
-            <li class="">
-                <a href="#" onclick="cambiar_gestion_periodo_header()" data-toggle="navbar-search" class="icon"> PERIODO:
-                    @php
-                        echo session('id_periodo');
-                    @endphp
-                </a>
-            </li>
-        {{--@endrole--}}
+        {{-- @role('dircarrera', true) --}}
+       <li>
+        <a><b>DBU</b></a>
+       </li>
+        <li class="">
+            <a href="#" onclick="cambiar_gestion_periodo_header()" data-toggle="navbar-search" class="icon">
+                GESTIÓN: <b>02/2023</b>{{-- {{ $gestionCompleta }}--}}
+            </a>
+        </li>
+        
+        {{-- @endrole --}}
 
         @isset($headerLanguageBar)
             <li class="dropdown navbar-language">
@@ -96,35 +77,31 @@ $headerMegaMenu = !empty($headerMegaMenu) ? $headerMegaMenu : '';
         <li class="dropdown navbar-user">
             <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
                 <img src="" alt="..." class=" profile_img">
-                <span class="d-none d-md-inline">{{--{{ Auth::user()->paterno }}
-                        					{{ Auth::user()->materno }},
-								{{ Auth::user()->nombres }}
-                                --}}
+                <span class="d-none d-md-inline">
+                    {{--
+                    {{ Auth::user()->nombres }} {{ Auth::user()->apellido_paterno }},
+                    {{ Auth::user()->apellido_materno }}
+                    --}}
                 </span> <b class="caret"></b>
             </a>
             <div class="dropdown-menu dropdown-menu-right">
-                {{--@yield('menuSide')
-                @role('dircarrera', true)
-                {{--<a href="{{ route('dir.ver.perfil') }}" class="dropdown-item">Editar Perfil</a> --}}
+                @yield('menuSide')
+                {{-- @role('dircarrera', true) --}}
+                {{--<a href="{{ route('perfil.edit') }}" class="dropdown-item">Editar Perfil</a>--}}
                 <div class="dropdown-divider"></div>
-                {{--@endrole--}}
-                {{--<a href="{{ route('password') }}" class="dropdown-item">Cambiar Contraseña</a> --}}
+                {{-- @endrole --}}
+                {{-- <a href="{{ route('password') }}" class="dropdown-item">Cambiar Contraseña</a> --}}
                 <div class="dropdown-divider"></div>
-                {{--<a href="{{ url('/logout') }}" class="dropdown-item" style="color: red;" 
+                <a href="{{ url('/logout') }}" class="dropdown-item" style="color: red;"
                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Cerrar sesión</a>
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                     @csrf
                 </form>
-                --}}
             </div>
         </li>
     </ul>
     <!-- end header navigation right -->
-    {{--<div class="search-form">
-        <button class="search-btn" type="submit"><i class="material-icons">search</i></button>
-        <input type="text" class="form-control" placeholder="Buscar algo..." />
-        <a href="#" class="close" data-dismiss="navbar-search"><i class="material-icons">close</i></a>
-    </div>--}}
+
 </div>
 <!-- end #header -->
 <!-- modal -->
@@ -158,7 +135,8 @@ $headerMegaMenu = !empty($headerMegaMenu) ? $headerMegaMenu : '';
             </div>
             <div class="modal-footer">
                 <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Cerrar</a>
-                <a href="javascript:;" onclick="GuardarGestionPeriodoHeader();" class="btn btn-primary">Guardar Cambios</a>
+                <a href="javascript:;" onclick="GuardarGestionPeriodoHeader();" class="btn btn-primary">Guardar
+                    Cambios</a>
             </div>
         </div>
     </div>

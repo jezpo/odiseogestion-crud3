@@ -13,7 +13,7 @@ class TipoTramite extends Model
     protected $table = 'tipo_tramite';
     protected $primaryKey = 'id';
     public $incrementing = true;
-
+    public $timestamps = false;
     protected $fillable = [
         'tramite',
         'estado'

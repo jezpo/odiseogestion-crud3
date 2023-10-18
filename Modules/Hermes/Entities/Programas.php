@@ -11,6 +11,7 @@ class Programas extends Model
     protected $table = 'programas';
     protected $primaryKey = 'id_programa';
     public $incrementing = false;
+    public $timestamps = false;
 
     protected $fillable = [
         'id_programa',

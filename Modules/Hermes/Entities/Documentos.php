@@ -11,7 +11,7 @@ class Documentos extends Model
 
     protected $table = 'documentos';
     protected $primaryKey = 'id';
-    public $timestamps = true;
+    public $timestamps = false;
 
     protected $fillable = ['id', 
                             'cite', 
@@ -20,8 +20,8 @@ class Documentos extends Model
                             'hash', 
                             'id_tipo_documento', 
                             'documento', 
-                            'id_programa',
-                            'name_document'
+                            'id_programa'
+                           
     ];
     public function programas()
     {

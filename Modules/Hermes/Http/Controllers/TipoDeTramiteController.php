@@ -19,8 +19,8 @@ class TipoDeTramiteController extends Controller
         if ($request->ajax()) {
             return DataTables::of($tipotramite)
                 ->addColumn('action', function ($data) {
-                    $button = '&nbsp;&nbsp;<a href="javascript:void(0)" type="button" data-toggle="tooltip" onclick="editProcess(' . $data->id . ')" class="edit btn btn-primary btn-sm ">Editar</a>';
-                    $button .= '&nbsp;&nbsp;<button type="button" data-toggle="tooltip" name="deleteDocument" onclick="deleteProcess(' . $data->id . ')" class="delete btn btn-danger btn-sm ">Eliminar</button>';
+                    $button = '&nbsp;&nbsp;<a href="javascript:void(0)" type="button" data-toggle="tooltip" onclick="editProcess(' . $data->id . ')" class="edit btn btn-primary btn-sm "><i class="fas fa-edit"></i> Editar</a>';
+                    $button .= '&nbsp;&nbsp;<button type="button" data-toggle="tooltip" name="deleteDocument" onclick="deleteProcess(' . $data->id . ')" class="delete btn btn-danger btn-sm "><i class="fas fa-trash"></i> Eliminar</button>';
                     return $button;
                 })
                 ->rawColumns(['action'])
@@ -57,9 +57,10 @@ class TipoDeTramiteController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function show($id)
     {
-        //
+        $tipoTramite = TipoTramite::findOrFail($id);
+        return view('hermes::tipodetramite.show', compact('tipoTramite'));
     }
 
     public function edit($id)
@@ -96,5 +97,4 @@ class TipoDeTramiteController extends Controller
 
         return response()->json(['status' => 'success', 'message' => 'Trámite eliminado correctamente']);
     }
-   
 }

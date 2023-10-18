@@ -14,8 +14,12 @@
     <div class="col-xl-12">
         <div class="panel panel-inverse">
             <!-- begin panel-heading -->
-            <div class="panel-heading">
-                <h4 class="panel-title">Unidad O Carrera</h4>
+            <div class="panel-heading ui-sortable-handle d-flex justify-content-between align-items-center">
+                <div class="d-block">
+                    <a id="abrirDocumentoModal" href="#modal-dialog" class="btn btn-sm btn btn-primary"
+                        data-toggle="modal"><i class="fas fa-plus"></i> Nuevo Unidad O carrera</a>
+                </div>
+
                 <div class="panel-heading-btn">
                     <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i
                             class="fa fa-expand"></i></a>
@@ -36,11 +40,11 @@
                             <div class="col-xl-12">
 
                                 <!-- Botón para abrir el modal de creación -->
-                                <div>
+                                {{--<div>
                                     <a id="abrirDocumentoModal" href="#modal-dialog" class="btn btn-sm btn btn-primary"
                                         data-toggle="modal">Crear Nuevo</a>
                                 </div>
-                                <br>
+                                <br>--}}
                                 <!-- Modal para Nuevo -->
                                 <div class="modal fade" class="modal fade" id="modal-dialog">
                                     <div class="modal-dialog">

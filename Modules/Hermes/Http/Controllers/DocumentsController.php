@@ -25,9 +25,9 @@ class DocumentsController extends Controller
 
             return DataTables::of($documentos)
                 ->addColumn('action', function ($documentos) {
-                    $btn = '<a href="javascript:void(0)" type="button" name="viewDocument" onclick="loadPDF(' . $documentos->id . ')" class="view btn btn-yellow btn-sm">Ver</a>';
-                    $btn .= '&nbsp;&nbsp;<a href="javascript:void(0)" type="button" data-toggle="tooltip" onclick="editDocument(' . $documentos->id . ')" class="edit btn btn-primary btn-sm ">Editar</a>';
-                    $btn .= '&nbsp;&nbsp;<button type="button" data-toggle="tooltip" name="deleteDocument" onclick="deleteDocument(' . $documentos->id . ')" class="delete btn btn-danger btn-sm ">Eliminar</button>';
+                    $btn = '<a href="javascript:void(0)" type="button" name="viewDocument" onclick="loadPDF(' . $documentos->id . ')" class="view btn btn-yellow btn-sm"><i class="fas fa-eye"></i> Ver</a>';
+                    $btn .= '&nbsp;&nbsp;<a href="javascript:void(0)" type="button" data-toggle="tooltip" onclick="editDocument(' . $documentos->id . ')" class="edit btn btn-primary btn-sm"><i class="fas fa-edit"></i> Editar</a>';
+                    $btn .= '&nbsp;&nbsp;<button type="button" data-toggle="tooltip" name="deleteDocument" onclick="deleteDocument(' . $documentos->id . ')" class="delete btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i> Eliminar</button>';
                     return $btn;
                 })
                 ->rawColumns(['action'])
@@ -57,7 +57,7 @@ class DocumentsController extends Controller
 
         // 1. Leer el archivo PDF
         $archivo = $request->file('documento');
-        $name_document = time() . '_' . $archivo->getClientOriginalName();
+        //$name_document = time() . '_' . $archivo->getClientOriginalName();
         $contenidoArchivo = file_get_contents($archivo->getRealPath());
 
         // 2. Convertir el contenido del archivo en binario utilizando pg_escape_bytea
@@ -74,7 +74,7 @@ class DocumentsController extends Controller
         $documentos->id_tipo_documento = $request->id_tipo_documento;
         $documentos->hash = $hash;
         $documentos->documento = $contenidoBinario; // Guardar el contenido binario
-        $documentos->name_document = $name_document;
+        //$documentos->name_document = $name_document;
         $documentos->id_programa = $request->id_programa;
         $documentos->save();
 
@@ -94,7 +94,7 @@ class DocumentsController extends Controller
 
         // 2. Leer el archivo PDF actualizado
         $archivo = $request->file('documento');
-        $name_document = time() . '_' . $archivo->getClientOriginalName();
+        //$name_document = time() . '_' . $archivo->getClientOriginalName();
         $contenidoArchivo = file_get_contents($archivo->getRealPath());
 
         // 3. Convertir el contenido del archivo en binario utilizando pg_escape_bytea
@@ -110,7 +110,7 @@ class DocumentsController extends Controller
         $documento->id_tipo_documento = $request->id_tipo_documento;
         $documento->hash = $hash;
         $documento->documento = $contenidoBinario; // Guardar el contenido binario
-        $documento->name_document = $name_document;
+        //$documento->name_document = $name_document;
         $documento->id_programa = $request->id_programa;
         $documento->save();
 
