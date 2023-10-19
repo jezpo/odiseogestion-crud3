@@ -15,16 +15,16 @@
             <!-- begin panel-heading -->
             <div class="panel-heading ui-sortable-handle d-flex justify-content-between align-items-center">
                 <!-- Título a la izquierda -->
-                
-            
+
+
                 <!-- Botón "Nuevo" alineado a la izquierda -->
                 <div class="d-block">
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
                         data-whatever="@mdo">
-                        <i class="fas fa-plus"></i> Nuevo
+                        <i class="fas fa-plus"></i> <b>Nuevo Flujo Documento</b>
                     </button>
                 </div>
-            
+
                 <!-- Botones en la esquina superior derecha -->
                 <div class="panel-heading-btn">
                     <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i
@@ -401,7 +401,10 @@
                             orderable: false,
                             searchable: false
                         }
-                    ]
+                    ],
+                    language: {
+                        url: '/assets/plugins/datatables.net/Spanish.json'
+                    }
                 });
             });
         </script>

@@ -18,7 +18,7 @@
 
                 <button id="addDocumentoForm" class="btn btn-sm btn btn-primary" data-toggle="modal"
                     data-target="#modal-dialog">
-                    <i class="fas fa-plus"></i> Crear Nuevo
+                    <i class="fas fa-plus"></i> Crear Nuevo Documento
                 </button>
 
                 <div class="panel-heading-btn">
@@ -39,19 +39,6 @@
                     <div class="dataTables_wrapper dt-bootstrap">
                         <div class="row">
 
-                            <div class="d-block d-lg-inline-flex">
-                                <div class="dt-buttons btn-group flex-wrap"> <button
-                                        class="btn btn-secondary buttons-copy buttons-html5 btn-sm" tabindex="0"
-                                        aria-controls="data-table-combine" type="button"><span>Copy</span></button> <button
-                                        class="btn btn-secondary buttons-csv buttons-html5 btn-sm" tabindex="0"
-                                        aria-controls="data-table-combine" type="button"><span>CSV</span></button> <button
-                                        class="btn btn-secondary buttons-excel buttons-html5 btn-sm" tabindex="0"
-                                        aria-controls="data-table-combine" type="button"><span>Excel</span></button>
-                                    <button class="btn btn-secondary buttons-pdf buttons-html5 btn-sm" tabindex="0"
-                                        aria-controls="data-table-combine" type="button"><span>PDF</span></button> <button
-                                        class="btn btn-secondary buttons-print btn-sm" tabindex="0"
-                                        aria-controls="data-table-combine" type="button"><span>Print</span></button> </div>
-                            </div>
                             <div class="col-xl-12">
 
                                 <!-- Botón para abrir el modal de creación -->
@@ -142,15 +129,20 @@
                                                         </div>
                                                     </div>
                                                     <div class="form-group row m-b-15">
-                                                        <label class="col-md-4 col-sm-4 col-form-label">Tipo de
-                                                            documento: </label>
+                                                        <label class="col-md-4 col-sm-4 col-form-label">Tipo de documento:
+                                                        </label>
                                                         <div class="col-md-8 col-sm-8">
                                                             <select class="form-control" id="select-required"
                                                                 name="id_tipo_documento" data-parsley-required="true">
                                                                 <option value="">Por favor selecciona una opcion
                                                                 </option>
-                                                                <option value="1">Cata</option>
+                                                                <option value="1">Carta</option>
                                                                 <option value="2">Dictamen</option>
+                                                                <option value="3">Nota</option>
+                                                                <option value="4">Resolucion</option>
+                                                                <option value="4">Solicitudes</option>
+                                                                <option value="4">Actas</option>
+                                                                <option value="4">Recibos</option>
                                                                 @error('id_tipo_documento')
                                                                     <ul class="parsley-errors-list filled" id="parsley-id-5"
                                                                         aria-hidden="false">
@@ -419,9 +411,11 @@
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="pdfModalLabel">Vista previa del PDF</h5>
-                                                <button type="button" class="btn-close" data-dismiss="modal"
-                                                    aria-label="Close"></button>
+                                                <h5 class="modal-title" id="pdfModalLabel">Vista previa del Documento</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
                                             </div>
                                             <div class="modal-body">
                                                 <iframe id="pdfFrame" style="width:100%; height:500px;"
@@ -437,6 +431,11 @@
 
                                 <!-- modal para el uso de de alertas -->
                                 {{--
+
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                
                                     <div class="panel-body">
                                     <p class="lead m-b-10 text-inverse">
                                         SweetAlert for Bootstrap. A beautiful replacement for JavaScript's "alert"
@@ -478,7 +477,7 @@
     <link href="../assets/plugins/datatables.net-keytable-bs4/css/keytable.bootstrap4.min.css" rel="stylesheet" />
     <link href="../assets/plugins/datatables.net-rowreorder-bs4/css/rowreorder.bootstrap4.min.css" rel="stylesheet" />
     <link href="../assets/plugins/datatables.net-select-bs4/css/select.bootstrap4.min.css" rel="stylesheet" />
-    <!-- ================== END PAGE LEVEL STYLE ================== -->
+    <!-- ================== END PAGE LEVEL STYLE =================C:\laragon\www\odiseogestion-crud3\public\assets\plugins\datatables.net\js= -->
 
     <!-- ================== BEGIN PAGE LEVEL JS ================== -->
     <script src="../assets/plugins/datatables.net/js/jquery.dataTables.min.js"></script>
@@ -497,6 +496,7 @@
     <script src="../assets/plugins/datatables.net-select-bs4/js/select.bootstrap4.min.js"></script>
     <script src="../assets/plugins/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
     <script src="../assets/plugins/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
+
     <script src="../assets/plugins/datatables.net-buttons/js/buttons.colVis.min.js"></script>
     <script src="../assets/plugins/datatables.net-buttons/js/buttons.flash.min.js"></script>
     <script src="../assets/plugins/datatables.net-buttons/js/buttons.html5.min.js"></script>
@@ -553,6 +553,9 @@
                         searchable: true,
                     },
                 ],
+                language: {
+                    url: '/assets/plugins/datatables.net/Spanish.json'
+                }
             });
         });
     </script>

@@ -18,7 +18,7 @@
                 <div class="d-block">
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
                         data-whatever="@mdo">
-                        <i class="fas fa-plus"></i> Nuevo
+                        <i class="fas fa-plus"></i> <b>Nuevo Flujo Tramite</b>
                     </button>
                 </div>
                 <!-- Botones en la esquina superior derecha -->
@@ -50,7 +50,7 @@
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Nuevo Tramite</h5>
+                                                    <h5 class="modal-title" id="exampleModalLabel">Nuevo Flujo Tramite</h5>
                                                     <button type="button" class="close" data-dismiss="modal"
                                                         aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
@@ -302,6 +302,9 @@
                             searchable: false
                         }
                     ],
+                    language: {
+                        url: '/assets/plugins/datatables.net/Spanish.json'
+                    }
                 });
             });
         </script>

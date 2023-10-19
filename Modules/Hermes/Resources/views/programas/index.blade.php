@@ -16,8 +16,8 @@
             <!-- begin panel-heading -->
             <div class="panel-heading ui-sortable-handle d-flex justify-content-between align-items-center">
                 <div class="d-block">
-                    <a id="abrirDocumentoModal" href="#modal-dialog" class="btn btn-sm btn btn-primary"
-                        data-toggle="modal"><i class="fas fa-plus"></i> Nuevo Unidad O carrera</a>
+                    <a id="abrirDocumentoModal" href="#modal-dialog" class="btn btn-sm btn btn-primary" data-toggle="modal"><i
+                            class="fas fa-plus"></i> Nuevo Unidad O carrera</a>
                 </div>
 
                 <div class="panel-heading-btn">
@@ -40,11 +40,11 @@
                             <div class="col-xl-12">
 
                                 <!-- Botón para abrir el modal de creación -->
-                                {{--<div>
+                                {{-- <div>
                                     <a id="abrirDocumentoModal" href="#modal-dialog" class="btn btn-sm btn btn-primary"
                                         data-toggle="modal">Crear Nuevo</a>
                                 </div>
-                                <br>--}}
+                                <br> --}}
                                 <!-- Modal para Nuevo -->
                                 <div class="modal fade" class="modal fade" id="modal-dialog">
                                     <div class="modal-dialog">
@@ -463,6 +463,9 @@
                         searchable: false
                     },
                 ],
+                language: {
+                    url: '/assets/plugins/datatables.net/Spanish.json'
+                }
             });
         });
     </script>
@@ -487,7 +490,7 @@
                                 if (result.isConfirmed) {
                                     $('#modal-dialog').modal('hide');
                                     location
-                                .reload(); // Opcional, si deseas recargar la página después de una inserción exitosa.
+                                        .reload(); // Opcional, si deseas recargar la página después de una inserción exitosa.
                                 }
                             });
                         } else {

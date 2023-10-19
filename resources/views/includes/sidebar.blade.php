@@ -15,10 +15,10 @@
                     </div>
                     <div class="info">
                         <b class="caret pull-right"></b>
-                        
+                        {{--
                         {{ $usuario->nombres }} {{ $usuario->apellido_paterno }}
                         <small>{{ $usuario->nombres }}</small>
-                        
+                        --}}
                     </div>
 
                 </a>
