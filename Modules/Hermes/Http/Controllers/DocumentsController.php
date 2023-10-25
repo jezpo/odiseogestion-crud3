@@ -9,11 +9,6 @@ use Illuminate\Routing\Controller;
 use Yajra\DataTables\DataTables;
 use Modules\Hermes\Entities\Documentos;
 use Modules\Hermes\Entities\Programas;
-use Illuminate\Support\Facades\DB;
-use PgSql\Connection;
-use PDO;
-use Barryvdh\DomPDF\Facade as PDF;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class DocumentsController extends Controller
 {
@@ -41,7 +36,7 @@ class DocumentsController extends Controller
     public function edit($id)
     {
         if (request()->ajax()) {
-            $documentos = Documentos::select('id', 'cite', 'descripcion', 'estado', 'id_tipo_documento', 'id_programa')->find($id);
+            $documentos = Documentos::select('id', 'cite', 'descripcion', 'estado', 'id_tipo_documento')->find($id);
             //$documentos = Documentos::find($id);
         }
         if (!$documentos) {
@@ -53,7 +48,7 @@ class DocumentsController extends Controller
     public function store(Request $request)
     {
         // Establecer la conexión a la base de datos
-        $conn = pg_connect("host=127.0.0.1 dbname=hermes4 user=postgres password=postgres");
+        $conn = pg_connect("host=127.0.0.1 dbname=hermes2 user=postgres password=postgres");
 
         // 1. Leer el archivo PDF
         $archivo = $request->file('documento');
@@ -73,9 +68,10 @@ class DocumentsController extends Controller
         $documentos->estado = $request->estado;
         $documentos->id_tipo_documento = $request->id_tipo_documento;
         $documentos->hash = $hash;
+        $documentos->id_programa = 'SIS';
         $documentos->documento = $contenidoBinario; // Guardar el contenido binario
         //$documentos->name_document = $name_document;
-        $documentos->id_programa = $request->id_programa;
+
         $documentos->save();
 
         // Cerrar la conexión a la base de datos
@@ -87,7 +83,7 @@ class DocumentsController extends Controller
     public function update(Request $request, $id)
     {
         // Establecer la conexión a la base de datos
-        $conn = pg_connect("host=127.0.0.1 dbname=hermes4 user=postgres password=postgres");
+        $conn = pg_connect("host=127.0.0.1 dbname=hermes2 user=postgres password=postgres");
 
         // 1. Obtener el documento existente de la base de datos
         $documento = Documentos::find($id);
@@ -109,9 +105,10 @@ class DocumentsController extends Controller
         $documento->estado = $request->estado;
         $documento->id_tipo_documento = $request->id_tipo_documento;
         $documento->hash = $hash;
+        $documento->id_programa = 'SIS';
         $documento->documento = $contenidoBinario; // Guardar el contenido binario
         //$documento->name_document = $name_document;
-        $documento->id_programa = $request->id_programa;
+
         $documento->save();
 
         // Cerrar la conexión a la base de datos
@@ -119,6 +116,7 @@ class DocumentsController extends Controller
 
         return redirect()->back()->with('message', '¡Documento actualizado exitosamente!');
     }
+
 
     public function destroy($id)
     {
@@ -129,7 +127,7 @@ class DocumentsController extends Controller
 
     public function show($id)
     {
-        $documento = Documentos::select('id', 'cite', 'descripcion', 'estado', 'id_tipo_documento', 'id_programa')->find($id);
+        $documento = Documentos::select('id', 'cite', 'descripcion', 'estado', 'id_tipo_documento')->find($id);
         if (!$documento) {
             return response()->json(['error' => 'Documento no encontrado'], 404);
         }

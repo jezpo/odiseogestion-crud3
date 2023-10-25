@@ -12,6 +12,8 @@ class Documentos extends Model
     protected $table = 'documentos';
     protected $primaryKey = 'id';
     public $timestamps = false;
+    //casterar el documento alamcenado
+  
 
     protected $fillable = ['id', 
                             'cite', 

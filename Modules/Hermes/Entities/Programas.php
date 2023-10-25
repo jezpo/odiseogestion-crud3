@@ -12,7 +12,10 @@ class Programas extends Model
     protected $primaryKey = 'id_programa';
     public $incrementing = false;
     public $timestamps = false;
-
+    protected $casts = [
+        'id_programa' => 'string',
+    ];
+    
     protected $fillable = [
         'id_programa',
         'programa',
@@ -30,5 +33,9 @@ class Programas extends Model
     public function flujoDocumentos()
     {
         return $this->hasMany(FlujoDocumentos::class);
+    }
+    public function getProgramaNombre()
+    {
+        return $this->programa ? $this->programa->programa : null;
     }
 }

@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Hermes\Entities\Documentos;
 use Modules\Hermes\Entities\Programas;
-use Modules\Hermes\Entities\FlujoDocumentos;
+use Modules\Hermes\Entities\FlujoDocuments;
 use Yajra\DataTables\Facades\DataTables;
-use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\DB;
 
 class FlujoDeDocumentosController extends Controller
 {
@@ -17,8 +17,8 @@ class FlujoDeDocumentosController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = FlujoDocumentos::with('documento', 'programa')->get();
-
+            //$data = FlujoDocumentos::with(['documentos', 'programas'])->get();
+            $data = FlujoDocuments::fetchWithDocumentCiteAndProgramName();
             return DataTables::of($data)
                 ->addColumn('actions', function ($data) {
                     $btn = '<a href="javascript:void(0)" type="button" data-toggle="tooltip" onclick="editFlujo(' . $data->id . ')" class="edit btn btn-primary btn-sm"><i class="fas fa-edit"></i> Editar</a>';
@@ -28,7 +28,6 @@ class FlujoDeDocumentosController extends Controller
                 ->rawColumns(['actions'])
                 ->toJson();
         }
-
         $documentos = Documentos::all();
         $programas = Programas::all();
 
@@ -40,14 +39,16 @@ class FlujoDeDocumentosController extends Controller
         $request->validate([
             'id_documento' => 'required',
             'fecha_recepcion' => 'required',
+            'fecha_envio' => 'required',
             'id_programa' => 'required|max:5',
             'obs' => 'nullable',
         ]);
 
         // Crea un nuevo registro utilizando los datos del formulario
-        $nuevoRegistro = new FlujoDocumentos([
+        $nuevoRegistro = new FlujoDocuments([
             'id_documento' => $request->input('id_documento'),
             'fecha_recepcion' => $request->input('fecha_recepcion'),
+            'fecha_envio' => $request->input('fecha_envio'),
             'id_programa' => $request->input('id_programa'),
             'obs' => $request->input('obs'),
         ]);
@@ -59,9 +60,10 @@ class FlujoDeDocumentosController extends Controller
     }
     public function create(Request $request)
     {
-        $flujos = FlujoDocumentos::create([
+        $flujos = FlujoDocuments::create([
             'id_documento' => $request->id_documento,
             'fecha_recepcion' => $request->fecha_recepcion ?? now(),
+            'fecha_envio' => $request->fecha_envio ?? now(),
             'id_programa' => $request->id_programa,
             'obs' => $request->obs
         ]);
@@ -77,13 +79,18 @@ class FlujoDeDocumentosController extends Controller
 
     public function show($id)
     {
-        return view('hermes::flujodocumento.show');
+         // Carga la relación programa 
+  $flujo = FlujoDocuments::with('programa')->find($id);  
+
+  // Accede al nombre a través del atributo accesor
+  $programa = $flujo->programa;
+        return view('hermes::flujodocumento.show',compact('flujo', 'programa'));
     }
 
     public function edit($id)
     {
         // Recupera el registro que se va a editar
-        $flujoDocumento = FlujoDocumentos::find($id);
+        $flujoDocumento = FlujoDocuments::find($id);
         // Puedes agregar validaciones aquí para asegurarte de que el registro existe
         return view('flujo-documentos.edit', ['flujoDocumento' => $flujoDocumento]);
     }
@@ -94,16 +101,18 @@ class FlujoDeDocumentosController extends Controller
         $request->validate([
             'id_documento' => 'required',
             'fecha_recepcion' => 'required',
+            'fecha_envio' => 'required',
             'id_programa' => 'required|max:5',
             'obs' => 'nullable',
         ]);
 
         // Encuentra el registro que se va a actualizar
-        $flujoDocumento = FlujoDocumentos::find($id);
+        $flujoDocumento = FlujoDocuments::find($id);
 
         // Actualiza los campos del registro con los datos del formulario
         $flujoDocumento->id_documento = $request->input('id_documento');
         $flujoDocumento->fecha_recepcion = $request->input('fecha_recepcion');
+        $flujoDocumento->fecha_envio = $request->input('fecha_envio');
         $flujoDocumento->id_programa = $request->input('id_programa');
         $flujoDocumento->obs = $request->input('obs');
 
@@ -117,7 +126,7 @@ class FlujoDeDocumentosController extends Controller
 
     public function destroy($id)
     {
-        $flujo = FlujoDocumentos::findOrFail($id);
+        $flujo = FlujoDocuments::findOrFail($id);
 
         if ($flujo) {
             $flujo->delete();
@@ -126,4 +135,5 @@ class FlujoDeDocumentosController extends Controller
             return response()->json(['message' => 'Documento no encontrado'], 404);
         }
     }
+    
 }

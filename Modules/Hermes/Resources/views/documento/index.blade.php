@@ -56,6 +56,7 @@
                                                 <button type="button" class="close" data-dismiss="modal"
                                                     aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
+
                                                 </button>
                                             </div>
                                             <div class="modal-body">
@@ -154,28 +155,7 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="form-group row m-b-15">
-                                                        <label class="col-md-4 col-sm-4 col-form-label">Origen: </label>
-                                                        <div class="col-md-8 col-sm-8">
-                                                            <select class="form-control select2_programas"
-                                                                id="id_programa" name="id_programa"
-                                                                data-parsley-required="true">
-                                                                <option value="">Por favor selecciona el origen
-                                                                </option>
-                                                                @foreach ($programas as $opcion)
-                                                                    <option value="{{ $opcion['id_programa'] }}">
-                                                                        {{ $opcion['programa'] }}</option>
-                                                                @endforeach
-                                                                @error('id_programa')
-                                                                    <ul class="parsley-errors-list filled" id="parsley-id-5"
-                                                                        aria-hidden="false">
-                                                                        <li class="parsley-required">
-                                                                            {{ 'este valor es requerido' }}</li>
-                                                                    </ul>
-                                                                @enderror
-                                                            </select>
-                                                        </div>
-                                                    </div>
+
                                                     <div class="form-group row m-b-0">
                                                         <label class="col-md-4 col-sm-4 col-form-label">&nbsp;</label>
                                                         <div class="col-md-8 col-sm-8">
@@ -206,7 +186,6 @@
                                                     <th width="10%">Descripción</th>
                                                     <th width="10%">Estado</th>
                                                     <th width="10%">Nombre del Programa</th>
-                                                    <th width="20%">Programa</th>
                                                     <th width="40%">Acciones</th>
                                                 </tr>
                                             </thead>
@@ -342,30 +321,7 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="form-group row m-b-15">
-                                                        <label class="col-md-4 col-sm-4 col-form-label">Origen: </label>
-                                                        <div class="col-md-8 col-sm-8">
-                                                            <select class="form-control select2_programas"
-                                                                id="id_programa2" name="id_programa2"
-                                                                data-parsley-required="true">
-                                                                <option value="">Por favor selecciona el origen
-                                                                </option>
-                                                                @foreach ($programas as $opcion)
-                                                                    <option value="{{ $opcion['id_programa'] }}">
-                                                                        {{ $opcion['programa'] }}</option>
-                                                                @endforeach
-                                                                @error('id_programa')
-                                                                    <ul class="parsley-errors-list filled" id="parsley-id-5"
-                                                                        aria-hidden="false">
-                                                                        <li class="parsley-required">
-                                                                            {{ 'este valor es requerido' }}</li>
-                                                                    </ul>
-                                                                @enderror
-                                                            </select>
-                                                        </div>
-                                                    </div>
 
-                                                    <!-- Agrega más campos de acuerdo a tus necesidades -->
 
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary"
@@ -428,29 +384,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <!-- modal para el uso de de alertas -->
-                                {{--
-
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                
-                                    <div class="panel-body">
-                                    <p class="lead m-b-10 text-inverse">
-                                        SweetAlert for Bootstrap. A beautiful replacement for JavaScript's "alert"
-                                    </p>
-                                    <hr />
-                                    <p class="">
-                                        Try any of those!
-                                    </p>
-                                    <a href="javascript:;" data-click="swal-primary" class="btn btn-primary">Primary</a>
-                                    <a href="javascript:;" data-click="swal-info" class="btn btn-info">Info</a>
-                                    <a href="javascript:;" data-click="swal-success" class="btn btn-success">Success</a>
-                                    <a href="javascript:;" data-click="swal-warning" class="btn btn-warning">Warning</a>
-                                    <a href="javascript:;" data-click="swal-danger" class="btn btn-danger">Danger</a>
-                                </div>
-                                --}}
                             </div>
                             <!-- end panel-body -->
                         </div>
@@ -535,15 +468,34 @@
                     },
                     {
                         data: 'estado',
-                        name: 'estado'
+                        name: 'estado',
+                        render: function(data, type, row) {
+                            return data === 'A' ? 'Activo' : 'Inactivo';
+                        }
                     },
                     {
                         data: 'id_tipo_documento',
-                        name: 'id_tipo_documento'
-                    },
-                    {
-                        data: 'programa',
-                        name: 'programa'
+                        name: 'id_tipo_documento',
+                        render: function(data, type, row) {
+                            switch (parseInt(data)) {
+                                case 1:
+                                    return 'Carta';
+                                case 2:
+                                    return 'Dictamen';
+                                case 3:
+                                    return 'Nota';
+                                case 4:
+                                    return 'Resolución';
+                                case 5:
+                                    return 'Solicitudes';
+                                case 6:
+                                    return 'Actas';
+                                case 7:
+                                    return 'Recibos';
+                                default:
+                                    return data; // retornará el número si no hay coincidencia
+                            }
+                        }
                     },
 
                     {
@@ -673,26 +625,26 @@
 
     <script type="text/javascript">
         $(document).ready(function() {
-            $('.select2_programas').select2({
-                placeholder: "Por favor selecciona el origen", // placeholder
+            // Selecciona el primer elemento select con la clase select2_programa
+            $('.select2_programa').eq(0).select2({
+                placeholder: "Por favor selecciona"
             });
         });
-    </script>
 
-    <script>
-        function editDocument(id) {
-            $.get('documents/edit/' + id, function(data) {
-                $('#txtId2').val(data.id);
-                $('#cite2').val(data.cite);
-                $('#descripcion2').val(data.descripcion);
-                $('#estado2').val(data.estado).trigger('change');
-                $('#documento2').val(''); // Limpiar el campo de entrada de archivo
-                $('#id_tipo_documento2').val(data.id_tipo_documento).trigger('change');
-                $('#id_programa2').val(data.id_programa).trigger('change');
-                $("input[name=_token]").val();
-                $('#editarDocumentoModal').modal('show');
-            })
-        }
+        <
+        script >
+            function editDocument(id) {
+                $.get('documents/edit/' + id, function(data) {
+                    $('#txtId2').val(data.id);
+                    $('#cite2').val(data.cite);
+                    $('#descripcion2').val(data.descripcion);
+                    $('#estado2').val(data.estado).trigger('change');
+                    $('#documento2').val(''); // Limpiar el campo de entrada de archivo
+                    $('#id_tipo_documento2').val(data.id_tipo_documento).trigger('change');
+                    $("input[name=_token]").val();
+                    $('#editarDocumentoModal').modal('show');
+                })
+            }
 
         $('#editDocumentoForm').submit(function(e) {
             e.preventDefault();
@@ -701,7 +653,7 @@
             var descripcion2 = $('#descripcion2').val();
             var estado2 = $('#estado2').val();
             var id_tipo_documento2 = $('#id_tipo_documento2').val();
-            var id_programa2 = $('#id_programa2').val();
+
             var documento2 = $('#documento2')[0].files[0]; // Obtener los datos del archivo
             var _token2 = $("input[name=_token]").val();
 
@@ -712,7 +664,7 @@
             formData.append('descripcion', descripcion2);
             formData.append('estado', estado2);
             formData.append('id_tipo_documento', id_tipo_documento2);
-            formData.append('id_programa', id_programa2);
+
             formData.append('documento', documento2); // Agregar los datos del archivo a los datos del formulario
             formData.append('_token', _token2);
             $.ajax({

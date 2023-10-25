@@ -47,18 +47,6 @@
 
                             <div class="row">
                                 <div class="col-xl-12">
-
-                                    {{-- <!-- Botón para abrir el modal de creación -->
-                                <div class="panel-body">
-                                    <div class="d-block d-lg-inline-flex">
-                                        <div class="dt-buttons btn-group flex-wrap">
-                                            <button type="button" class="btn btn-primary" data-toggle="modal"
-                                                data-target="#exampleModal" data-whatever="@mdo">Flujo de
-                                                documentos</button>
-                                        </div>
-                                    </div>
-                                    <hr>
---}}
                                     <!-- Modal de edición -->
                                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -85,7 +73,7 @@
                                                                     name="id_documento" data-parsley-required="true">
                                                                     @foreach ($documentos as $documento)
                                                                         <option value='{{ $documento->id }}'>
-                                                                            {{ $documento->id }}
+                                                                            {{ $documento->id }} - {{ $documento->cite }}
                                                                         </option>
                                                                     @endforeach
                                                                     @error('id_documento')
@@ -119,17 +107,58 @@
 
                                                         <div class="form-group row m-b-15">
                                                             <label class="col-md-4 col-sm-4 col-form-label"
-                                                                for="fullname">Id de Destino:</label>
+                                                                for="fullname">Fecha de envio:</label>
+                                                            <div class="col-md-8 col-sm-8">
+                                                                <input class="form-control" type="datetime-local"
+                                                                    id="fecha_envio" value="" name="fecha_envio"
+                                                                    placeholder="fecha envio" data-parsley-required="true">
+                                                                @error('fecha_envio')
+                                                                    <ul class="parsley-errors-list filled" id="parsley-id-5"
+                                                                        aria-hidden="false">
+                                                                        <li class="parsley-required">
+                                                                            {{ 'Este valor es requerido' }}</li>
+                                                                    </ul>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group row m-b-15">
+                                                            <label class="col-md-4 col-sm-4 col-form-label"
+                                                                for="fullname">Unidad Destino</label>
                                                             <div class="col-md-8 col-sm-8">
                                                                 <select class="form-control" id="id_programa"
                                                                     name="id_programa" data-parsley-required="true">
                                                                     @foreach ($programas as $programa)
                                                                         <option value='{{ $programa->id_programa }}'>
-                                                                            {{ $programa->id_programa }}</option>
+                                                                            {{ $programa->programa }}
+                                                                        </option>
                                                                     @endforeach
                                                                     @error('id_programa')
-                                                                        <ul class="parsley-errors-list filled" id="parsley-id-5"
-                                                                            aria-hidden="false">
+                                                                        <ul class="parsley-errors-list filled"
+                                                                            id="parsley-id-5" aria-hidden="false">
+                                                                            <li class="parsley-required">
+                                                                                {{ 'este valor es requerido' }}
+                                                                            </li>
+                                                                        </ul>
+                                                                    @enderror
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group row m-b-15">
+                                                            <label class="col-md-4 col-sm-4 col-form-label"
+                                                                for="fullname">Unidad Origen</label>
+                                                            <div class="col-md-8 col-sm-8">
+                                                                <select class="form-control" id="id_programa"
+                                                                    name="id_programa" data-parsley-required="true">
+                                                                    @foreach ($programas as $programa)
+                                                                        <option value='{{ $programa->id_programa }}'>
+                                                                            {{ $programa->programa }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                    @error('id_programa')
+                                                                        <ul class="parsley-errors-list filled"
+                                                                            id="parsley-id-5" aria-hidden="false">
                                                                             <li class="parsley-required">
                                                                                 {{ 'este valor es requerido' }}
                                                                             </li>
@@ -184,7 +213,9 @@
                                                         <th>ID</th>
                                                         <th>Id Documento</th>
                                                         <th>Fecha de Repecion</th>
+                                                        <th>Fecha de Envio</th>
                                                         <th>Unidad De Origen</th>
+                                                        <th>Unidad De Destino</th>
                                                         <th>Observaciones</th>
                                                         <th>Acciones</th>
                                                     </tr>
@@ -256,6 +287,24 @@
 
                                                         <div class="form-group row m-b-15">
                                                             <label class="col-md-4 col-sm-4 col-form-label"
+                                                                for="fullname">Fecha de envio:</label>
+                                                            <div class="col-md-8 col-sm-8">
+                                                                <input class="form-control" type="datetime-local"
+                                                                    id="fecha_envio2" value="" name="fecha_envio2"
+                                                                    placeholder="fecha envio"
+                                                                    data-parsley-required="true">
+                                                                @error('fecha_envio')
+                                                                    <ul class="parsley-errors-list filled" id="parsley-id-5"
+                                                                        aria-hidden="false">
+                                                                        <li class="parsley-required">
+                                                                            {{ 'Este valor es requerido' }}</li>
+                                                                    </ul>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group row m-b-15">
+                                                            <label class="col-md-4 col-sm-4 col-form-label"
                                                                 for="fullname">Id de Destino:</label>
                                                             <div class="col-md-8 col-sm-8">
                                                                 <select class="form-control" id="id_programa2"
@@ -293,8 +342,6 @@
                                                                 @enderror
                                                             </div>
                                                         </div>
-
-
                                                         <div class="form-group row m-b-0">
                                                             <label class="col-md-4 col-sm-4 col-form-label">&nbsp;</label>
                                                             <div class="col-md-8 col-sm-8">
@@ -308,8 +355,6 @@
                                         </div>
                                     </div>
                                     <!-- Fin Modal de edición -->
-
-
                                 </div>
                                 <!-- end panel-body -->
                             </div>
@@ -380,16 +425,25 @@
                             name: 'id'
                         },
                         {
-                            data: 'id_documento',
-                            name: 'id_documento'
+                            data: 'cite',
+                            name: 'cite',
+
                         },
                         {
                             data: 'fecha_recepcion',
                             name: 'fecha_recepcion'
                         },
                         {
-                            data: 'id_programa',
-                            name: 'id_programa'
+                            data: 'fecha_envio',
+                            name: 'fecha_envio'
+                        },
+                        {
+                            data: 'programa_origen',
+                            name: 'programa_origen'
+                        },
+                        {
+                            data: 'programa_destino',
+                            name: 'programa_destino'
                         },
                         {
                             data: 'obs',
@@ -461,6 +515,7 @@
                     // Llenar el formulario de edición con los datos recibidos
                     $('#id_documento2').val(data.flujo.id_documento);
                     $('#fecha_recepcion2').val(data.flujo.fecha_recepcion);
+                    $('#fecha_envio2').val(data.flujo.fecha_envio);
                     $('#id_programa2').val(data.flujo.id_programa);
                     $('#obs2').val(data.flujo.obs);
                     // Mostrar el modal de edición
@@ -471,6 +526,7 @@
                 e.preventDefault();
                 var id = $('#id_documento2').val();
                 var fecha_recepcion = $('#fecha_recepcion2').val();
+                var fecha_recepcion = $('#fecha_envio2').val();
                 var id_programa = $('#id_programa2').val();
                 var obs = $('#obs2').val();
                 var _token = $("input[name=_token]").val();
@@ -478,6 +534,7 @@
                 formData.append('_method', 'PUT');
                 formData.append('id_documento', id); // Cambiado 'id' a 'id_documento'
                 formData.append('fecha_recepcion', fecha_recepcion);
+                formData.append('fecha_envio', fecha_envio);
                 formData.append('id_programa', id_programa);
                 formData.append('obs', obs);
                 formData.append('_token', _token);

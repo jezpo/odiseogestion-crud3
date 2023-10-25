@@ -5,6 +5,7 @@ namespace Modules\Hermes\Entities;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
+
 class FlujoDocumentos extends Model
 {
     use HasFactory;
@@ -15,16 +16,27 @@ class FlujoDocumentos extends Model
     protected $fillable = [
         'id_documento',
         'fecha_recepcion',
+        'fecha_envio',
         'id_programa',
         'obs'
     ];
-
     public function documento()
     {
-        return $this->belongsTo(Documentos::class);
+        return $this->belongsTo(Documentos::class, 'id_documenmto');
     }
+
     public function programa()
     {
-        return $this->belongsTo(Programas::class);
+        return $this->belongsTo(Programas::class, 'id_programa');
+    }
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            if (!$model->id_programa) {
+                $model->id_programa = 'SIS';
+            }
+        });
     }
 }

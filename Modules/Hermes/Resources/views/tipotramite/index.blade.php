@@ -19,7 +19,7 @@
                 <div class="d-block d-lg-inline-flex">
                     <div class="dt-buttons btn-group flex-wrap">
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                           <i class="fas fa-plus"> </i> Nuevo Tramite</button>
+                            <i class="fas fa-plus"> </i> Nuevo Tramite</button>
                     </div>
                 </div>
                 <div class="panel-heading-btn">
@@ -337,7 +337,16 @@
                     },
                     {
                         data: 'estado',
-                        name: 'estado'
+                        name: 'estado',
+                        render: function(data, type, row) {
+                            if (data === "A") {
+                                return "Activo";
+                            } else if (data === "I") {
+                                return "Inactivo";
+                            } else {
+                                return data; // Por si hay algún otro valor inesperado, lo mostrará tal cual
+                            }
+                        }
                     },
                     {
                         data: 'action',
