@@ -2,6 +2,7 @@
 
 namespace Modules\Hermes\Http\Controllers;
 
+use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
@@ -13,6 +14,7 @@ class DocumentsController extends Controller
 {
     public function index(Request $request)
     {
+
         if ($request->ajax()) {
             $documentos = Documentos::list_documents();
 
@@ -125,7 +127,7 @@ class DocumentsController extends Controller
 
     public function show($id)
     {
-        $documento = Documentos::select('id', 'cite', 'descripcion', 'estado', 'id_tipo_documento', 'id_programa')->find($id);
+        $documento = Documentos::select('id', 'cite', 'descripcion', 'estado', 'id_tipo_documento')->find($id);
         if (!$documento) {
             return response()->json(['error' => 'Documento no encontrado'], 404);
         }
@@ -148,24 +150,5 @@ class DocumentsController extends Controller
         } else {
             return response()->json(['message' => 'Documento no encontrado'], 404);
         }
-    }
-    public function recibidos(Request $request)
-    {
-        if ($request->ajax()) {
-            $documentos = Documentos::list_documents();
-
-            return DataTables::of($documentos)
-                ->addColumn('action', function ($documentos) {
-                    $btn = '<a href="javascript:void(0)" type="button" name="viewDocument" onclick="loadPDF(' . $documentos->id . ')" class="view btn btn-yellow btn-sm"><i class="fas fa-eye"></i> Ver</a>';
-                    $btn .= '&nbsp;&nbsp;<a href="javascript:void(0)" type="button" data-toggle="tooltip" onclick="editDocument(' . $documentos->id . ')" class="edit btn btn-primary btn-sm"><i class="fas fa-edit"></i> Editar</a>';
-                    $btn .= '&nbsp;&nbsp;<button type="button" data-toggle="tooltip" name="deleteDocument" onclick="deleteDocument(' . $documentos->id . ')" class="delete btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i> Eliminar</button>';
-                    return $btn;
-                })
-                ->rawColumns(['action'])
-                ->toJson();
-        }
-
-        $programas = Programas::all();
-        return view('hermes::documento.recibidos', compact('programas'));
     }
 }

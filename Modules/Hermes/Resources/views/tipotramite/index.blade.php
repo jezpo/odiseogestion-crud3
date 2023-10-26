@@ -436,7 +436,6 @@
 
             // Obtener el ID del trámite desde el campo oculto
             var id = $('#edit-tramite-id').val();
-
             // Resto de los datos del formulario
             var tramite = $('#tramite2').val();
             var estado = $('#estado2').val();

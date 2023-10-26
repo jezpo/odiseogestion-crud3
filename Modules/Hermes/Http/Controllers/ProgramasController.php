@@ -6,12 +6,14 @@ use Illuminate\Contracts\Support\Renderable;
 
 use Illuminate\Routing\Controller;
 
-use Modules\Hermes\Entities\Programas;
+use Modules\Hermes\Entities\Programs;
 use Modules\Hermes\Entities\Documentos;
 use Modules\Hermes\Entities\FlujoDocumentos;
 use Modules\Hermes\Entities\Flujo_de_tramite;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\DB;
+
 
 class ProgramasController extends Controller
 {
@@ -19,7 +21,7 @@ class ProgramasController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Programas::all();
+            $data = Programs::all();
             return DataTables::of($data)
                 ->addColumn('action', function ($data) {
                     $button = '&nbsp;&nbsp;<a href="javascript:void(0)" type="button" data-toggle="tooltip" onclick="editProgram(' . $data->id . ')" class="edit btn btn-primary btn-sm "><i class="fas fa-edit"></i> Editar</a>';
@@ -44,7 +46,7 @@ class ProgramasController extends Controller
                 'estado' => 'required|in:A,I',
             ]);
 
-            $programa = new Programas();
+            $programa = new Programs();
 
             $programa->id_programa = $request->id_programa;
             $programa->programa = $request->programa;
@@ -65,14 +67,23 @@ class ProgramasController extends Controller
 
     public function edit($id)
     {
-        $programa = Programas::find($id);
+        // Buscar el programa basado en el ID usando el constructor de consultas
+        $programa = DB::table('programas')->where('id', $id)->first();
+
+        // Si no se encuentra el programa, devolver un mensaje de error
+        if (!$programa) {
+            return response()->json(['success' => false, 'message' => 'Programa no encontrado.'], 404);
+        }
+
+        // Si se encuentra, devolver el programa como respuesta JSON
         return response()->json($programa);
     }
+
 
     public function update(Request $request, $id)
     {
         try {
-            $programa = Programas::find($id);  // Busca el programa basado en el ID. Si no lo encuentra, lanza una excepción
+            $programa = Programs::find($id);  // Busca el programa basado en el ID. Si no lo encuentra, lanza una excepción
 
             $programa->id_programa = $request->id_programa;
             $programa->programa = $request->programa;
@@ -91,7 +102,7 @@ class ProgramasController extends Controller
 
     public function destroy($id)
     {
-        Programas::find($id)->delete();
+        Programs::find($id)->delete();
         return response()->json(['success' => 'Programa eliminado exitosamente.']);
     }
 }

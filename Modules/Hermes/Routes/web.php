@@ -36,6 +36,7 @@ Route::prefix('hermes')->group(function () {
     Route::put('programas/update/{id}', [ProgramasController::class, 'update'])->name('programas.update');
     Route::get('programas/destroy/{id}', [ProgramasController::class, 'destroy'])->name('programas.destroy');
     //llamando a flujo de tramite controller 
+    Route::get('documentos/recibidos', [DocumentsController::class, 'recibidos'])->name('documentos.recibidos');
 
     //ruta de flujo de tramite 
     Route::get('flujotramite', [FlujoDeTramiteController::class, 'index'])->name('flujotramite.index');
@@ -69,12 +70,14 @@ Route::prefix('hermes')->group(function () {
 
     Route::get('documents', [DocumentsController::class, 'index'])->name('documents.index');
     Route::post('documents/store', [DocumentsController::class, 'store'])->name('documents.store');
-    Route::get('documents/{id}', [DocumentsController::class, 'show'])->name('documents.show');
+    Route::get('documents/show/{id}', [DocumentsController::class, 'show'])->name('documents.show');
     Route::get('documents/edit/{id}', [DocumentsController::class, 'edit'])->name('documents.edit');
     Route::put('documents/update/{id}', [DocumentsController::class, 'update'])->name('documents.update');
     Route::get('documents/destroy/{id}', [DocumentsController::class, 'destroy'])->name('documents.destroy');
 
     Route::get('documents/downloadPdf/{id}', [DocumentsController::class, 'downloadPdf']);
+
+    Route::get('documents/recibidos', [DocumentsController::class, 'recibidos'])->name('documents.recibidos');
 
    
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');

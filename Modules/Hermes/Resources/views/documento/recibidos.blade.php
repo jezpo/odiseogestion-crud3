@@ -457,7 +457,7 @@
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    url: "{{ route('documents.index') }}",
+                    url: "{{ route('documents.recibidos') }}",
                 },
                 columns: [{
                         data: 'id',

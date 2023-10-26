@@ -209,9 +209,11 @@
                                             </div>
                                             <div class="modal-body">
                                                 <!-- Formulario de edición -->
-                                                <form id="editarProgramaForm" class="form-horizontal" method="PUT"
-                                                    enctype="multipart/form-data" action="{{ route('programas.store') }}">
+                                                <form id="editarProgramaForm" class="form-horizontal" method="POST"
+                                                    enctype="multipart/form-data" class="form-horizontal">
                                                     @csrf
+                                                    @method('PUT')
+                                                    <input type="hidden" id="edit-programa-id" name="id">
                                                     <div class="form-group row m-b-15">
                                                         <label class="col-md-4 col-sm-4 col-form-label" for="fullname">Id
                                                             Unidad o carrera:</label>
@@ -347,23 +349,7 @@
                                     </div>
                                 </div>
 
-                                <!-- modal para el uso de de alertas -->
-                                {{--
-                                    <div class="panel-body">
-                                    <p class="lead m-b-10 text-inverse">
-                                        SweetAlert for Bootstrap. A beautiful replacement for JavaScript's "alert"
-                                    </p>
-                                    <hr />
-                                    <p class="">
-                                        Try any of those!
-                                    </p>
-                                    <a href="javascript:;" data-click="swal-primary" class="btn btn-primary">Primary</a>
-                                    <a href="javascript:;" data-click="swal-info" class="btn btn-info">Info</a>
-                                    <a href="javascript:;" data-click="swal-success" class="btn btn-success">Success</a>
-                                    <a href="javascript:;" data-click="swal-warning" class="btn btn-warning">Warning</a>
-                                    <a href="javascript:;" data-click="swal-danger" class="btn btn-danger">Danger</a>
-                                </div>
-                                --}}
+
                             </div>
                             <!-- end panel-body -->
                         </div>
@@ -454,7 +440,10 @@
                     },
                     {
                         data: 'estado',
-                        name: 'estado'
+                        name: 'estado',
+                        render: function(data, type, row) {
+                            return data === 'A' ? 'Activo' : 'Inactivo';
+                        }
                     },
                     {
                         data: 'action',
@@ -515,42 +504,43 @@
     <script>
         function editProgram(id) {
             $.get('programas/edit/' + id, function(data) {
-                $('#id2').val(data.id);
+                $('#edit-programa-id').val(data.id);
                 $('#id_programa2').val(data.id_programa);
                 $('#programa2').val(data.programa);
                 $('#id_padre2').val(data.id_padre);
                 $('#estado2').val(data.estado).trigger('change');
-                $("input[name=_token]").val();
                 $('#editarProgramaModal').modal('show');
+            }).fail(function() {
+                Swal.fire({
+                    icon: 'error',
+                    title: '¡Error!',
+                    text: 'Ocurrió un error al cargar los datos del programa. Por favor, inténtalo de nuevo.'
+                });
             });
         }
 
-        $('#editProgramaForm').submit(function(e) {
+        $('#editarProgramaForm').submit(function(e) {
             e.preventDefault();
-            var id2 = $('#id2').val();
-            var id_programa2 = $('#id_programa2').val();
-            var programa2 = $('#programa2').val();
-            var id_padre2 = $('#id_padre2').val();
-            var estado2 = $('#estado2').val();
-            var _token2 = $("input[name=_token]").val();
 
-            var formData = new FormData();
-            formData.append('_method', 'DELETE'); // Cambiar a DELETE si se está enviando una solicitud DELETE
-            formData.append('id', id2);
-            formData.append('id_programa', id_programa2);
-            formData.append('programa', programa2);
-            formData.append('id_padre', id_padre2);
-            formData.append('estado', estado2);
-            formData.append('_token', _token2);
+            var id = $('#edit-programa-id').val();
+            var id_programa = $('#id_programa2').val();
+            var programa = $('#programa2').val();
+            var id_padre = $('#id_padre2').val();
+            var estado = $('#estado2').val();
 
             $.ajax({
-                url: 'programas/update/' + id2,
+                url: 'programas/update/' + id,
                 type: 'POST',
-                data: formData,
-                contentType: false,
-                processData: false,
+                data: {
+                    _token: $('input[name="_token"]').val(),
+                    _method: 'PUT',
+                    id_programa: id_programa,
+                    programa: programa,
+                    id_padre: id_padre,
+                    estado: estado
+                },
                 success: function(response) {
-                    if (response) {
+                    if (response.status == 'success') {
                         $('#editarProgramaModal').modal('hide');
                         Swal.fire({
                             icon: 'success',
@@ -559,9 +549,20 @@
                             timer: 1500
                         });
                         $('#programas-table').DataTable().ajax.reload();
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: '¡Error!',
+                            text: 'Ocurrió un error al actualizar el programa. Por favor, inténtalo de nuevo.'
+                        });
                     }
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: '¡Error!',
+                        text: 'Ocurrió un error al actualizar el programa. Por favor, inténtalo de nuevo.'
+                    });
                     console.log("Error de AJAX: " + textStatus + ' : ' + errorThrown);
                 }
             });

@@ -1,37 +1,18 @@
 <li class="has-sub active expand">
     <a href="javascript:;">
         <b class="caret"></b>
-        <i class="material-icons">people</i>
-        <span>Roles y Permisos</span>
-    </a>
-    <ul class="sub-menu">
-        <li class="active">
-            <a href="{{url('roles')}}">
-                <i class="fas fa-user-tag"></i> Roles
-            </a>
-        </li>
-        <li>
-            <a href="{{url('permisos')}}">
-                <i class="fas fa-user-shield"></i> Permisos
-            </a>
-        </li>
-        <li>
-            <a href="{{url('asignar-permisos')}}">
-                <i class="fas fa-user-cog"></i> Asignar Permisos
-            </a>
-        </li>
-    </ul>
-</li>
-<li class="has-sub active expand">
-    <a href="javascript:;">
-        <b class="caret"></b>
         <i class="material-icons">home</i>
         <span>Documentos</span>
     </a>
     <ul class="sub-menu">
         <li class="active">
-            <a href="{{url('hermes/documents')}}">
-                <i class="fas fa-file"></i> Documentos
+            <a href="{{ route('documents.recibidos') }}">
+                <i class="fas fa-file"></i> Documentos Recibidos
+            </a>
+        </li>
+        <li class="active">
+            <a href="{{ route('documents.index') }}">
+                <i class="fas fa-file"></i> Documentos Enviados
             </a>
         </li>
         <li>

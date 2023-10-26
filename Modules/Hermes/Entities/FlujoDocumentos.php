@@ -22,7 +22,7 @@ class FlujoDocumentos extends Model
     ];
     public function documento()
     {
-        return $this->belongsTo(Documentos::class, 'id_documenmto');
+        return $this->belongsTo(Documentos::class, 'id_documento');
     }
 
     public function programa()
