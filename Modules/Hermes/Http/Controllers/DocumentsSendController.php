@@ -8,15 +8,15 @@ use Illuminate\Routing\Controller;
 
 use Yajra\DataTables\DataTables;
 use Modules\Hermes\Entities\Documentos;
-use Modules\Hermes\Entities\Programas;
-
-class DocumentsController extends Controller
+use Modules\Hermes\Entities\Programs;
+use Illuminate\Support\Facades\DB;
+class DocumentsSendController extends Controller
 {
     public function index(Request $request)
     {
 
         if ($request->ajax()) {
-            $documentos = Documentos::list_documents();
+            $documentos = Documentos::list_documents2();
 
             return DataTables::of($documentos)
                 ->addColumn('action', function ($documentos) {
@@ -28,9 +28,8 @@ class DocumentsController extends Controller
                 ->rawColumns(['action'])
                 ->toJson();
         }
-
-        $programas = Programas::all();
-        return view('hermes::documento.index', compact('programas'));
+        $programas = Programs::all();
+        return view('hermes::documento.index_recibidos', compact('programas'));
     }
 
     public function edit($id)
@@ -68,10 +67,8 @@ class DocumentsController extends Controller
         $documentos->estado = $request->estado;
         $documentos->id_tipo_documento = $request->id_tipo_documento;
         $documentos->hash = $hash;
-        $documentos->id_programa = 'SIS';
         $documentos->documento = $contenidoBinario; // Guardar el contenido binario
-        //$documentos->name_document = $name_document;
-
+        $documentos->id_programa = null;
         $documentos->save();
 
         // Cerrar la conexión a la base de datos
@@ -105,10 +102,9 @@ class DocumentsController extends Controller
         $documento->estado = $request->estado;
         $documento->id_tipo_documento = $request->id_tipo_documento;
         $documento->hash = $hash;
-        $documento->id_programa = 'SIS';
         $documento->documento = $contenidoBinario; // Guardar el contenido binario
         //$documento->name_document = $name_document;
-
+        $documento->id_programa = null;
         $documento->save();
 
         // Cerrar la conexión a la base de datos
@@ -116,7 +112,6 @@ class DocumentsController extends Controller
 
         return redirect()->back()->with('message', '¡Documento actualizado exitosamente!');
     }
-
 
     public function destroy($id)
     {
@@ -127,7 +122,7 @@ class DocumentsController extends Controller
 
     public function show($id)
     {
-        $documento = Documentos::select('id', 'cite', 'descripcion', 'estado', 'id_tipo_documento')->find($id);
+        $documento = Documentos::select('id', 'cite', 'descripcion', 'estado', 'id_tipo_documento', 'id_programa')->find($id);
         if (!$documento) {
             return response()->json(['error' => 'Documento no encontrado'], 404);
         }

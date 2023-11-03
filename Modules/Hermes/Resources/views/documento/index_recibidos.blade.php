@@ -62,7 +62,7 @@
                                             <div class="modal-body">
                                                 <!-- Formulario de creación -->
                                                 <form id="crearNuevoDocumentoForm" class="form-horizontal" method="POST"
-                                                    enctype="multipart/form-data" action="{{ route('documents.store') }}">
+                                                    enctype="multipart/form-data" action="{{ route('recibidos.store') }}">
                                                     @csrf
                                                     <div class="form-group row m-b-15">
                                                         <label class="col-md-4 col-sm-4 col-form-label"
@@ -155,6 +155,28 @@
                                                         </div>
                                                     </div>
 
+                                                    <div class="form-group row m-b-15">
+                                                        <label class="col-md-4 col-sm-4 col-form-label">Origen: </label>
+                                                        <div class="col-md-8 col-sm-8">
+                                                            <select class="form-control select2_programas"
+                                                                id="id_programa" name="id_programa"
+                                                                data-parsley-required="true">
+                                                                <option value="">Por favor selecciona el origen
+                                                                </option>
+                                                                @foreach ($programas as $opcion)
+                                                                    <option value="{{ $opcion['id_programa'] }}">
+                                                                        {{ $opcion['programa'] }}</option>
+                                                                @endforeach
+                                                                @error('id_programa')
+                                                                    <ul class="parsley-errors-list filled" id="parsley-id-5"
+                                                                        aria-hidden="false">
+                                                                        <li class="parsley-required">
+                                                                            {{ 'este valor es requerido' }}</li>
+                                                                    </ul>
+                                                                @enderror
+                                                            </select>
+                                                        </div>
+                                                    </div>
 
                                                     <div class="form-group row m-b-0">
                                                         <label class="col-md-4 col-sm-4 col-form-label">&nbsp;</label>
@@ -176,7 +198,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <table id="documentos-table"
+                                        <table id="recibidos-table"
                                             class="table table-striped table-bordered table-td-valign-middle">
                                             <thead>
                                                 <tr role="row">
@@ -185,7 +207,8 @@
                                                     <th width="10%">Cite</th>
                                                     <th width="10%">Descripción</th>
                                                     <th width="10%">Estado</th>
-                                                    <th width="10%">Nombre del Programa</th>
+                                                    <th width="10%">Tipo De Documento</th>
+                                                    <th width="10%">Unidad O Carrera de Origen</th>
                                                     <th width="40%">Acciones</th>
                                                 </tr>
                                             </thead>
@@ -232,7 +255,8 @@
                                             </div>
                                             <div class="modal-body">
                                                 <!-- Formulario de edición -->
-                                                <form id="editDocumentoForm" method="POST" enctype="multipart/form-data">
+                                                <form id="editDocumentoForm" method="POST"
+                                                    enctype="multipart/form-data">
                                                     @csrf
                                                     <!-- Dentro del formulario -->
                                                     <input type="hidden" id="txtId2" name="txtId2">
@@ -326,7 +350,28 @@
                                                         </div>
                                                     </div>
 
-
+                                                    <div class="form-group row m-b-15">
+                                                        <label class="col-md-4 col-sm-4 col-form-label">Origen: </label>
+                                                        <div class="col-md-8 col-sm-8">
+                                                            <select class="form-control select2_programas"
+                                                                id="id_programa" name="id_programa"
+                                                                data-parsley-required="true">
+                                                                <option value="">Por favor selecciona el origen
+                                                                </option>
+                                                                @foreach ($programas as $opcion)
+                                                                    <option value="{{ $opcion['id_programa'] }}">
+                                                                        {{ $opcion['programa'] }}</option>
+                                                                @endforeach
+                                                                @error('id_programa')
+                                                                    <ul class="parsley-errors-list filled" id="parsley-id-5"
+                                                                        aria-hidden="false">
+                                                                        <li class="parsley-required">
+                                                                            {{ 'este valor es requerido' }}</li>
+                                                                    </ul>
+                                                                @enderror
+                                                            </select>
+                                                        </div>
+                                                    </div>
 
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary"
@@ -453,11 +498,11 @@
 
     <script>
         $(document).ready(function() {
-            var documentTable = $('#documentos-table').DataTable({
+            var documentTable = $('#recibidos-table').DataTable({
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    url: "{{ route('documents.index') }}",
+                    url: "{{ route('recibidos.index') }}",
                 },
                 columns: [{
                         data: 'id',
@@ -502,6 +547,10 @@
                             }
                         }
                     },
+                    {
+                        data: 'programa',
+                        name: 'programa'
+                    },
 
                     {
                         data: 'action',
@@ -512,6 +561,11 @@
                 ],
                 language: {
                     url: '/assets/plugins/datatables.net/Spanish.json'
+                },
+                createdRow: function(row, data) {
+                    if (data.programa.toLowerCase() === 'carrera de ingenieria de sistemas') {
+                        $(row).hide();
+                    }
                 }
             });
         });
@@ -533,7 +587,7 @@
                 formData.append('_token', '{{ csrf_token() }}');
 
                 $.ajax({
-                    url: "{{ route('documents.store') }}",
+                    url: "{{ route('recibidos.store') }}",
                     type: "POST",
                     data: formData,
                     processData: false,
@@ -549,7 +603,7 @@
                             title: 'Éxito',
                             text: 'El nuevo documento se ha ingresado correctamente.'
                         }).then(() => {
-                            $('#documentos-table').DataTable().ajax.reload();
+                            $('#recibidos-table').DataTable().ajax.reload();
                         });
                     },
                     error: function(xhr) {
@@ -597,7 +651,7 @@
                 if (result.isConfirmed) {
                     // El usuario confirmó la eliminación, ejecuta la solicitud AJAX
                     $.ajax({
-                        url: "documents/destroy/" + doc_id,
+                        url: "recibidos/destroy/" + doc_id,
                         beforeSend: function() {
                             // Cambia el texto del botón mientras se realiza la solicitud
                             Swal.showLoading();
@@ -611,7 +665,7 @@
                                 );
 
                                 // Asumiendo que tienes DataTable y quieres recargar los datos
-                                $('#documentos-table').DataTable().ajax.reload();
+                                $('#recibidos-table').DataTable().ajax.reload();
                             }, 2000);
                         },
                         error: function(xhr, status, error) {
@@ -627,7 +681,8 @@
             });
         }
 
-        <script type = "text/javascript" >
+        <
+        script type = "text/javascript" >
             $(document).ready(function() {
                 $('.select2_programas').select2({
                     placeholder: "Por favor selecciona el origen", // placeholder
@@ -637,7 +692,7 @@
 
     <script>
         function editDocument(id) {
-            $.get('documents/edit/' + id, function(data) {
+            $.get('recibidos/edit/' + id, function(data) {
                 $('#txtId2').val(data.id);
                 $('#cite2').val(data.cite);
                 $('#descripcion2').val(data.descripcion);
@@ -672,7 +727,7 @@
             formData.append('documento', documento2); // Agregar los datos del archivo a los datos del formulario
             formData.append('_token', _token2);
             $.ajax({
-                url: "documents/update/" + id2, // Asegúrate de que esta URL es correcta
+                url: "recibidos/update/" + id2, // Asegúrate de que esta URL es correcta
                 type: 'POST',
                 data: formData,
                 contentType: false,
@@ -686,7 +741,7 @@
                             showConfirmButton: false,
                             timer: 1500
                         });
-                        $('#documentos-table').DataTable().ajax.reload();
+                        $('#recibidos-table').DataTable().ajax.reload();
                     }
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
@@ -721,7 +776,7 @@
 
         function loadPDF(id) {
             $.ajax({
-                url: '/hermes/documents/downloadPdf/' + id,
+                url: '/hermes/recibidos/downloadPdf/' + id,
                 method: 'GET',
                 success: function(response) {
                     var blob = b64toBlob(response.base64, 'application/pdf');

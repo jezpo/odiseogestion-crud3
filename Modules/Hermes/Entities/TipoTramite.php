@@ -21,6 +21,6 @@ class TipoTramite extends Model
     
     public function flujotramites()
     {
-        return $this->hasMany(FlujoTramite::class);
+        return $this->hasMany(FlujoTramite::class, 'id_tipo_tramite', 'id');
     } 
 }

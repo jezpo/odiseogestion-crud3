@@ -5,7 +5,7 @@ namespace Modules\Hermes\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Modules\Hermes\Entities\Programas;
+use Modules\Hermes\Entities\Programs;
 use Modules\Hermes\Entities\FlujoTramite;
 use Modules\Hermes\Entities\TipoTramite;
 use Yajra\DataTables\DataTables;
@@ -28,7 +28,7 @@ class FlujoDeTramiteController extends Controller
         }
 
         $tipotramite = TipoTramite::all();
-        $programas = Programas::all();
+        $programas = Programs::all();
 
         return view('hermes::flujodetramite.index', compact('tipotramite', 'programas'));
     }
@@ -64,7 +64,7 @@ class FlujoDeTramiteController extends Controller
     {
         $flujoTramite = FlujoTramite::find($id);
         $tiposTramite = TipoTramite::all();
-        $programas = Programas::all();
+        $programas = Programs::all();
 
         return view('hermes::flujodetramite.edit', compact('flujoTramite', 'tiposTramite', 'programas'));
     }

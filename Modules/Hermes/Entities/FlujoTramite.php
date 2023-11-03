@@ -22,12 +22,12 @@ class FlujoTramite extends Model
     ];
     public function tipoTramite()
     {
-        return $this->belongsTo(\Modules\Hermes\Entities\TipoTramite::class);
+        return $this->belongsTo(TipoTramite::class, 'id_tipo_tramite', 'id');
     }
 
     public function programa()
     {
-        return $this->belongsTo(\Modules\Hermes\Entities\Programas::class);
+        return $this->belongsTo(Programas::class, 'id_programa', 'id');
 
     }
    

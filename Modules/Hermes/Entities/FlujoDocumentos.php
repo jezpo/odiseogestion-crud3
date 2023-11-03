@@ -29,14 +29,5 @@ class FlujoDocumentos extends Model
     {
         return $this->belongsTo(Programas::class, 'id_programa');
     }
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::creating(function ($model) {
-            if (!$model->id_programa) {
-                $model->id_programa = 'SIS';
-            }
-        });
-    }
+    
 }

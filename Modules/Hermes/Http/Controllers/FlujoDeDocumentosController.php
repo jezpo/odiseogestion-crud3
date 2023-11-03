@@ -6,7 +6,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Hermes\Entities\Documentos;
-use Modules\Hermes\Entities\Programas;
+use Modules\Hermes\Entities\Programs;
 use Modules\Hermes\Entities\FlujoDocuments;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\DB;
@@ -29,7 +29,7 @@ class FlujoDeDocumentosController extends Controller
                 ->toJson();
         }
         $documentos = Documentos::all();
-        $programas = Programas::all();
+        $programas = Programs::all();
 
         return view('hermes::flujodedocumento.index', compact('documentos', 'programas'));
     }

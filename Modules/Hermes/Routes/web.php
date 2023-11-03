@@ -12,7 +12,8 @@ use Modules\Hermes\Http\Controllers\ProgramasController;
 use Modules\Hermes\Http\Controllers\FlujoDeDocumentosController;
 use Modules\Hermes\Http\Controllers\FlujoDeTramiteController;
 use Modules\Hermes\Http\Controllers\DocumentsController;
-use Modules\Hermes\Http\Controllers\PermissionController;
+use Modules\Hermes\Http\Controllers\DocumentsSendController;
+
 use Modules\Hermes\Http\Controllers\ReportController;
 
 
@@ -77,9 +78,15 @@ Route::prefix('hermes')->group(function () {
 
     Route::get('documents/downloadPdf/{id}', [DocumentsController::class, 'downloadPdf']);
 
-    Route::get('documents/recibidos', [DocumentsController::class, 'recibidos'])->name('documents.recibidos');
+    Route::get('recibidos', [DocumentsSendController::class, 'index'])->name('recibidos.index');
+    Route::post('recibidos/store', [DocumentsSendController::class, 'store'])->name('recibidos.store');
+    Route::get('recibidos/show/{id}', [DocumentsSendController::class, 'show'])->name('recibidos.show');
+    Route::get('recibidos/edit/{id}', [DocumentsSendController::class, 'edit'])->name('recibidos.edit');
+    Route::put('recibidos/update/{id}', [DocumentsSendController::class, 'update'])->name('recibidos.update');
+    Route::get('recibidos/destroy/{id}', [DocumentsSendController::class, 'destroy'])->name('recibidos.destroy');
+    Route::get('recibidos/downloadPdf/{id}', [DocumentsSendController::class, 'downloadPdf'])->name('recibidos.downloadPdf');
 
-   
+
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
     Route::post('/get-report-data', [ReportController::class, 'getReportData']);
 });

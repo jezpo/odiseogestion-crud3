@@ -14,7 +14,7 @@ class DocumentsController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $documentos = Documentos::list_documents();
+            $documentos = Documentos::list_documents1();
 
             return DataTables::of($documentos)
                 ->addColumn('action', function ($documentos) {
@@ -28,7 +28,7 @@ class DocumentsController extends Controller
         }
 
         $programas = Programas::all();
-        return view('hermes::documento.index', compact('programas'));
+        return view('hermes::documento.index_enviados', compact('programas'));
     }
 
     public function edit($id)
@@ -66,10 +66,8 @@ class DocumentsController extends Controller
         $documentos->estado = $request->estado;
         $documentos->id_tipo_documento = $request->id_tipo_documento;
         $documentos->hash = $hash;
-        $documentos->id_programa = 'SIS';
         $documentos->documento = $contenidoBinario; // Guardar el contenido binario
-        //$documentos->name_document = $name_document;
-
+        $documentos->id_programa = null;
         $documentos->save();
 
         // Cerrar la conexión a la base de datos
@@ -77,6 +75,8 @@ class DocumentsController extends Controller
 
         return redirect()->back()->with('message', '¡Documento guardado exitosamente!');
     }
+
+
 
     public function update(Request $request, $id)
     {

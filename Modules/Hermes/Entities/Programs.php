@@ -24,11 +24,11 @@ class Programs extends Model
     ];
     public function documentos()
     {
-        return $this->hasMany(Documentos::class);
+        return $this->hasMany(Documentos::class, 'id_programa');
     }
     public function flujoTramites()
     {
-        return $this->hasMany(FlujoTramite::class);
+        return $this->hasMany(FlujoTramite::class,);
     }
     public function flujoDocumentos()
     {

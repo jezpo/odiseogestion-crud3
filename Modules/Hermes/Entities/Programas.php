@@ -9,7 +9,7 @@ class Programas extends Model
 {
     use HasFactory;
     protected $table = 'programas';
-    protected $primaryKey = 'id_programa';
+    protected $primaryKey = 'id';
     public $incrementing = false;
     public $timestamps = false;
     protected $casts = [
@@ -24,18 +24,16 @@ class Programas extends Model
     ];
     public function documentos()
     {
-        return $this->hasMany(Documentos::class);
+        return $this->hasMany(Documentos::class, 'id_programa', 'id');
     }
     public function flujoTramites()
     {
-        return $this->hasMany(FlujoTramite::class);
+        return $this->hasMany(FlujoTramite::class, 'id_programa', 'id');
     }
+    //cambios en la relacion
     public function flujoDocumentos()
     {
-        return $this->hasMany(FlujoDocumentos::class);
+        return $this->hasMany(FlujoDocumentos::class, 'id_programa', 'id');
     }
-    public function getProgramaNombre()
-    {
-        return $this->programa ? $this->programa->programa : null;
-    }
+    
 }

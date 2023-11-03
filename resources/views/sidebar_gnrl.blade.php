@@ -6,7 +6,7 @@
     </a>
     <ul class="sub-menu">
         <li class="active">
-            <a href="{{ route('documents.recibidos') }}">
+            <a href="{{ route('recibidos.index') }}">
                 <i class="fas fa-file"></i> Documentos Recibidos
             </a>
         </li>

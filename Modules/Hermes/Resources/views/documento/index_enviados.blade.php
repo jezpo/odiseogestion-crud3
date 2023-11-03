@@ -56,7 +56,6 @@
                                                 <button type="button" class="close" data-dismiss="modal"
                                                     aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
-
                                                 </button>
                                             </div>
                                             <div class="modal-body">
@@ -141,9 +140,9 @@
                                                                 <option value="2">Dictamen</option>
                                                                 <option value="3">Nota</option>
                                                                 <option value="4">Resolucion</option>
-                                                                <option value="5">Solicitudes</option>
-                                                                <option value="6">Actas</option>
-                                                                <option value="7">Recibos</option>
+                                                                <option value="4">Solicitudes</option>
+                                                                <option value="4">Actas</option>
+                                                                <option value="4">Recibos</option>
                                                                 @error('id_tipo_documento')
                                                                     <ul class="parsley-errors-list filled" id="parsley-id-5"
                                                                         aria-hidden="false">
@@ -155,7 +154,28 @@
                                                         </div>
                                                     </div>
 
-
+                                                    <div class="form-group row m-b-15">
+                                                        <label class="col-md-4 col-sm-4 col-form-label">Origen: </label>
+                                                        <div class="col-md-8 col-sm-8">
+                                                            <select class="form-control select2_programas"
+                                                                id="id_programa" name="id_programa"
+                                                                data-parsley-required="true">
+                                                                <option value="">Por favor selecciona el origen
+                                                                </option>
+                                                                @foreach ($programas as $opcion)
+                                                                    <option value="{{ $opcion['id_programa'] }}">
+                                                                        {{ $opcion['programa'] }}</option>
+                                                                @endforeach
+                                                                @error('id_programa')
+                                                                    <ul class="parsley-errors-list filled" id="parsley-id-5"
+                                                                        aria-hidden="false">
+                                                                        <li class="parsley-required">
+                                                                            {{ 'este valor es requerido' }}</li>
+                                                                    </ul>
+                                                                @enderror
+                                                            </select>
+                                                        </div>
+                                                    </div>
                                                     <div class="form-group row m-b-0">
                                                         <label class="col-md-4 col-sm-4 col-form-label">&nbsp;</label>
                                                         <div class="col-md-8 col-sm-8">
@@ -186,6 +206,8 @@
                                                     <th width="10%">Descripción</th>
                                                     <th width="10%">Estado</th>
                                                     <th width="10%">Nombre del Programa</th>
+                                                    <th width="20%">Programa</th>
+
                                                     <th width="40%">Acciones</th>
                                                 </tr>
                                             </thead>
@@ -232,7 +254,7 @@
                                             </div>
                                             <div class="modal-body">
                                                 <!-- Formulario de edición -->
-                                                <form id="editDocumentoForm" method="POST" enctype="multipart/form-data">
+                                                <form id="editDocumentoForm" method="POST">
                                                     @csrf
                                                     <!-- Dentro del formulario -->
                                                     <input type="hidden" id="txtId2" name="txtId2">
@@ -308,13 +330,8 @@
                                                                 name="id_tipo_documento2" data-parsley-required="true">
                                                                 <option value="">Por favor selecciona una opcion
                                                                 </option>
-                                                                <option value="1">Carta</option>
+                                                                <option value="1">Cata</option>
                                                                 <option value="2">Dictamen</option>
-                                                                <option value="3">Nota</option>
-                                                                <option value="4">Resolucion</option>
-                                                                <option value="5">Solicitudes</option>
-                                                                <option value="6">Actas</option>
-                                                                <option value="7">Recibos</option>
                                                                 @error('id_tipo_documento')
                                                                     <ul class="parsley-errors-list filled" id="parsley-id-5"
                                                                         aria-hidden="false">
@@ -326,7 +343,30 @@
                                                         </div>
                                                     </div>
 
+                                                    <div class="form-group row m-b-15">
+                                                        <label class="col-md-4 col-sm-4 col-form-label">Origen: </label>
+                                                        <div class="col-md-8 col-sm-8">
+                                                            <select class="form-control select2_programas"
+                                                                id="id_programa2" name="id_programa2"
+                                                                data-parsley-required="true">
+                                                                <option value="">Por favor selecciona el origen
+                                                                </option>
+                                                                @foreach ($programas as $opcion)
+                                                                    <option value="{{ $opcion['id_programa'] }}">
+                                                                        {{ $opcion['programa'] }}</option>
+                                                                @endforeach
+                                                                @error('id_programa')
+                                                                    <ul class="parsley-errors-list filled" id="parsley-id-5"
+                                                                        aria-hidden="false">
+                                                                        <li class="parsley-required">
+                                                                            {{ 'este valor es requerido' }}</li>
+                                                                    </ul>
+                                                                @enderror
+                                                            </select>
+                                                        </div>
+                                                    </div>
 
+                                                    <!-- Agrega más campos de acuerdo a tus necesidades -->
 
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary"
@@ -389,6 +429,7 @@
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
                             <!-- end panel-body -->
                         </div>
@@ -457,7 +498,7 @@
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    url: "{{ route('documents.recibidos') }}",
+                    url: "{{ route('documents.index') }}",
                 },
                 columns: [{
                         data: 'id',
@@ -473,47 +514,33 @@
                     },
                     {
                         data: 'estado',
-                        name: 'estado',
-                        render: function(data, type, row) {
-                            return data === 'A' ? 'Activo' : 'Inactivo';
-                        }
+                        name: 'estado'
                     },
                     {
                         data: 'id_tipo_documento',
-                        name: 'id_tipo_documento',
-                        render: function(data, type, row) {
-                            switch (parseInt(data)) {
-                                case 1:
-                                    return 'Carta';
-                                case 2:
-                                    return 'Dictamen';
-                                case 3:
-                                    return 'Nota';
-                                case 4:
-                                    return 'Resolución';
-                                case 5:
-                                    return 'Solicitudes';
-                                case 6:
-                                    return 'Actas';
-                                case 7:
-                                    return 'Recibos';
-                                default:
-                                    return data; // retornará el número si no hay coincidencia
-                            }
-                        }
+                        name: 'id_tipo_documento'
                     },
-
+                    {
+                        data: 'programa',
+                        name: 'programa'
+                    },
+                    
                     {
                         data: 'action',
                         name: 'action',
                         orderable: true,
-                        searchable: true,
-                    },
+                        searchable: true
+                    }
                 ],
+                buttons: ['copy', 'excel'], // Agregar botones de exportación
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
+                },
                 language: {
                     url: '/assets/plugins/datatables.net/Spanish.json'
                 }
             });
+            documentTable.buttons().container().appendTo($('#documentos-table .col-md-6:eq(0)'));
         });
     </script>
     <script>
@@ -626,13 +653,14 @@
                 }
             });
         }
+    </script>
 
-        <script type = "text/javascript" >
-            $(document).ready(function() {
-                $('.select2_programas').select2({
-                    placeholder: "Por favor selecciona el origen", // placeholder
-                });
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.select2_programas').select2({
+                placeholder: "Por favor selecciona el origen", // placeholder
             });
+        });
     </script>
 
     <script>
@@ -644,7 +672,7 @@
                 $('#estado2').val(data.estado).trigger('change');
                 $('#documento2').val(''); // Limpiar el campo de entrada de archivo
                 $('#id_tipo_documento2').val(data.id_tipo_documento).trigger('change');
-
+                $('#id_programa2').val(data.id_programa).trigger('change');
                 $("input[name=_token]").val();
                 $('#editarDocumentoModal').modal('show');
             })
@@ -657,7 +685,7 @@
             var descripcion2 = $('#descripcion2').val();
             var estado2 = $('#estado2').val();
             var id_tipo_documento2 = $('#id_tipo_documento2').val();
-
+            var id_programa2 = $('#id_programa2').val();
             var documento2 = $('#documento2')[0].files[0]; // Obtener los datos del archivo
             var _token2 = $("input[name=_token]").val();
 
@@ -668,7 +696,7 @@
             formData.append('descripcion', descripcion2);
             formData.append('estado', estado2);
             formData.append('id_tipo_documento', id_tipo_documento2);
-
+            formData.append('id_programa', id_programa2);
             formData.append('documento', documento2); // Agregar los datos del archivo a los datos del formulario
             formData.append('_token', _token2);
             $.ajax({
