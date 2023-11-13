@@ -144,7 +144,7 @@
 
                                                         <div class="form-group row m-b-15">
                                                             <label class="col-md-4 col-sm-4 col-form-label"
-                                                                for="fullname">unidad de origen:</label>
+                                                                for="fullname">Unidad de Destino:</label>
                                                             <div class="col-md-8 col-sm-8">
                                                                 <select class="form-control" id="select-required"
                                                                     name="id_programa" data-parsley-required="true">

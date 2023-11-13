@@ -17,20 +17,23 @@ class FlujoDeDocumentosController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            //$data = FlujoDocumentos::with(['documentos', 'programas'])->get();
-            $data = FlujoDocuments::fetchWithDocumentCiteAndProgramName();
+            $data = FlujoDocuments::fetchDocumentProgramFlujoData();
+    
             return DataTables::of($data)
-                ->addColumn('actions', function ($data) {
-                    $btn = '<a href="javascript:void(0)" type="button" data-toggle="tooltip" onclick="editFlujo(' . $data->id . ')" class="edit btn btn-primary btn-sm"><i class="fas fa-edit"></i> Editar</a>';
-                    $btn .= '&nbsp;&nbsp;<button type="button" data-toggle="tooltip" name="deleteFlujo" onclick="deleteFlujo(' . $data->id . ')" class="delete btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i> Eliminar</button>';
-                    return $btn;
-                })
-                ->rawColumns(['actions'])
-                ->toJson();
+         
+            ->addColumn('actions', function ($data) {
+                // Botones de acción, por ejemplo: Editar y Eliminar
+                $btn = '&nbsp;&nbsp;<a href="javascript:void(0)" type="button" data-toggle="tooltip" onclick="editFlujo(' . $data->id . ')" class="edit btn btn-primary btn-sm"><i class="fas fa-edit"></i> Editar</a>';
+                $btn .= '&nbsp;&nbsp;<button type="button" data-toggle="tooltip" name="deleteDocument" onclick="deleteFlujo(' . $data->id . ')" class="delete btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i> Eliminar</button>';
+                return $btn;
+            })
+            ->rawColumns(['actions'])
+            ->toJson();
         }
+    
         $documentos = Documentos::all();
         $programas = Programs::all();
-
+    
         return view('hermes::flujodedocumento.index', compact('documentos', 'programas'));
     }
     public function store(Request $request)

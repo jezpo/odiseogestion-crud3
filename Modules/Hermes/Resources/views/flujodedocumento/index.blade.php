@@ -212,11 +212,12 @@
                                                     <tr role="row">
                                                         <th>ID</th>
                                                         <th>Id Documento</th>
-                                                        <th>Fecha de Repecion</th>
-                                                        <th>Fecha de Envio</th>
-                                                        <th>Unidad De Origen</th>
-                                                        <th>Unidad De Destino</th>
+                                                        <th>Fecha de Recepción</th>
+                                                        <th>Fecha de Envío</th>
+                                                        <th>Unidad o Carrera</th>
                                                         <th>Observaciones</th>
+                                                        <th>Unidad o Carrera</th>
+                                                       
                                                         <th>Acciones</th>
                                                     </tr>
                                                 </thead>
@@ -415,7 +416,7 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <link href="../assets/plugins/gritter/css/jquery.gritter.css" rel="stylesheet" />
         <script>
-            $(function() {
+            $(document).ready(function() {
                 $('#flujosdoc-table').DataTable({
                     processing: true,
                     serverSide: true,
@@ -426,8 +427,7 @@
                         },
                         {
                             data: 'cite',
-                            name: 'cite',
-
+                            name: 'cite'
                         },
                         {
                             data: 'fecha_recepcion',
@@ -442,16 +442,26 @@
                             name: 'programa_origen'
                         },
                         {
-                            data: 'programa_destino',
-                            name: 'programa_destino'
+                            data: null,
+                            render: function(data, type, row) {
+                                if (data.programa_origen === 'SIS') {
+                                    return 'Origen';
+                                } else {
+                                    return 'Destino';
+                                }
+                            }
                         },
                         {
                             data: 'obs',
                             name: 'obs'
                         },
                         {
-                            data: 'actions',
-                            name: 'actions',
+                            data: 'origen_destino',
+                            name: 'origen_destino'
+                        },
+                        {
+                            data: 'action',
+                            name: 'action',
                             orderable: false,
                             searchable: false
                         }
@@ -462,6 +472,7 @@
                 });
             });
         </script>
+
         <script>
             $(document).ready(function() {
                 // Manejar el envío del formulario por AJAX
@@ -511,7 +522,7 @@
         </script>
         <script>
             function editFlujo(id) {
-                $.get('/flujodocumentos/edit/' + id, function(data) {
+                $.get('/flujodocumentos/edit/'+id, function(data) {
                     // Llenar el formulario de edición con los datos recibidos
                     $('#id_documento2').val(data.flujo.id_documento);
                     $('#fecha_recepcion2').val(data.flujo.fecha_recepcion);

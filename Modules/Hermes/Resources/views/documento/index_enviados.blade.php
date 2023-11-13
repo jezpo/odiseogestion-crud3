@@ -154,28 +154,31 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="form-group row m-b-15">
+                                                    {{-- <div class="form-group row m-b-15">
                                                         <label class="col-md-4 col-sm-4 col-form-label">Origen: </label>
                                                         <div class="col-md-8 col-sm-8">
                                                             <select class="form-control select2_programas"
                                                                 id="id_programa" name="id_programa"
                                                                 data-parsley-required="true">
-                                                                <option value="">Por favor selecciona el origen
-                                                                </option>
                                                                 @foreach ($programas as $opcion)
-                                                                    <option value="{{ $opcion['id_programa'] }}">
-                                                                        {{ $opcion['programa'] }}</option>
+                                                                    <option value="{{ $opcion['id_programa'] }}"
+                                                                        {{ $opcion['programa'] === 'CARRERA DE INGENIERIA DE SISTEMAS' ? 'selected' : '' }}>
+                                                                        {{ $opcion['programa'] }}
+                                                                    </option>
                                                                 @endforeach
                                                                 @error('id_programa')
                                                                     <ul class="parsley-errors-list filled" id="parsley-id-5"
                                                                         aria-hidden="false">
                                                                         <li class="parsley-required">
-                                                                            {{ 'este valor es requerido' }}</li>
+                                                                            {{ 'Este valor es requerido' }}
+                                                                        </li>
                                                                     </ul>
                                                                 @enderror
                                                             </select>
                                                         </div>
                                                     </div>
+                                                    --}}
+
                                                     <div class="form-group row m-b-0">
                                                         <label class="col-md-4 col-sm-4 col-form-label">&nbsp;</label>
                                                         <div class="col-md-8 col-sm-8">
@@ -201,13 +204,11 @@
                                             <thead>
                                                 <tr role="row">
 
-                                                    <th width="10%">Id</th>
+                                                    <th width="10%">Nro.</th>
                                                     <th width="10%">Cite</th>
                                                     <th width="10%">Descripción</th>
                                                     <th width="10%">Estado</th>
-                                                    <th width="10%">Nombre del Programa</th>
-                                                    <th width="20%">Programa</th>
-
+                                                    <th width="10%">Tipo de Documento</th>
                                                     <th width="40%">Acciones</th>
                                                 </tr>
                                             </thead>
@@ -343,6 +344,7 @@
                                                         </div>
                                                     </div>
 
+                                                    {{--
                                                     <div class="form-group row m-b-15">
                                                         <label class="col-md-4 col-sm-4 col-form-label">Origen: </label>
                                                         <div class="col-md-8 col-sm-8">
@@ -365,6 +367,7 @@
                                                             </select>
                                                         </div>
                                                     </div>
+                                                    --}}
 
                                                     <!-- Agrega más campos de acuerdo a tus necesidades -->
 
@@ -502,7 +505,10 @@
                 },
                 columns: [{
                         data: 'id',
-                        name: 'id'
+                        name: 'id',
+                        render: function(data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
                     },
                     {
                         data: 'cite',
@@ -514,17 +520,36 @@
                     },
                     {
                         data: 'estado',
-                        name: 'estado'
+                        name: 'estado',
+                        render: function(data, type, row) {
+                            return data === 'A' ? 'Activo' : 'Inactivo';
+                        }
                     },
                     {
                         data: 'id_tipo_documento',
-                        name: 'id_tipo_documento'
+                        name: 'id_tipo_documento',
+                        render: function(data, type, row) {
+                            // Aquí puedes mapear los valores numéricos a nombres de tipo de documento
+                            switch (data) {
+                                case 1:
+                                    return 'Carta';
+                                case 2:
+                                    return 'Dictamen';
+                                case 3:
+                                    return 'Nota';
+                                case 4:
+                                    return 'Resolución';
+                                case 5:
+                                    return 'Solicitudes';
+                                case 6:
+                                    return 'Actas';
+                                case 7:
+                                    return 'Recibos';
+                                default:
+                                    return data; // Mostrará el número si no hay coincidencia
+                            }
+                        }
                     },
-                    {
-                        data: 'programa',
-                        name: 'programa'
-                    },
-                    
                     {
                         data: 'action',
                         name: 'action',
@@ -532,15 +557,14 @@
                         searchable: true
                     }
                 ],
-                buttons: ['copy', 'excel'], // Agregar botones de exportación
-                language: {
-                    url: 'https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
-                },
+                buttons: ['pdf', 'excel', 'print'],
+
                 language: {
                     url: '/assets/plugins/datatables.net/Spanish.json'
                 }
             });
-            documentTable.buttons().container().appendTo($('#documentos-table .col-md-6:eq(0)'));
+            documentTable.buttons().container().appendTo($(
+                '#documentos-table_wrapper .col-md-6:eq(0)')); // Colocar los botones en un contenedor
         });
     </script>
     <script>
@@ -672,7 +696,7 @@
                 $('#estado2').val(data.estado).trigger('change');
                 $('#documento2').val(''); // Limpiar el campo de entrada de archivo
                 $('#id_tipo_documento2').val(data.id_tipo_documento).trigger('change');
-                $('#id_programa2').val(data.id_programa).trigger('change');
+                //$('#id_programa2').val(data.id_programa).trigger('change');
                 $("input[name=_token]").val();
                 $('#editarDocumentoModal').modal('show');
             })
@@ -685,7 +709,7 @@
             var descripcion2 = $('#descripcion2').val();
             var estado2 = $('#estado2').val();
             var id_tipo_documento2 = $('#id_tipo_documento2').val();
-            var id_programa2 = $('#id_programa2').val();
+            //var id_programa2 = $('#id_programa2').val();
             var documento2 = $('#documento2')[0].files[0]; // Obtener los datos del archivo
             var _token2 = $("input[name=_token]").val();
 
@@ -696,7 +720,7 @@
             formData.append('descripcion', descripcion2);
             formData.append('estado', estado2);
             formData.append('id_tipo_documento', id_tipo_documento2);
-            formData.append('id_programa', id_programa2);
+            //formData.append('id_programa', id_programa2);
             formData.append('documento', documento2); // Agregar los datos del archivo a los datos del formulario
             formData.append('_token', _token2);
             $.ajax({
@@ -749,7 +773,7 @@
 
         function loadPDF(id) {
             $.ajax({
-                url: '/hermes/documents/downloadPdf/' + id,
+                url: '/hermes/recibidos/downloadPdf/' + id,
                 method: 'GET',
                 success: function(response) {
                     var blob = b64toBlob(response.base64, 'application/pdf');

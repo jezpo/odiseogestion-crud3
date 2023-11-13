@@ -10,13 +10,14 @@ use Yajra\DataTables\DataTables;
 use Modules\Hermes\Entities\Documentos;
 use Modules\Hermes\Entities\Programs;
 use Illuminate\Support\Facades\DB;
+
 class DocumentsSendController extends Controller
 {
     public function index(Request $request)
     {
 
         if ($request->ajax()) {
-            $documentos = Documentos::list_documents2();
+            $documentos = Documentos::list_documents_destino();
 
             return DataTables::of($documentos)
                 ->addColumn('action', function ($documentos) {
@@ -46,6 +47,15 @@ class DocumentsSendController extends Controller
 
     public function store(Request $request)
     {
+        // Validar los datos del formulario
+        $request->validate([
+            'documento' => 'required|file',
+            'cite' => 'required|string',
+            'descripcion' => 'required|string',
+            'estado' => 'required|string',
+            'id_tipo_documento' => 'required|integer',
+            'id_programa' => 'required|string',
+        ]);
         // Establecer la conexión a la base de datos
         $conn = pg_connect("host=127.0.0.1 dbname=hermes2 user=postgres password=postgres");
 
@@ -68,7 +78,7 @@ class DocumentsSendController extends Controller
         $documentos->id_tipo_documento = $request->id_tipo_documento;
         $documentos->hash = $hash;
         $documentos->documento = $contenidoBinario; // Guardar el contenido binario
-        $documentos->id_programa = null;
+        $documentos->id_programa = $request->id_programa;
         $documentos->save();
 
         // Cerrar la conexión a la base de datos
@@ -79,6 +89,16 @@ class DocumentsSendController extends Controller
 
     public function update(Request $request, $id)
     {
+        // Validar los datos del formulario
+        $request->validate([
+            'documento' => 'required|file',
+            'cite' => 'required|string',
+            'descripcion' => 'required|string',
+            'estado' => 'required|string',
+            'id_tipo_documento' => 'required|integer',
+            'id_programa' => 'required|string',
+        ]);
+
         // Establecer la conexión a la base de datos
         $conn = pg_connect("host=127.0.0.1 dbname=hermes2 user=postgres password=postgres");
 
@@ -104,7 +124,7 @@ class DocumentsSendController extends Controller
         $documento->hash = $hash;
         $documento->documento = $contenidoBinario; // Guardar el contenido binario
         //$documento->name_document = $name_document;
-        $documento->id_programa = null;
+        $documento->id_programa = $request->id_programa;
         $documento->save();
 
         // Cerrar la conexión a la base de datos

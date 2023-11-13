@@ -2,20 +2,27 @@
 
 namespace Modules\Hermes\Http\Controllers;
 
+use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
 use Yajra\DataTables\DataTables;
 use Modules\Hermes\Entities\Documentos;
 use Modules\Hermes\Entities\Programas;
+use PgSql\Connection;
+use PDO;
+use Barryvdh\DomPDF\Facade as PDF;
+use Symfony\Component\HttpFoundation\StreamedResponse;
+use Illuminate\Support\Facades\DB;
+
 
 class DocumentsController extends Controller
 {
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $documentos = Documentos::list_documents1();
-
+            $documentos = Documentos::list_documents_origen();
+            //dd($documentos);
             return DataTables::of($documentos)
                 ->addColumn('action', function ($documentos) {
                     $btn = '<a href="javascript:void(0)" type="button" name="viewDocument" onclick="loadPDF(' . $documentos->id . ')" class="view btn btn-yellow btn-sm"><i class="fas fa-eye"></i> Ver</a>';
@@ -45,39 +52,52 @@ class DocumentsController extends Controller
 
     public function store(Request $request)
     {
-        // Establecer la conexión a la base de datos
-        $conn = pg_connect("host=127.0.0.1 dbname=hermes2 user=postgres password=postgres");
-
-        // 1. Leer el archivo PDF
-        $archivo = $request->file('documento');
-        //$name_document = time() . '_' . $archivo->getClientOriginalName();
-        $contenidoArchivo = file_get_contents($archivo->getRealPath());
-
-        // 2. Convertir el contenido del archivo en binario utilizando pg_escape_bytea
-        $contenidoBinario = pg_escape_bytea($conn, $contenidoArchivo);
-
-        // Generar un valor hash para el archivo
-        $hash = md5($contenidoArchivo);
-
-        // 3. Almacenar el binario en la base de datos
-        $documentos = new Documentos;
-        $documentos->cite = $request->cite;
-        $documentos->descripcion = $request->descripcion;
-        $documentos->estado = $request->estado;
-        $documentos->id_tipo_documento = $request->id_tipo_documento;
-        $documentos->hash = $hash;
-        $documentos->documento = $contenidoBinario; // Guardar el contenido binario
-        $documentos->id_programa = null;
-        $documentos->save();
-
-        // Cerrar la conexión a la base de datos
-        pg_close($conn);
-
-        return redirect()->back()->with('message', '¡Documento guardado exitosamente!');
+        try {
+            // 1. Leer el archivo PDF
+            $archivo = $request->file('documento');
+            $contenidoArchivo = file_get_contents($archivo->getRealPath());
+    
+            // 2. Establecer la conexión a la base de datos
+            $conn = pg_connect("host=127.0.0.1 dbname=hermes2 user=postgres password=postgres");
+    
+            // Iniciar una transacción
+            pg_query($conn, "BEGIN");
+    
+            // 3. Convertir el contenido del archivo en binario utilizando pg_escape_bytea
+            $contenidoBinario = pg_escape_bytea($conn, $contenidoArchivo);
+    
+            // 4. Generar un valor hash para el archivo
+            $hash = md5($contenidoArchivo);
+    
+            // 5. Almacenar el binario en la base de datos utilizando Eloquent
+            $documento = new Documentos;
+            $documento->cite = $request->cite;
+            $documento->descripcion = $request->descripcion;
+            $documento->estado = $request->estado;
+            $documento->id_tipo_documento = $request->id_tipo_documento;
+            $documento->hash = $hash;
+            $documento->documento = $contenidoBinario; // Guardar el contenido binario
+            $documento->id_programa = 'SIS';
+            $documento->save();
+    
+            // Confirmar la transacción
+            pg_query($conn, "COMMIT");
+    
+            // Cerrar la conexión a la base de datos
+            pg_close($conn);
+    
+            return redirect()->back()->with('message', '¡Documento guardado exitosamente!');
+        } catch (\Exception $e) {
+            // Revertir la transacción en caso de error
+            pg_query($conn, "ROLLBACK");
+    
+            // Cerrar la conexión a la base de datos
+            pg_close($conn);
+    
+            return redirect()->back()->with('error', 'Error al guardar el documento: ' . $e->getMessage());
+        }
     }
-
-
-
+    
     public function update(Request $request, $id)
     {
         // Establecer la conexión a la base de datos
@@ -148,24 +168,5 @@ class DocumentsController extends Controller
         } else {
             return response()->json(['message' => 'Documento no encontrado'], 404);
         }
-    }
-    public function recibidos(Request $request)
-    {
-        if ($request->ajax()) {
-            $documentos = Documentos::list_documents();
-
-            return DataTables::of($documentos)
-                ->addColumn('action', function ($documentos) {
-                    $btn = '<a href="javascript:void(0)" type="button" name="viewDocument" onclick="loadPDF(' . $documentos->id . ')" class="view btn btn-yellow btn-sm"><i class="fas fa-eye"></i> Ver</a>';
-                    $btn .= '&nbsp;&nbsp;<a href="javascript:void(0)" type="button" data-toggle="tooltip" onclick="editDocument(' . $documentos->id . ')" class="edit btn btn-primary btn-sm"><i class="fas fa-edit"></i> Editar</a>';
-                    $btn .= '&nbsp;&nbsp;<button type="button" data-toggle="tooltip" name="deleteDocument" onclick="deleteDocument(' . $documentos->id . ')" class="delete btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i> Eliminar</button>';
-                    return $btn;
-                })
-                ->rawColumns(['action'])
-                ->toJson();
-        }
-
-        $programas = Programas::all();
-        return view('hermes::documento.recibidos', compact('programas'));
     }
 }
