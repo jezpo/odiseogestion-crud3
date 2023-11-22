@@ -48,7 +48,7 @@
                                 <div class="modal fade" class="modal fade" id="modal-dialog">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
-                                            <div class="modal-body">
+                                            <div class="modal-header">
 
                                                 <h5 class="modal-title" id="nuevoDocumentoModalLabel">
                                                     <i class="fas fa-plus"></i> Nuevo Documento
@@ -182,8 +182,9 @@
                                                     <div class="form-group row m-b-0">
                                                         <label class="col-md-4 col-sm-4 col-form-label">&nbsp;</label>
                                                         <div class="col-md-8 col-sm-8">
-                                                            <button type="submit"
-                                                                class="btn btn-primary">Registrar</button>
+                                                            <button type="submit" class="btn btn-primary">
+                                                                <i class="fas fa-save"></i> Guardar
+                                                            </button>
                                                         </div>
                                                     </div>
 
@@ -246,8 +247,8 @@
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="editarDocumentoModalLabel">Editar Documento
-                                                </h5>
+                                                <i class="fas fa-pencil-alt"> </i> Editar Documento
+                                            </h5>
                                                 <button type="button" class="close" data-dismiss="modal"
                                                     aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
@@ -372,9 +373,12 @@
                                                     <!-- Agrega más campos de acuerdo a tus necesidades -->
 
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                            data-dismiss="modal">Cancelar</button>
-                                                        <button type="submit" class="btn btn-primary">Actualizar</button>
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                            <i class="fas fa-times"></i> Cancelar
+                                                        </button>
+                                                        <button type="submit" class="btn btn-primary">
+                                                            <i class="fas fa-save"></i> Actualizar
+                                                        </button>
                                                     </div>
 
 
@@ -582,7 +586,6 @@
                 e.preventDefault();
                 var formData = new FormData(this);
                 formData.append('_token', '{{ csrf_token() }}');
-
                 $.ajax({
                     url: "{{ route('documents.store') }}",
                     type: "POST",
@@ -603,7 +606,7 @@
                             $('#documentos-table').DataTable().ajax.reload();
                         });
                     },
-                    error: function(xhr) {
+                    error: function(xhr, status, error) {
                         if (xhr.responseJSON.errors) {
                             // Mostrar mensajes de error de validación en el formulario
                             $.each(xhr.responseJSON.errors, function(key, value) {

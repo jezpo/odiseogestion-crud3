@@ -17,7 +17,7 @@
             <div class="panel-heading ui-sortable-handle d-flex justify-content-between align-items-center">
                 <div class="d-block">
                     <a id="abrirDocumentoModal" href="#modal-dialog" class="btn btn-sm btn btn-primary" data-toggle="modal"><i
-                            class="fas fa-plus"></i> Nuevo Unidad O carrera</a>
+                            class="fas fa-plus"></i> Nuevo Unidad O Carrera</a>
                 </div>
 
                 <div class="panel-heading-btn">
@@ -49,12 +49,11 @@
                                 <div class="modal fade" class="modal fade" id="modal-dialog">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
-                                            <div class="modal-body">
-
-                                                <h5 class="modal-title" id="nuevoDocumentoModalLabel">Nuevo Unidad O Carrera
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="nuevoDocumentoModalLabel">
+                                                    <i class="fas fa-building"></i> Nuevo Unidad O Carrera
                                                 </h5>
-                                                <button type="button" class="close" data-dismiss="modal"
-                                                    aria-label="Close">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
@@ -64,8 +63,7 @@
                                                     enctype="multipart/form-data" action="{{ route('programas.store') }}">
                                                     @csrf
                                                     <div class="form-group row m-b-15">
-                                                        <label class="col-md-4 col-sm-4 col-form-label" for="fullname">Id
-                                                            Unidad o carrera:</label>
+                                                        <label class="col-md-4 col-sm-4 col-form-label" for="fullname">Sigla de la Unidad o Carrera: </label>
                                                         <div class="col-md-8 col-sm-8">
                                                             <input class="form-control" type="text" id="id_programa"
                                                                 value="" name="id_programa"
@@ -100,8 +98,7 @@
                                                     </div>
 
                                                     <div class="form-group row m-b-15">
-                                                        <label class="col-md-4 col-sm-4 col-form-label" for="fullname">Id
-                                                            Padre:</label>
+                                                        <label class="col-md-4 col-sm-4 col-form-label" for="fullname">Ingresa el nivel numerico:</label>
                                                         <div class="col-md-8 col-sm-8">
                                                             <input class="form-control" type="text" id="id_padre"
                                                                 value="" name="id_padre"
@@ -140,7 +137,7 @@
                                                         <label class="col-md-4 col-sm-4 col-form-label">&nbsp;</label>
                                                         <div class="col-md-8 col-sm-8">
                                                             <button type="submit"
-                                                                class="btn btn-primary">Registrar</button>
+                                                                class="btn btn-primary"><i class="fas fa-save"> </i> Registrar</button>
                                                         </div>
                                                     </div>
 
@@ -160,10 +157,10 @@
                                             class="table table-striped table-bordered table-td-valign-middle">
                                             <thead>
                                                 <tr role="row">
-                                                    <th width="10%">Id</th>
-                                                    <th width="10%">Id Programa</th>
+                                                    <th width="10%">Nro</th></th>
+                                                    <th width="10%">Sigla</th>
                                                     <th width="10%">Programa</th>
-                                                    <th width="10%">Id Padre</th>
+                                                    <th width="10%">Nivel de unidad</th>
                                                     <th width="10%">Estado</th>
                                                     <th width="40%">Acciones</th>
                                                 </tr>
@@ -200,7 +197,7 @@
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="editarDocumentoModalLabel">Editar Documento
+                                                <h5 class="modal-title" id="editarDocumentoModalLabel"><i class="fas fa-edit"></i>  Editar Unidad o Carrera
                                                 </h5>
                                                 <button type="button" class="close" data-dismiss="modal"
                                                     aria-label="Close">
@@ -215,7 +212,7 @@
                                                     @method('PUT')
                                                     <input type="hidden" id="edit-programa-id" name="id">
                                                     <div class="form-group row m-b-15">
-                                                        <label class="col-md-4 col-sm-4 col-form-label" for="fullname">Id
+                                                        <label class="col-md-4 col-sm-4 col-form-label" for="fullname">Sigla de
                                                             Unidad o carrera:</label>
                                                         <div class="col-md-8 col-sm-8">
                                                             <input class="form-control" type="text" id="id_programa2"
@@ -251,8 +248,7 @@
                                                     </div>
 
                                                     <div class="form-group row m-b-15">
-                                                        <label class="col-md-4 col-sm-4 col-form-label" for="fullname">Id
-                                                            Padre:</label>
+                                                        <label class="col-md-4 col-sm-4 col-form-label" for="fullname">Ingresa el nivel numerico: </label>
                                                         <div class="col-md-8 col-sm-8">
                                                             <input class="form-control" type="text" id="id_padre2"
                                                                 value="" name="id_padre2"
@@ -291,7 +287,7 @@
                                                         <label class="col-md-4 col-sm-4 col-form-label">&nbsp;</label>
                                                         <div class="col-md-8 col-sm-8">
                                                             <button type="submit"
-                                                                class="btn btn-primary">Registrar</button>
+                                                                class="btn btn-primary"><i class="far fa-save"> </i> Registrar</button>
                                                         </div>
                                                     </div>
 
@@ -422,9 +418,13 @@
                 ajax: {
                     url: "{{ route('programas.index') }}",
                 },
+
                 columns: [{
                         data: 'id',
-                        name: 'id'
+                        name: 'id',
+                        render: function(data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
                     },
                     {
                         data: 'id_programa',

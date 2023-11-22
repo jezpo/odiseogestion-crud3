@@ -47,13 +47,13 @@
 
                             <div class="row">
                                 <div class="col-xl-12">
-                                    <!-- Modal de edición -->
+                                    <!-- Modal de nuevo -->
                                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Flujo de Documentos</h5>
+                                                    <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-file-alt"></i> Flujo de Documentos</h5>
                                                     <button type="button" class="close" data-dismiss="modal"
                                                         aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
@@ -62,7 +62,8 @@
                                                 <div class="modal-body">
                                                     <form class="form-horizontal" method="POST"
                                                         enctype="multipart/form-data"
-                                                        action="{{ route('flujodocumentos.store') }}">
+                                                        action="{{ route('flujodocumentos.store') }}"
+                                                        id="form-create-flujo">
                                                         @csrf
 
                                                         <div class="form-group row m-b-15">
@@ -121,7 +122,6 @@
                                                                 @enderror
                                                             </div>
                                                         </div>
-
                                                         <div class="form-group row m-b-15">
                                                             <label class="col-md-4 col-sm-4 col-form-label"
                                                                 for="fullname">Unidad Destino</label>
@@ -133,38 +133,15 @@
                                                                             {{ $programa->programa }}
                                                                         </option>
                                                                     @endforeach
-                                                                    @error('id_programa')
-                                                                        <ul class="parsley-errors-list filled"
-                                                                            id="parsley-id-5" aria-hidden="false">
-                                                                            <li class="parsley-required">
-                                                                                {{ 'este valor es requerido' }}
-                                                                            </li>
-                                                                        </ul>
-                                                                    @enderror
                                                                 </select>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="form-group row m-b-15">
-                                                            <label class="col-md-4 col-sm-4 col-form-label"
-                                                                for="fullname">Unidad Origen</label>
-                                                            <div class="col-md-8 col-sm-8">
-                                                                <select class="form-control" id="id_programa"
-                                                                    name="id_programa" data-parsley-required="true">
-                                                                    @foreach ($programas as $programa)
-                                                                        <option value='{{ $programa->id_programa }}'>
-                                                                            {{ $programa->programa }}
-                                                                        </option>
-                                                                    @endforeach
-                                                                    @error('id_programa')
-                                                                        <ul class="parsley-errors-list filled"
-                                                                            id="parsley-id-5" aria-hidden="false">
-                                                                            <li class="parsley-required">
-                                                                                {{ 'este valor es requerido' }}
-                                                                            </li>
-                                                                        </ul>
-                                                                    @enderror
-                                                                </select>
+                                                                @error('id_programa')
+                                                                    <ul class="parsley-errors-list filled" id="parsley-id-5"
+                                                                        aria-hidden="false">
+                                                                        <li class="parsley-required">
+                                                                            {{ 'Este valor es requerido' }}
+                                                                        </li>
+                                                                    </ul>
+                                                                @enderror
                                                             </div>
                                                         </div>
 
@@ -190,8 +167,10 @@
                                                         <div class="form-group row m-b-0">
                                                             <label class="col-md-4 col-sm-4 col-form-label">&nbsp;</label>
                                                             <div class="col-md-8 col-sm-8">
-                                                                <button type="submit"
-                                                                    class="btn btn-primary">Registrar</button>
+                                                                <button type="submit" class="btn btn-primary">
+                                                                    <i class="far fa-save"></i>  Registrar
+                                                                    <!--icono de guardar-->
+                                                                </button>
                                                             </div>
                                                         </div>
                                                     </form>
@@ -199,7 +178,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- Fin Modal de edición -->
+                                    <!-- Fin Modal de nuevo -->
                                     <!--DONDE MUESTRA LAS TABLAS ATRAVES DE DATA TABLES -->
                                     <div style="position: absolute; height: 1px; width: 0px; overflow: hidden;">
                                         <input type="text" tabindex="0">
@@ -210,14 +189,12 @@
                                                 class="table table-striped table-bordered table-td-valign-middle">
                                                 <thead>
                                                     <tr role="row">
-                                                        <th>ID</th>
-                                                        <th>Id Documento</th>
+                                                        <th>Nro.</th>
+                                                        <th>Cite del Documneto</th>
                                                         <th>Fecha de Recepción</th>
                                                         <th>Fecha de Envío</th>
-                                                        <th>Unidad o Carrera</th>
+                                                        <th>Unidad o Carrera de Destino</th>
                                                         <th>Observaciones</th>
-                                                        <th>Unidad o Carrera</th>
-                                                       
                                                         <th>Acciones</th>
                                                     </tr>
                                                 </thead>
@@ -233,7 +210,7 @@
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Flujo de Documentos
+                                                    <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-edit"></i> Flujo de Documentos
                                                     </h5>
                                                     <button type="button" class="close" data-dismiss="modal"
                                                         aria-label="Close">
@@ -242,10 +219,9 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <form class="form-horizontal" method="POST"
-                                                        enctype="multipart/form-data"
-                                                        action="{{ route('flujodocumentos.create') }}">
+                                                        enctype="multipart/form-data" id="form-edit-flujo">
                                                         @csrf
-
+                                                        <input type="hidden" id="id2" name="id2">
                                                         <div class="form-group row m-b-15">
                                                             <label class="col-md-4 col-sm-4 col-form-label"
                                                                 for="fullname">Id Documento</label>
@@ -270,11 +246,11 @@
 
                                                         <div class="form-group row m-b-15">
                                                             <label class="col-md-4 col-sm-4 col-form-label"
-                                                                for="fullname">Fecha de recepcion:</label>
+                                                                for="fecha_recepcion2">Fecha de recepción:</label>
                                                             <div class="col-md-8 col-sm-8">
                                                                 <input class="form-control" type="datetime-local"
-                                                                    id="fullname" value="" name="fecha_recepcion2"
-                                                                    placeholder="fecha_recepcion2"
+                                                                    id="fecha_recepcion2" name="fecha_recepcion2"
+                                                                    placeholder="Fecha de recepción"
                                                                     data-parsley-required="true">
                                                                 @error('fecha_recepcion')
                                                                     <ul class="parsley-errors-list filled" id="parsley-id-5"
@@ -288,11 +264,11 @@
 
                                                         <div class="form-group row m-b-15">
                                                             <label class="col-md-4 col-sm-4 col-form-label"
-                                                                for="fullname">Fecha de envio:</label>
+                                                                for="fecha_envio2">Fecha de envío:</label>
                                                             <div class="col-md-8 col-sm-8">
                                                                 <input class="form-control" type="datetime-local"
-                                                                    id="fecha_envio2" value="" name="fecha_envio2"
-                                                                    placeholder="fecha envio"
+                                                                    id="fecha_envio2" name="fecha_envio2"
+                                                                    placeholder="Fecha de envío"
                                                                     data-parsley-required="true">
                                                                 @error('fecha_envio')
                                                                     <ul class="parsley-errors-list filled" id="parsley-id-5"
@@ -308,17 +284,19 @@
                                                             <label class="col-md-4 col-sm-4 col-form-label"
                                                                 for="fullname">Id de Destino:</label>
                                                             <div class="col-md-8 col-sm-8">
-                                                                <select class="form-control" id="id_programa2"
-                                                                    name="id_programa2" data-parsley-required="true">
+                                                                <select class="form-control select2_programas"
+                                                                    id="id_programa2" name="id_programa2"
+                                                                    data-parsley-required="true">
                                                                     @foreach ($programas as $programa)
                                                                         <option value='{{ $programa->id_programa }}'>
-                                                                            {{ $programa->programa }}</option>
+                                                                            {{ $programa->programa }}
+                                                                        </option>
                                                                     @endforeach
                                                                     @error('id_programa')
                                                                         <ul class="parsley-errors-list filled"
                                                                             id="parsley-id-5" aria-hidden="false">
                                                                             <li class="parsley-required">
-                                                                                {{ 'este valor es requerido' }}
+                                                                                {{ 'Este valor es requerido' }}
                                                                             </li>
                                                                         </ul>
                                                                     @enderror
@@ -347,7 +325,7 @@
                                                             <label class="col-md-4 col-sm-4 col-form-label">&nbsp;</label>
                                                             <div class="col-md-8 col-sm-8">
                                                                 <button type="submit"
-                                                                    class="btn btn-primary">Registrar</button>
+                                                                    class="btn btn-primary"><i class="far fa-save"></i>  Actulizar</button>
                                                             </div>
                                                         </div>
                                                     </form>
@@ -364,259 +342,291 @@
                 </div>
             </div>
         </div>
+    </div>
 
-    @endsection
-    @push('scripts')
-        {{-- Aqui se coloca los JS de assets --}}
-        <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet" />
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-        <link href="../assets/css/material/app.min.css" rel="stylesheet" />
-        <!-- ================== END BASE CSS STYLE ================== -->
+@endsection
+@push('scripts')
+    {{-- Aqui se coloca los JS de assets --}}
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link href="../assets/css/material/app.min.css" rel="stylesheet" />
+    <!-- ================== END BASE CSS STYLE ================== -->
 
-        <link href="../assets/plugins/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
-        <link href="../assets/plugins/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" />
-        <link href="../assets/plugins/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet" />
-        <link href="../assets/plugins/datatables.net-autofill-bs4/css/autofill.bootstrap4.min.css" rel="stylesheet" />
-        <link href="../assets/plugins/datatables.net-colreorder-bs4/css/colreorder.bootstrap4.min.css" rel="stylesheet" />
-        <link href="../assets/plugins/datatables.net-keytable-bs4/css/keytable.bootstrap4.min.css" rel="stylesheet" />
-        <link href="../assets/plugins/datatables.net-rowreorder-bs4/css/rowreorder.bootstrap4.min.css" rel="stylesheet" />
-        <link href="../assets/plugins/datatables.net-select-bs4/css/select.bootstrap4.min.css" rel="stylesheet" />
-        <!-- ================== END PAGE LEVEL STYLE ================== -->
+    <link href="../assets/plugins/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+    <link href="../assets/plugins/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" />
+    <link href="../assets/plugins/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet" />
+    <link href="../assets/plugins/datatables.net-autofill-bs4/css/autofill.bootstrap4.min.css" rel="stylesheet" />
+    <link href="../assets/plugins/datatables.net-colreorder-bs4/css/colreorder.bootstrap4.min.css" rel="stylesheet" />
+    <link href="../assets/plugins/datatables.net-keytable-bs4/css/keytable.bootstrap4.min.css" rel="stylesheet" />
+    <link href="../assets/plugins/datatables.net-rowreorder-bs4/css/rowreorder.bootstrap4.min.css" rel="stylesheet" />
+    <link href="../assets/plugins/datatables.net-select-bs4/css/select.bootstrap4.min.css" rel="stylesheet" />
+    <!-- ================== END PAGE LEVEL STYLE ================== -->
 
-        <!-- ================== BEGIN PAGE LEVEL JS ================== -->
-        <script src="../assets/plugins/datatables.net/js/jquery.dataTables.min.js"></script>
-        <script src="../assets/plugins/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
-        <script src="../assets/plugins/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-        <script src="../assets/plugins/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
-        <script src="../assets/plugins/datatables.net-autofill/js/dataTables.autofill.min.js"></script>
-        <script src="../assets/plugins/datatables.net-autofill-bs4/js/autofill.bootstrap4.min.js"></script>
-        <script src="../assets/plugins/datatables.net-colreorder/js/dataTables.colreorder.min.js"></script>
-        <script src="../assets/plugins/datatables.net-colreorder-bs4/js/colreorder.bootstrap4.min.js"></script>
-        <script src="../assets/plugins/datatables.net-keytable/js/dataTables.keytable.min.js"></script>
-        <script src="../assets/plugins/datatables.net-keytable-bs4/js/keytable.bootstrap4.min.js"></script>
-        <script src="../assets/plugins/datatables.net-rowreorder/js/dataTables.rowreorder.min.js"></script>
-        <script src="../assets/plugins/datatables.net-rowreorder-bs4/js/rowreorder.bootstrap4.min.js"></script>
-        <script src="../assets/plugins/datatables.net-select/js/dataTables.select.min.js"></script>
-        <script src="../assets/plugins/datatables.net-select-bs4/js/select.bootstrap4.min.js"></script>
-        <script src="../assets/plugins/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-        <script src="../assets/plugins/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
-        <script src="../assets/plugins/datatables.net-buttons/js/buttons.colVis.min.js"></script>
-        <script src="../assets/plugins/datatables.net-buttons/js/buttons.flash.min.js"></script>
-        <script src="../assets/plugins/datatables.net-buttons/js/buttons.html5.min.js"></script>
-        <script src="../assets/plugins/datatables.net-buttons/js/buttons.print.min.js"></script>
-        <script src="../assets/plugins/pdfmake/build/pdfmake.min.js"></script>
-        <script src="../assets/plugins/pdfmake/build/vfs_fonts.js"></script>
-        <script src="../assets/plugins/jszip/dist/jszip.min.js"></script>
-        <script src="../assets/js/demo/table-manage-combine.demo.js"></script>
+    <!-- ================== BEGIN PAGE LEVEL JS ================== -->
+    <script src="../assets/plugins/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="../assets/plugins/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="../assets/plugins/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="../assets/plugins/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+    <script src="../assets/plugins/datatables.net-autofill/js/dataTables.autofill.min.js"></script>
+    <script src="../assets/plugins/datatables.net-autofill-bs4/js/autofill.bootstrap4.min.js"></script>
+    <script src="../assets/plugins/datatables.net-colreorder/js/dataTables.colreorder.min.js"></script>
+    <script src="../assets/plugins/datatables.net-colreorder-bs4/js/colreorder.bootstrap4.min.js"></script>
+    <script src="../assets/plugins/datatables.net-keytable/js/dataTables.keytable.min.js"></script>
+    <script src="../assets/plugins/datatables.net-keytable-bs4/js/keytable.bootstrap4.min.js"></script>
+    <script src="../assets/plugins/datatables.net-rowreorder/js/dataTables.rowreorder.min.js"></script>
+    <script src="../assets/plugins/datatables.net-rowreorder-bs4/js/rowreorder.bootstrap4.min.js"></script>
+    <script src="../assets/plugins/datatables.net-select/js/dataTables.select.min.js"></script>
+    <script src="../assets/plugins/datatables.net-select-bs4/js/select.bootstrap4.min.js"></script>
+    <script src="../assets/plugins/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="../assets/plugins/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
+    <script src="../assets/plugins/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+    <script src="../assets/plugins/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="../assets/plugins/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="../assets/plugins/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="../assets/plugins/pdfmake/build/pdfmake.min.js"></script>
+    <script src="../assets/plugins/pdfmake/build/vfs_fonts.js"></script>
+    <script src="../assets/plugins/jszip/dist/jszip.min.js"></script>
+    <script src="../assets/js/demo/table-manage-combine.demo.js"></script>
 
-        <link href="../assets/plugins/select2/dist/css/select2.min.css" rel="stylesheet" />
-        <link href="../assets/plugins/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet" />
-        <script src="../assets/plugins/select2/dist/js/select2.min.js"></script>
-        <script src="../assets/js/demo/ui-modal-notification.demo.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <link href="../assets/plugins/gritter/css/jquery.gritter.css" rel="stylesheet" />
-        <script>
-            $(document).ready(function() {
-                $('#flujosdoc-table').DataTable({
-                    processing: true,
-                    serverSide: true,
-                    ajax: "{{ route('flujodedocumento.index') }}",
-                    columns: [{
-                            data: 'id',
-                            name: 'id'
-                        },
-                        {
-                            data: 'cite',
-                            name: 'cite'
-                        },
-                        {
-                            data: 'fecha_recepcion',
-                            name: 'fecha_recepcion'
-                        },
-                        {
-                            data: 'fecha_envio',
-                            name: 'fecha_envio'
-                        },
-                        {
-                            data: 'programa_origen',
-                            name: 'programa_origen'
-                        },
-                        {
-                            data: null,
-                            render: function(data, type, row) {
-                                if (data.programa_origen === 'SIS') {
-                                    return 'Origen';
-                                } else {
-                                    return 'Destino';
-                                }
+    <link href="../assets/plugins/select2/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="../assets/plugins/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet" />
+    <script src="../assets/plugins/select2/dist/js/select2.min.js"></script>
+    <script src="../assets/js/demo/ui-modal-notification.demo.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="../assets/plugins/gritter/css/jquery.gritter.css" rel="stylesheet" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#flujosdoc-table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('flujodedocumentos.index') }}",
+
+                columns: [{
+                        data: 'id',
+                        name: 'id',
+                        render: function(data, type, row, meta) {
+                                return meta.row + meta.settings._iDisplayStart + 1;
                             }
-                        },
-                        {
-                            data: 'obs',
-                            name: 'obs'
-                        },
-                        {
-                            data: 'origen_destino',
-                            name: 'origen_destino'
-                        },
-                        {
-                            data: 'action',
-                            name: 'action',
-                            orderable: false,
-                            searchable: false
-                        }
-                    ],
-                    language: {
-                        url: '/assets/plugins/datatables.net/Spanish.json'
+                    },
+                    {
+                        data: 'cite',
+                        name: 'cite'
+                    },
+                    {
+                        data: 'fecha_recepcion',
+                        name: 'fecha_recepcion',
+                    },
+                    {
+                        data: 'fecha_envio',
+                        name: 'fecha_envio'
+                    },
+                    {
+                        data: 'programa',
+                        name: 'programa'
+                    },
+
+                    {
+                        data: 'obs',
+                        name: 'obs'
+                    },
+
+                    {
+                        data: 'actions',
+                        name: 'actions',
+                        orderable: false,
+                        searchable: false
                     }
-                });
+                ],
+                language: {
+                    url: '/assets/plugins/datatables.net/Spanish.json'
+                }
             });
-        </script>
+        });
+    </script>
 
-        <script>
-            $(document).ready(function() {
-                // Manejar el envío del formulario por AJAX
-                $('#form-create-flujo').on('submit', function(event) {
-                    event.preventDefault(); // Prevenir el envío del formulario por defecto
+    <script>
+        $(document).ready(function() {
+            // Manejar el envío del formulario por AJAX
+            $('#form-create-flujo').on('submit', function(event) {
+                event.preventDefault(); // Prevenir el envío del formulario por defecto
 
-                    // Obtener los datos del formulario
-                    var formData = new FormData(this);
+                // Obtener los datos del formulario
+                var formData = new FormData(this);
 
-                    // Realizar la solicitud AJAX
-                    $.ajax({
-                        url: "{{ route('flujodocumentos.create') }}",
-                        method: "POST",
-                        data: formData,
-                        contentType: false,
-                        processData: false,
-                        success: function(response) {
-                            console.log(response);
-
-                            // Mostrar SweetAlert en lugar de una alerta estándar
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Registro creado con éxito',
-                                text: 'El flujo de documentos se ha creado correctamente.',
-                            }).then((result) => {
-                                // Cerrar el modal después de mostrar SweetAlert
-                                if (result.isConfirmed) {
-                                    $('#exampleModal').modal('hide');
-                                }
-                            });
-
-                            // Puedes realizar cualquier otra acción necesaria, como actualizar la tabla de datos
-                        },
-                        error: function(xhr, status, error) {
-                            console.error(xhr.responseText);
-
-                            // Mostrar SweetAlert en caso de error
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Error',
-                                text: 'Ocurrió un error al crear el flujo de documentos.',
-                            });
-                        }
-                    });
-                });
-            });
-        </script>
-        <script>
-            function editFlujo(id) {
-                $.get('/flujodocumentos/edit/'+id, function(data) {
-                    // Llenar el formulario de edición con los datos recibidos
-                    $('#id_documento2').val(data.flujo.id_documento);
-                    $('#fecha_recepcion2').val(data.flujo.fecha_recepcion);
-                    $('#fecha_envio2').val(data.flujo.fecha_envio);
-                    $('#id_programa2').val(data.flujo.id_programa);
-                    $('#obs2').val(data.flujo.obs);
-                    // Mostrar el modal de edición
-                    $('#editFlujoForm').modal('show');
-                });
-            }
-            $('#editFlujoForm').submit(function(e) {
-                e.preventDefault();
-                var id = $('#id_documento2').val();
-                var fecha_recepcion = $('#fecha_recepcion2').val();
-                var fecha_recepcion = $('#fecha_envio2').val();
-                var id_programa = $('#id_programa2').val();
-                var obs = $('#obs2').val();
-                var _token = $("input[name=_token]").val();
-                var formData = new FormData();
-                formData.append('_method', 'PUT');
-                formData.append('id_documento', id); // Cambiado 'id' a 'id_documento'
-                formData.append('fecha_recepcion', fecha_recepcion);
-                formData.append('fecha_envio', fecha_envio);
-                formData.append('id_programa', id_programa);
-                formData.append('obs', obs);
-                formData.append('_token', _token);
+                // Realizar la solicitud AJAX
                 $.ajax({
-                    url: "/flujodocumentos/update/" + id, // Ruta actualizada
-                    type: 'PUT',
+                    url: "{{ route('flujodocumentos.create') }}",
+                    method: "POST",
                     data: formData,
                     contentType: false,
                     processData: false,
                     success: function(response) {
-                        if (response) {
-                            $('#editFlujoForm').modal('hide');
-                            Swal.fire({
-                                icon: 'success',
-                                title: '¡Registro actualizado!',
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
-                            // Aquí, si deseas, puedes recargar la tabla de flujo de documentos.
-                        }
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        console.log("Error de AJAX: " + textStatus + ' : ' + errorThrown);
-                    }
-                });
-            });
-        </script>
-        <script>
-            function deleteFlujo(id) {
-                Swal.fire({
-                    title: '¿Estás seguro?',
-                    text: "El trámite será eliminado permanentemente",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Sí, eliminar!',
-                    cancelButtonText: 'Cancelar'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $.ajax({
-                            url: 'flujodocumentos/destroy/' + id,
-                            type: 'POST',
-                            data: {
-                                _token: $('input[name="_token"]').val(),
-                                _method: 'DELETE'
-                            },
-                            success: function(response) {
-                                if (response.status == 'success') {
-                                    Swal.fire({
-                                        icon: 'success',
-                                        title: 'Trámite eliminado correctamente',
-                                        showConfirmButton: false,
-                                        timer: 1500
-                                    });
-                                    $('#flujosdoc-table').DataTable().ajax.reload();
-                                } else {
-                                    Swal.fire({
-                                        icon: 'error',
-                                        title: 'Ocurrió un error al eliminar el trámite',
-                                        text: response.message,
-                                        confirmButtonText: 'Aceptar'
-                                    });
-                                }
-                            },
-                            error: function(jqXHR, textStatus, errorThrown) {
-                                console.log("Error de AJAX: " + textStatus + ' : ' + errorThrown);
+                        console.log(response);
+
+                        // Mostrar SweetAlert en lugar de una alerta estándar
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Registro creado con éxito',
+                            text: 'El flujo de documentos se ha creado correctamente.',
+                        }).then((result) => {
+                            // Cerrar el modal después de mostrar SweetAlert
+                            if (result.isConfirmed) {
+                                $('#exampleModal').modal('hide');
                             }
+                        });
+
+                        // Puedes realizar cualquier otra acción necesaria, como actualizar la tabla de datos
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(xhr.responseText);
+
+                        // Mostrar SweetAlert en caso de error
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Ocurrió un error al crear el flujo de documentos.',
                         });
                     }
                 });
-            }
-        </script>
-    @endpush
+            });
+        });
+    </script>
+    <!-- Script para obtener datos de edición -->
+    <script>
+        function editFlujo(id) {
+            $.ajax({
+                url: 'flujodocumentos/edit/' + id,
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    // Llenar el formulario de edición con los datos recibidos
+
+                    // Ajustar el formato de fecha de recepción
+                    var fechaRecepcion = new Date(data.fecha_recepcion);
+                    var fechaRecepcionFormateada = fechaRecepcion.toISOString().slice(0, 19).replace("T", " ");
+                    data.fecha_recepcion = fechaRecepcionFormateada;
+
+                    // Ajustar el formato de fecha de envío
+                    var fechaEnvio = new Date(data.fecha_envio);
+                    var fechaEnvioFormateada = fechaEnvio.toISOString().slice(0, 19).replace("T", " ");
+                    data.fecha_envio = fechaEnvioFormateada;
+
+                    $('#id2').val(data.id)
+                    $('#id_documento2').val(data.id_documento);
+                    $('#fecha_recepcion2').val(data.fecha_recepcion);
+                    $('#fecha_envio2').val(data.fecha_envio);
+                    $('#id_programa2').val(data.id_programa);
+                    $('#obs2').val(data.obs);
+                    // Mostrar el modal de edición
+                    $('#editFlujoForm').modal('show');
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.log("Error de AJAX: " + textStatus + ' : ' + errorThrown);
+                }
+            });
+        }
+    </script>
+
+    <!-- Script para realizar la actualización -->
+    <script>
+        $('#editFlujoForm').submit(function(e) {
+            e.preventDefault();
+
+            var id = $('#id2').val(); // Corregido para obtener el valor del campo id2
+            var id_documento = $('#id_documento2')
+            var fecha_recepcion = $('#fecha_recepcion2').val();
+            var fecha_envio = $('#fecha_de_envio2').val();
+            var id_programa = $('#id_programa2').val();
+            var obs = $('#obs2').val();
+            var _token = $('meta[name="csrf-token"]').attr('content'); // Obtener el token CSRF
+
+            // Crear un objeto con los datos a enviar
+            var _token = $('meta[name="csrf-token"]').attr('content');
+            var formData = {
+                _method: 'PUT',
+                id_documento: id,
+                fecha_recepcion: fecha_recepcion,
+                fecha_envio: fecha_envio, // Asegúrate de incluir fecha_envio
+                id_programa: id_programa,
+                obs: obs,
+                _token: _token
+            };
+
+            $.ajax({
+                url: "flujodocumentos/update/" + id,
+                type: 'POST', // Cambiado a POST para simular el método PUT
+                data: formData,
+                success: function(response) {
+                    $('#editFlujoForm').modal('hide');
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Registro actualizado!',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    // Aquí, si deseas, puedes recargar la tabla de flujo de documentos.
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.log("Error de AJAX: " + textStatus + ' : ' + errorThrown);
+                }
+            });
+        });
+    </script>
+
+    <script>
+        function deleteFlujo(id) {
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: 'Esta acción no se puede deshacer',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, eliminar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "flujodocumentos/destroy/" + id,
+                        method: "DELETE",
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                            id: id
+                        },
+                        success: function(response) {
+                            // Actualizar la tabla de datos después de eliminar
+                            $('#flujosdoc-table').DataTable().ajax.reload();
+
+                            // Mostrar SweetAlert para confirmar la eliminación
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Eliminado con éxito',
+                                text: 'El flujo de documentos se ha eliminado correctamente.',
+                            });
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(xhr.responseText);
+                            // Mostrar SweetAlert en caso de error
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: 'Ocurrió un error al eliminar el flujo de documentos.',
+                            });
+                        }
+                    });
+                }
+            });
+        }
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('.select2_programas').select2();
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#id_programa').select2();
+        });
+    </script>
+@endpush

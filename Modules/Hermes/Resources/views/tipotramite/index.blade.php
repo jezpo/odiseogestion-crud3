@@ -17,10 +17,10 @@
             <div class="panel-heading ui-sortable-handle d-flex justify-content-between align-items-center">
                 <!-- Botón para abrir el modal de creación -->
                 <div class="d-block d-lg-inline-flex">
-                    <div class="dt-buttons btn-group flex-wrap">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                            <i class="fas fa-plus"> </i> Nuevo Tramite</button>
-                    </div>
+
+                    <a type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                        <i class="fas fa-plus"> </i> Nuevo Tramite</a>
+
                 </div>
                 <div class="panel-heading-btn">
                     <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i
@@ -100,7 +100,7 @@
                                                         <label class="col-md-4 col-sm-4 col-form-label">&nbsp;</label>
                                                         <div class="col-md-8 col-sm-8">
                                                             <button type="submit"
-                                                                class="btn btn-primary">Registrar</button>
+                                                                class="btn btn-primary"><i class="far fa-save"> </i> Registrar</button>
                                                         </div>
                                                     </div>
                                                 </form>
@@ -137,7 +137,7 @@
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Editar Trámite</h5>
+                                                <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-edit"></i> Editar Trámite</h5>
                                                 <button type="button" class="close" data-dismiss="modal"
                                                     aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
@@ -188,8 +188,7 @@
                                                     <div class="form-group row m-b-0">
                                                         <label class="col-md-4 col-sm-4 col-form-label">&nbsp;</label>
                                                         <div class="col-md-8 col-sm-8">
-                                                            <button type="submit" class="btn btn-primary">Guardar
-                                                                Cambios</button>
+                                                            <button type="submit" class="btn btn-primary"><i class="far fa-save"> </i> Actulizar</button>
                                                         </div>
                                                     </div>
                                                 </form>
@@ -322,14 +321,19 @@
     <script>
         $(document).ready(function() {
             var documentTable = $('#programa-table').DataTable({
+
                 processing: true,
                 serverSide: true,
                 ajax: {
                     url: "{{ route('tipotramite.index') }}",
                 },
+
                 columns: [{
                         data: 'id',
-                        name: 'id'
+                        name: 'id',
+                        render: function(data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
                     },
                     {
                         data: 'tramite',

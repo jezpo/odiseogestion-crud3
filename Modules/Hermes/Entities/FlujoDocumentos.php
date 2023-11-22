@@ -22,12 +22,28 @@ class FlujoDocumentos extends Model
     ];
     public function documento()
     {
-        return $this->belongsTo(Documentos::class, 'id_documento');
+        return $this->belongsTo(Documentos::class);
     }
 
     public function programa()
     {
-        return $this->belongsTo(Programas::class, 'id_programa');
+        return $this->belongsTo(Programas::class);
     }
-    
+    public static function list_documents_with_flow()
+    {
+        $flujoDocumentos = FlujoDocuments::select(
+            'flujo_documentos.id',
+            'flujo_documentos.id_documento',
+            'flujo_documentos.fecha_recepcion',
+            'flujo_documentos.fecha_envio',
+            'flujo_documentos.id_programa',
+            'flujo_documentos.obs',
+            'programas.programa',
+            DB::raw("CASE WHEN programas.programa = 'SIS' THEN 'origen' ELSE 'destino' END AS tipo")
+        )
+        ->join('documentos', 'flujo_documentos.id_documento', '=', 'documentos.id')
+        ->join('programas', 'flujo_documentos.id_programa', '=', 'programas.id_programa')
+        ->get();
+    }
+   
 }

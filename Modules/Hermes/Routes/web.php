@@ -44,12 +44,12 @@ Route::prefix('hermes')->group(function () {
     Route::post('flujotramite/create', [FlujoDeTramiteController::class, 'create'])->name('flujotramite.create');
     Route::post('flujotramite/store', [FlujoDeTramiteController::class, 'store'])->name('flujotramite.store');
     Route::get('flujotramite/{id}', [FlujoDeTramiteController::class, 'show'])->name('flujotramite.show');
-    Route::post('flujotramite/edit/{id}', [FlujoDeTramiteController::class, 'edit'])->name('flujotramite.edit');
-    Route::post('flujotramite/update/{id}', [FlujoDeTramiteController::class, 'update'])->name('flujotramite.update');
+    Route::get('flujotramite/edit/{id}', [FlujoDeTramiteController::class, 'edit'])->name('flujotramite.edit');
+    Route::put('flujotramite/update/{id}', [FlujoDeTramiteController::class, 'update'])->name('flujotramite.update');
     Route::delete('flujotramite/destroy/{id}', [FlujoDeTramiteController::class, 'destroy'])->name('flujotramite.destroy');
 
     //ruta para flujo de documentos
-    Route::get('flujodocumentos', [FlujoDeDocumentosController::class, 'index'])->name('flujodedocumento.index'); // Cambia 'flujodocumentos' a 'flujodedocumento'
+    Route::get('flujodocumentos', [FlujoDeDocumentosController::class, 'index'])->name('flujodedocumentos.index'); // Cambia 'flujodocumentos' a 'flujodedocumento'
     Route::post('flujodocumentos/create', [FlujoDeDocumentosController::class, 'create'])->name('flujodocumentos.create');
     Route::post('flujodocumentos/store', [FlujoDeDocumentosController::class, 'store'])->name('flujodocumentos.store');
     Route::get('flujodocumentos/{id}', [FlujoDeDocumentosController::class, 'show'])->name('flujodocumentos.show');
