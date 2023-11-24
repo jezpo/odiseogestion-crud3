@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Color Admin | Register Page</title>
+    <title>Registro|UATF</title>
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
     <meta content="" name="description" />
     <meta content="" name="author" />
@@ -23,7 +23,7 @@
                 <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2"
                     stroke-miterlimit="10"></circle>
             </svg>
-            <div class="message">Loading...</div>
+            <div class="message">Cargado...</div>
         </div>
     </div>
     <!-- end #page-loader -->
@@ -36,11 +36,9 @@
             <div class="news-feed">
                 <div class="news-image" style="background-image: url(../assets/img/login-bg/login-bg-15.jpg)"></div>
                 <div class="news-caption">
-                    <h4 class="caption-title"><b>Color</b> Admin App</h4>
+                    <h4 class="caption-title"><b>Correspondencia</b> UATF</h4>
                     <p>
-                        As a Color Admin app administrator, you use the Color Admin console to manage your
-                        organization’s account, such as add new users, manage security settings, and turn on the
-                        services you want your team to access.
+
                     </p>
                 </div>
             </div>
@@ -49,8 +47,8 @@
             <div class="right-content">
                 <!-- begin register-header -->
                 <h1 class="register-header">
-                    Sign Up
-                    <small>Create your Color Admin Account. It’s free and always will be.</small>
+                    Registrarse
+                    <small>Ingresa tus datos para el registro</small>
                 </h1>
                 <!-- end register-header -->
                 <!-- begin register-content -->
@@ -112,36 +110,36 @@
                             </div>
                         
 
-                        <label class="control-label">Password <span class="text-danger">*</span></label>
+                        <label class="control-label">Contraseña</label> <span class="text-danger">*</span></label>
                         <div class="row m-b-15">
                             <div class="col-md-12">
-                                <input type="password" name="password" class="form-control" placeholder="Password"
+                                <input type="password" name="password" class="form-control" placeholder="Contraseña"
                                     required />
                                 @error('password')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
                         </div>
-                        <label class="control-label">Confirm Password <span class="text-danger">*</span></label>
+                        <label class="control-label">Confirma tu contraseña <span class="text-danger">*</span></label>
                         <div class="row m-b-15">
                             <div class="col-md-12">
                                 <input type="password" name="password_confirmation" class="form-control"
-                                    placeholder="Confirm Password" required />
+                                    placeholder="Confirma tu Contraseña" required />
                             </div>
                         </div>
 
                         <div class="register-buttons">
-                            <button type="submit" class="btn btn-primary btn-block btn-lg">Sign Up</button>
+                            <button type="submit" class="btn btn-primary btn-block btn-lg">Registrarse</button>
                         </div>
 
                         <div class="m-t-30 m-b-30 p-b-30">
-                            Already a member? Click <a href="{{ route('login') }}">here</a> to login.
+                            Ya estas Registrado ingresa a <a href="{{ route('login') }}">Aqui</a> Para ingresar.
                         </div>
 
                         <hr />
 
                         <p class="text-center mb-0">
-                            &copy; Color Admin All Right Reserved 2020
+                            &copy; Uatf Right Reserved 2023
                         </p>
                     </form>
 
